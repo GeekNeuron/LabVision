@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LabVision</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="light-theme">
+
+    <header id="main-header">
+        <h1 data-lang-key="headerTitle">LabVision</h1>
+    </header>
+
+    <main>
+        <div class="container">
+            <h2 data-lang-key="inputHeader">اطلاعات برگه آزمایش خود را وارد کنید</h2>
+            <p data-lang-key="inputHint">هر آیتم را در یک خط جدید وارد کنید. مثال: Glucose: 95</p>
+            <textarea id="lab-input" rows="10" placeholder="Hb: 14.5&#10;WBC: 7500&#10;Cholesterol: 190"></textarea>
+            <button id="process-btn" data-lang-key="processButton">تحلیل نتایج</button>
+            
+            <div id="results-container">
+                <h2 data-lang-key="resultsHeader">تفسیر نتایج</h2>
+                <div id="results-output">
+                    <p class="placeholder" data-lang-key="resultsPlaceholder">نتایج تحلیل آزمایش شما در اینجا نمایش داده می‌شود.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="language-switcher">
+        <div class="lang-tab" id="lang-fa">FA</div>
+        <div class="lang-tab active" id="lang-en">EN</div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
