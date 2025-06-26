@@ -13,86 +13,38 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentTheme = 'light';
     let currentLang = 'en';
 
-    // --- Translations Database ---
+    // --- Translations Database (UPGRADED) ---
     const translations = {
         fa: {
             headerTitle: "LabVision",
-            inputHeader: "اطلاعات برگه آزمایش خود را وارد کنید",
+            inputHeader: "اطلاعات برگه آزمایش",
+            selectGender: "جنسیت:",
+            genderMale: "مرد",
+            genderFemale: "زن",
             inputHint: "هر آیتم را در یک خط جدید وارد کنید. مثال: Glucose: 95",
             processButton: "تحلیل نتایج",
             resultsHeader: "تفسیر نتایج",
             resultsPlaceholder: "نتایج تحلیل آزمایش شما در اینجا نمایش داده می‌شود.",
-            statusLow: "پایین",
-            statusNormal: "نرمال",
-            statusHigh: "بالا",
-            yourValue: "مقدار شما",
-            normalRange: "محدوده نرمال",
-            explanation: "توضیحات"
+            statusLow: "پایین", statusNormal: "نرمال", statusHigh: "بالا",
+            yourValue: "مقدار شما", normalRange: "محدوده نرمال", explanation: "توضیحات"
         },
         en: {
             headerTitle: "LabVision",
-            inputHeader: "Enter Your Lab Report Data",
+            inputHeader: "Lab Report Data",
+            selectGender: "Gender:",
+            genderMale: "Male",
+            genderFemale: "Female",
             inputHint: "Enter each item on a new line. e.g., Glucose: 95",
             processButton: "Analyze Results",
             resultsHeader: "Results Interpretation",
             resultsPlaceholder: "Your lab analysis results will be displayed here.",
-            statusLow: "Low",
-            statusNormal: "Normal",
-            statusHigh: "High",
-            yourValue: "Your Value",
-            normalRange: "Normal Range",
-            explanation: "Explanation"
+            statusLow: "Low", statusNormal: "Normal", statusHigh: "High",
+            yourValue: "Your Value", normalRange: "Normal Range", explanation: "Explanation"
         }
     };
 
-    // --- Lab Data "Database" ---
-    // You can easily add more tests here
-    const labData = {
-        hemoglobin: {
-            fa_name: "هموگلوبین",
-            en_name: "Hemoglobin (Hb)",
-            unit: "g/dL",
-            male_range: [13.5, 17.5],
-            female_range: [12.0, 15.5],
-            explanation: {
-                fa: "پروتئینی در گلبول‌های قرمز خون که اکسیژن را حمل می‌کند. میزان پایین آن می‌تواند نشانه کم‌خونی باشد.",
-                en: "A protein in red blood cells that carries oxygen. Low levels can indicate anemia."
-            }
-        },
-        glucose: {
-            fa_name: "گلوکز (قند خون)",
-            en_name: "Glucose",
-            unit: "mg/dL",
-            male_range: [70, 100],
-            female_range: [70, 100],
-            explanation: {
-                fa: "میزان قند در خون. مقادیر بالا می‌تواند نشانه دیابت یا پیش-دیابت باشد.",
-                en: "The amount of sugar in your blood. High levels can be a sign of diabetes or pre-diabetes."
-            }
-        },
-        wbc: {
-            fa_name: "گلبول‌های سفید خون",
-            en_name: "White Blood Cell (WBC) Count",
-            unit: "cells/mcL",
-            male_range: [4500, 11000],
-            female_range: [4500, 11000],
-            explanation: {
-                fa: "سلول‌های سیستم ایمنی بدن که با عفونت‌ها مبارزه می‌کنند. مقادیر بالا می‌تواند نشانه عفونت و مقادیر پایین نشانه ضعف سیستم ایمنی باشد.",
-                en: "Immunity cells that fight infection. High levels can indicate an infection, while low levels can signal an immune system weakness."
-            }
-        },
-        cholesterol: {
-            fa_name: "کلسترول کل",
-            en_name: "Total Cholesterol",
-            unit: "mg/dL",
-            male_range: [0, 200], // Desirable is < 200
-            female_range: [0, 200],
-            explanation: {
-                fa: "چربی موجود در خون. سطح بالای آن خطر بیماری‌های قلبی را افزایش می‌دهد.",
-                en: "A type of fat in your blood. High levels increase the risk of heart disease."
-            }
-        }
-    };
+    // --- Lab Data "Database" is now in database.js ---
+    // The 'labData' object is loaded globally from the separate file.
 
     // --- Functions ---
     const toggleTheme = () => {
@@ -117,13 +69,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
-        // Update placeholder texts for RTL/LTR
-        labInput.placeholder = lang === 'fa' ? "Hb: 14.5\nWBC: 7500\nCholesterol: 190" : "Hb: 14.5\nWBC: 7500\nCholesterol: 190";
+        labInput.placeholder = lang === 'fa' ? "Hb: 14.5\nPlatelet: 250\nTSH: 2.1" : "Hb: 14.5\nPlatelet: 250\nTSH: 2.1";
 
-        // Re-process results to show them in the new language
         if (labInput.value.trim() !== '') {
             interpretResults();
         }
+    };
+
+    // NEW (UPGRADED): Smarter function to find test key using aliases
+    const findTestKey = (name) => {
+        const lowerCaseName = name.toLowerCase().trim();
+        for (const key in labData) {
+            if (key === lowerCaseName) return key;
+            if (labData[key].aliases && labData[key].aliases.includes(lowerCaseName)) {
+                return key;
+            }
+        }
+        return null;
     };
 
     const interpretResults = () => {
@@ -133,26 +95,35 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // NEW: Get the selected gender from the UI
+        const selectedGender = document.querySelector('input[name="gender"]:checked').value;
+
         resultsOutput.innerHTML = ''; // Clear previous results
         const lines = input.split('\n');
 
         lines.forEach(line => {
-            const parts = line.split(/[:\s]+/); // Split by colon or space
+            const parts = line.split(/[:\s]+/);
             if (parts.length < 2) return;
 
-            const testName = parts[0].toLowerCase().trim();
-            const value = parseFloat(parts[1]);
+            const testNameInput = parts[0];
+            const value = parseFloat(parts[parts.length > 2 ? parts[1] + '.' + parts[2] : parts[1]]);
 
             if (isNaN(value)) return;
 
-            let testKey = Object.keys(labData).find(key => testName.includes(key));
-            if (!testKey) { // Try to find by abbreviations
-                if(testName === 'hb') testKey = 'hemoglobin';
-            }
+            // USE THE UPGRADED FUNCTION
+            const testKey = findTestKey(testNameInput);
             
             if (testKey) {
                 const data = labData[testKey];
-                const range = data.male_range; // Simplified: Using male range for all. Could be extended.
+
+                // UPGRADE: Select the correct range based on gender
+                let range;
+                if (selectedGender === 'female' && data.female_range) {
+                    range = data.female_range;
+                } else {
+                    // Default to male_range if female_range isn't available or male is selected
+                    range = data.male_range;
+                }
                 
                 let status = 'normal';
                 let statusKey = 'statusNormal';
@@ -175,9 +146,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 resultsOutput.innerHTML += resultCard;
             }
         });
-         if (resultsOutput.innerHTML === '') {
-             resultsOutput.innerHTML = `<p class="placeholder" data-lang-key="resultsPlaceholder">${translations[currentLang].resultsPlaceholder}</p>`;
-         }
+
+        if (resultsOutput.innerHTML === '') {
+            resultsOutput.innerHTML = `<p class="placeholder">هیچ تست معتبری برای تحلیل یافت نشد. لطفاً ورودی خود را چک کنید.</p>`;
+        }
     };
 
     // --- Event Listeners ---
