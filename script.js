@@ -88,69 +88,73 @@ document.addEventListener('DOMContentLoaded', () => {
         return null;
     };
 
-    const interpretResults = () => {
-        const input = labInput.value.trim();
-        if (!input) {
-            resultsOutput.innerHTML = `<p class="placeholder" data-lang-key="resultsPlaceholder">${translations[currentLang].resultsPlaceholder}</p>`;
-            return;
-        }
+    // File: script.js (Only the interpretResults function is shown, the rest remains the same)
 
-        // NEW: Get the selected gender from the UI
-        const selectedGender = document.querySelector('input[name="gender"]:checked').value;
+const interpretResults = async () => { // Make the function async
+    const input = labInput.value.trim();
+    if (!input) {
+        resultsOutput.innerHTML = `<p class="placeholder" data-lang-key="resultsPlaceholder">${translations[currentLang].resultsPlaceholder}</p>`;
+        return;
+    }
 
-        resultsOutput.innerHTML = ''; // Clear previous results
-        const lines = input.split('\n');
+    const selectedGender = document.querySelector('input[name="gender"]:checked').value;
 
-        lines.forEach(line => {
-            const parts = line.split(/[:\s]+/);
-            if (parts.length < 2) return;
+    // Show a loading state
+    resultsOutput.innerHTML = `<p class="placeholder">${currentLang === 'fa' ? 'در حال تحلیل با هوش مصنوعی...' : 'Analyzing with AI...'}</p>`;
+    processBtn.disabled = true;
 
-            const testNameInput = parts[0];
-            const value = parseFloat(parts[parts.length > 2 ? parts[1] + '.' + parts[2] : parts[1]]);
-
-            if (isNaN(value)) return;
-
-            // USE THE UPGRADED FUNCTION
-            const testKey = findTestKey(testNameInput);
-            
-            if (testKey) {
-                const data = labData[testKey];
-
-                // UPGRADE: Select the correct range based on gender
-                let range;
-                if (selectedGender === 'female' && data.female_range) {
-                    range = data.female_range;
-                } else {
-                    // Default to male_range if female_range isn't available or male is selected
-                    range = data.male_range;
-                }
-                
-                let status = 'normal';
-                let statusKey = 'statusNormal';
-                if (value < range[0]) {
-                    status = 'low';
-                    statusKey = 'statusLow';
-                } else if (value > range[1]) {
-                    status = 'high';
-                    statusKey = 'statusHigh';
-                }
-
-                const resultCard = `
-                    <div class="result-item ${status}">
-                        <h3>${data[currentLang+'_name']} - <span class="${status}">${translations[currentLang][statusKey]}</span></h3>
-                        <p><strong>${translations[currentLang].yourValue}:</strong> ${value} ${data.unit}</p>
-                        <p><strong>${translations[currentLang].normalRange}:</strong> ${range[0]} - ${range[1]} ${data.unit}</p>
-                        <p><strong>${translations[currentLang].explanation}:</strong> ${data.explanation[currentLang]}</p>
-                    </div>
-                `;
-                resultsOutput.innerHTML += resultCard;
-            }
+    try {
+        const response = await fetch('/api/interpret', { // Calling our own backend
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                labText: input,
+                gender: selectedGender,
+                lang: currentLang
+            }),
         });
 
-        if (resultsOutput.innerHTML === '') {
-            resultsOutput.innerHTML = `<p class="placeholder">هیچ تست معتبری برای تحلیل یافت نشد. لطفاً ورودی خود را چک کنید.</p>`;
+        if (!response.ok) {
+            const errData = await response.json();
+            throw new Error(errData.error || 'An unknown error occurred.');
         }
-    };
+
+        const data = await response.json();
+
+        // Clear previous results and build new ones from AI response
+        resultsOutput.innerHTML = '';
+        
+        // Add disclaimer and summary
+        const summaryElement = document.createElement('p');
+        summaryElement.style.textAlign = 'center';
+        summaryElement.style.fontStyle = 'italic';
+        summaryElement.style.marginBottom = '1.5rem';
+        summaryElement.innerText = data.summary;
+        resultsOutput.appendChild(summaryElement);
+
+        // Add detailed cards
+        data.details.forEach(item => {
+            let statusClass = 'normal';
+            if (item.status.toLowerCase() === 'high') statusClass = 'high';
+            if (item.status.toLowerCase() === 'low') statusClass = 'low';
+
+            const resultCard = `
+                <div class="result-item ${statusClass}">
+                    <h3>${item.testName} - <span class="${statusClass}">${item.status}</span></h3>
+                    <p><strong>${translations[currentLang].yourValue}:</strong> ${item.value}</p>
+                    <p><strong>${translations[currentLang].explanation}:</strong> ${item.interpretation}</p>
+                </div>
+            `;
+            resultsOutput.innerHTML += resultCard;
+        });
+
+    } catch (error) {
+        console.error('Frontend Error:', error);
+        resultsOutput.innerHTML = `<p class="placeholder" style="color: #dc3545;">${currentLang === 'fa' ? 'خطا در ارتباط با سرور تحلیلگر:' : 'Error connecting to the analysis server:'} ${error.message}</p>`;
+    } finally {
+        processBtn.disabled = false; // Re-enable the button
+    }
+};
 
     // --- Event Listeners ---
     header.addEventListener('click', toggleTheme);
