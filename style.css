@@ -23,7 +23,9 @@ body.dark-theme {
 }
 
 body {
-    font-family: 'Vazirmatn', sans-serif;
+    /* 'Vazirmatn' will be used automatically if the user installs it locally;
+       otherwise it falls back to common system fonts that render Persian well, with zero network requests. */
+    font-family: 'Vazirmatn', Tahoma, 'Segoe UI', Arial, sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
     margin: 0;
@@ -70,6 +72,9 @@ textarea {
     border: 1px solid var(--border-color);
     background-color: var(--bg-color);
     color: var(--text-color);
+    /* Monospace only for the input box, to match a code/terminal-style workflow
+       when typing lab values (e.g. "Hb: 14.5"). Fully offline system fonts. */
+    font-family: 'Consolas', 'Courier New', 'DejaVu Sans Mono', monospace;
     font-size: 1rem;
     box-sizing: border-box;
     resize: vertical;
@@ -196,4 +201,67 @@ button:hover {
 .gender-selector label:has(input:checked) {
     background-color: var(--primary-color);
     color: var(--primary-text-color);
+}
+
+/* Secondary (print) button */
+.btn-secondary {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+.btn-secondary:hover {
+    background-color: color-mix(in srgb, var(--primary-color) 10%, transparent);
+    opacity: 1;
+}
+
+/* ============ Print / PDF export styles ============
+   Use the browser's native Print dialog ("Save as PDF") — fully offline,
+   no external library or network request required. */
+@media print {
+    /* Hide everything that isn't part of the report itself */
+    header,
+    .input-section,
+    .language-switcher,
+    #process-btn,
+    #print-btn {
+        display: none !important;
+    }
+
+    body {
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+
+    .container {
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .main-content {
+        display: block !important;
+    }
+
+    .results-section h2 {
+        text-align: start;
+    }
+
+    #results-output {
+        border: none;
+        padding: 0;
+    }
+
+    .result-item {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        border: 1px solid #999999;
+        border-left-width: 5px;
+        box-shadow: none;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    .result-item.normal { border-left-color: #28a745 !important; }
+    .result-item.low { border-left-color: #ffc107 !important; }
+    .result-item.high { border-left-color: #dc3545 !important; }
 }

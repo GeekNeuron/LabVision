@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LabVision</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+    <!-- No external fonts/CDN links: the app relies only on locally installed system fonts to stay 100% offline. -->
 </head>
 <body class="light-theme">
 
@@ -42,6 +40,7 @@
                 <div id="results-output">
                     <p class="placeholder" data-lang-key="resultsPlaceholder">نتایج تحلیل آزمایش شما در اینجا نمایش داده می‌شود.</p>
                 </div>
+                <button id="print-btn" class="btn-secondary" data-lang-key="printButton">چاپ / خروجی PDF</button>
             </section>
         </main>
     </div>
@@ -51,6 +50,7 @@
         <div class="lang-tab active" id="lang-en">EN</div>
     </div>
     
+    <script src="database.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
