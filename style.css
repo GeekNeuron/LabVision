@@ -251,7 +251,11 @@ textarea {
     font-size: 0.95rem;
     line-height: 2rem;
     /* Ruled-line background: a faint horizontal divider under every
-       line of typed text, like a vitals/prescription chart. */
+       line of typed text, like a vitals/prescription chart.
+       background-origin/clip: content-box makes the ruling start at
+       the exact same point as the text (inside the padding), so the
+       lines land under each line of text instead of being offset by
+       the textarea's own padding. */
     background-image: repeating-linear-gradient(
         to bottom,
         transparent 0,
@@ -259,6 +263,7 @@ textarea {
         var(--border-color) calc(2rem - 1px),
         var(--border-color) 2rem
     );
+    background-origin: content-box;
     background-attachment: local;
     box-sizing: border-box;
     resize: vertical;
@@ -301,11 +306,10 @@ button:active { transform: scale(0.98); }
     background-color: color-mix(in srgb, var(--primary-color) 12%, transparent);
 }
 
-/* ============ Results ============ */
+/* ============ Results — rendered as a compact lab-report table ============ */
 #results-output {
     display: flex;
     flex-direction: column;
-    gap: 0.85rem;
 }
 
 .placeholder {
@@ -314,46 +318,99 @@ button:active { transform: scale(0.98); }
     padding: 2rem 1rem;
 }
 
-.result-item {
-    background-color: var(--bg-color);
+.lab-report-meta {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin: 0 0 0.85rem;
+}
+
+/* Table wrapper handles the rounded corners + clipping, since border-radius
+   on <table> itself doesn't clip cell borders consistently across browsers. */
+.lab-report-table-wrap {
+    border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    border-inline-start: 5px solid var(--border-color);
-    padding: 1rem 1.1rem;
-}
-.result-item.normal { border-inline-start-color: var(--success-color); }
-.result-item.low    { border-inline-start-color: var(--warning-color); }
-.result-item.high   { border-inline-start-color: var(--danger-color); }
-
-.result-item h3 {
-    margin: 0 0 0.6rem;
-    font-size: 0.98rem;
-    display: flex;
-    align-items: baseline;
-    gap: 0.3rem;
-    flex-wrap: wrap;
-}
-.result-item h3 span.normal { color: var(--success-color); }
-.result-item h3 span.low    { color: var(--warning-color); }
-.result-item h3 span.high   { color: var(--danger-color); }
-
-/* Thin divider between the title/status row and the detail rows */
-.result-item .divider {
-    height: 1px;
-    background-color: var(--border-color);
-    margin: 0 0 0.6rem;
+    overflow: hidden;
 }
 
-.result-item p { margin: 0.3rem 0; font-size: 0.9rem; line-height: 1.6; }
-.result-item p strong { color: var(--text-muted); font-weight: 700; }
+.lab-report-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
 
-/* Summary + disclaimer lines rendered above/below the cards */
-.results-meta {
-    text-align: center;
+.lab-report-table th {
+    background-color: var(--bg-color);
+    color: var(--text-muted);
+    font-weight: 700;
+    text-align: start;
+    padding: 10px 12px;
+    font-size: 0.78rem;
+}
+
+.lab-report-table td {
+    padding: 10px 12px;
+    /* A real row divider: a border on the cell itself is always perfectly
+       aligned with that row's text, unlike a separately-positioned line. */
+    border-top: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+.lab-report-table tbody tr:first-child td { border-top: none; }
+
+.lab-report-table td.col-name { font-weight: 700; }
+.lab-report-table td.col-range { color: var(--text-muted); font-size: 0.8rem; }
+
+/* Colored accent bar on the row, aligned exactly to that row's own borders */
+.lab-report-table tr.row-normal  td.col-name { border-inline-start: 3px solid var(--success-color); }
+.lab-report-table tr.row-low     td.col-name { border-inline-start: 3px solid var(--warning-color); }
+.lab-report-table tr.row-high    td.col-name { border-inline-start: 3px solid var(--danger-color); }
+.lab-report-table tr.row-unknown td.col-name { border-inline-start: 3px solid var(--placeholder-color); }
+
+.status-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+.status-badge.normal  { background-color: var(--success-bg); color: var(--success-color); }
+.status-badge.low     { background-color: var(--warning-bg); color: var(--warning-color); }
+.status-badge.high    { background-color: var(--danger-bg);  color: var(--danger-color); }
+.status-badge.unknown { background-color: var(--bg-color);   color: var(--text-muted); }
+
+/* --- Notes: only rendered for abnormal / unrecognized / unparsed items --- */
+.lab-report-notes {
+    margin-top: 1rem;
+    padding-top: 0.9rem;
+    border-top: 1px dashed var(--border-color);
+}
+.lab-report-notes h4 {
+    margin: 0 0 0.5rem;
     font-size: 0.85rem;
     color: var(--text-muted);
 }
+.note-line {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    margin: 0 0 0.5rem;
+    padding-inline-start: 0.6rem;
+    border-inline-start: 3px solid var(--border-color);
+}
+.note-line.note-low     { border-inline-start-color: var(--warning-color); }
+.note-line.note-high    { border-inline-start-color: var(--danger-color); }
+.note-line.note-unknown { border-inline-start-color: var(--placeholder-color); }
+.note-line strong { color: var(--text-color); }
 
-/* ============ Print / PDF export ============ */
+/* Summary + disclaimer lines rendered above/below the report */
+.results-meta {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 1rem;
+}
+
+/* ============ Print / PDF export — styled to resemble a real printed lab sheet ============ */
 @media print {
     header, .input-section, #process-btn, #print-btn {
         display: none !important;
@@ -362,19 +419,27 @@ button:active { transform: scale(0.98); }
     .container { max-width: 100%; margin: 0; }
     .main-content { display: block !important; }
     .results-section { box-shadow: none; border-radius: 0; padding: 0; }
-    #results-output { gap: 0.5rem; }
-    .result-item {
-        background-color: #ffffff !important;
+
+    .lab-report-meta { color: #333333 !important; }
+
+    .lab-report-table-wrap { border: 1px solid #999999 !important; border-radius: 0; }
+    .lab-report-table th {
+        background-color: #f0f0f0 !important;
         color: #000000 !important;
-        border: 1px solid #999999;
-        border-inline-start-width: 5px;
-        box-shadow: none;
-        page-break-inside: avoid;
-        break-inside: avoid;
+        border-bottom: 1px solid #999999;
     }
-    .result-item.normal { border-inline-start-color: #28a745 !important; }
-    .result-item.low    { border-inline-start-color: #b45309 !important; }
-    .result-item.high   { border-inline-start-color: #dc3545 !important; }
+    .lab-report-table td { border-top: 1px solid #cccccc !important; color: #000000 !important; }
+    .lab-report-table tr { page-break-inside: avoid; break-inside: avoid; }
+
+    .lab-report-table tr.row-normal  td.col-name { border-inline-start: 3px solid #28a745 !important; }
+    .lab-report-table tr.row-low     td.col-name { border-inline-start: 3px solid #b45309 !important; }
+    .lab-report-table tr.row-high    td.col-name { border-inline-start: 3px solid #dc3545 !important; }
+    .lab-report-table tr.row-unknown td.col-name { border-inline-start: 3px solid #999999 !important; }
+
+    .status-badge { border: 1px solid #999999; background: none !important; color: #000000 !important; }
+
+    .lab-report-notes { border-top: 1px dashed #999999; }
+    .note-line { color: #000000 !important; page-break-inside: avoid; break-inside: avoid; }
 }
 
 /* ============ Responsive ============ */
@@ -382,4 +447,7 @@ button:active { transform: scale(0.98); }
     body { padding: 0.75rem; }
     header#main-header { flex-wrap: wrap; padding: 0.85rem 1rem; }
     .input-section, .results-section { padding: 1.1rem; }
+    .lab-report-table { font-size: 0.78rem; }
+    .lab-report-table th, .lab-report-table td { padding: 8px 8px; }
+    .lab-report-table td.col-range { display: none; } /* keep mobile table narrow; range is still in the note for abnormal items */
 }

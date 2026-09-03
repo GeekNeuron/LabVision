@@ -35,9 +35,13 @@ document.addEventListener('DOMContentLoaded', () => {
             unparsedQualitative: "نتیجه این آزمایش کیفی است (مثبت/منفی). مقدار وارد‌شده قابل تشخیص نبود.",
             unparsedQuantitative: "این آزمایش عددی است اما مقدار عددی معتبری در ورودی یافت نشد.",
             resultLabel: "نتیجه",
+            colTest: "آزمایش", colResult: "نتیجه", colRange: "محدوده مرجع", colStatus: "وضعیت",
+            notesHeader: "یادداشت‌های بالینی",
+            reportDateLabel: "تاریخ گزارش",
+            referenceGenderLabel: "جنسیت مرجع",
             summaryText: (total, abnormal) => abnormal === 0
                 ? `از مجموع ${total} آیتم بررسی‌شده، همه در محدوده نرمال قرار دارند.`
-                : `از مجموع ${total} آیتم بررسی‌شده، ${abnormal} مورد خارج از محدوده نرمال است.`,
+                : `از مجموع ${total} آیتم بررسی‌شده، ${abnormal} مورد نیاز به توجه دارد (به یادداشت‌ها مراجعه کنید).`,
             disclaimer: "این تحلیل صرفاً جنبه اطلاعاتی دارد و جایگزین نظر پزشک متخصص نیست."
         },
         en: {
@@ -59,9 +63,13 @@ document.addEventListener('DOMContentLoaded', () => {
             unparsedQualitative: "This is a qualitative test (positive/negative). The entered value could not be recognized.",
             unparsedQuantitative: "This is a numeric test, but no valid number was found in the input.",
             resultLabel: "Result",
+            colTest: "Test", colResult: "Result", colRange: "Reference Range", colStatus: "Status",
+            notesHeader: "Clinical Notes",
+            reportDateLabel: "Report Date",
+            referenceGenderLabel: "Reference Gender",
             summaryText: (total, abnormal) => abnormal === 0
                 ? `Of ${total} item(s) reviewed, all are within the normal range.`
-                : `Of ${total} item(s) reviewed, ${abnormal} are outside the normal range.`,
+                : `Of ${total} item(s) reviewed, ${abnormal} need attention (see notes below).`,
             disclaimer: "This analysis is for informational purposes only and is not a substitute for professional medical advice."
         }
     };
@@ -190,39 +198,17 @@ document.addEventListener('DOMContentLoaded', () => {
         resultsOutput.innerHTML = '';
 
         let abnormalCount = 0;
-        const cardsFragment = document.createDocumentFragment();
-
-        // A thin divider line between a card's title/status row and its detail rows.
-        const makeDivider = () => {
-            const div = document.createElement('div');
-            div.className = 'divider';
-            return div;
-        };
-
-        // Helper to build a simple 2-line "note" card (used for unrecognized/unparsed items)
-        const buildNoteCard = (title, valueText, noteText) => {
-            const card = document.createElement('div');
-            card.className = 'result-item';
-            const h3 = document.createElement('h3');
-            h3.textContent = title;
-            const p1 = document.createElement('p');
-            const strong1 = document.createElement('strong');
-            strong1.textContent = t.yourValue + ': ';
-            p1.appendChild(strong1);
-            p1.appendChild(document.createTextNode(valueText || '—'));
-            const p2 = document.createElement('p');
-            p2.textContent = noteText;
-            card.appendChild(h3);
-            card.appendChild(makeDivider());
-            card.appendChild(p1);
-            card.appendChild(p2);
-            return card;
-        };
+        // Rows for the compact table, and separate notes for anything that needs
+        // explanation (abnormal, unrecognized, or unparsed items — normal results
+        // don't need a note, exactly like a real printed lab report).
+        const rows = [];
+        const notes = [];
 
         parsedItems.forEach(item => {
             // --- Test not found in database ---
             if (!item.key) {
-                cardsFragment.appendChild(buildNoteCard(item.rawName, item.rawValue, t.unrecognized));
+                rows.push({ name: item.rawName, result: item.rawValue || '—', range: '—', statusKey: 'unknown', statusLabel: '?' });
+                notes.push({ name: item.rawName, text: t.unrecognized, statusKey: 'unknown' });
                 return;
             }
 
@@ -232,118 +218,148 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.type === 'qualitative') {
                 const matched = matchQualitativeValue(item.rawValue);
                 if (!matched) {
-                    cardsFragment.appendChild(buildNoteCard(data.name[currentLang], item.rawValue, t.unparsedQualitative));
+                    rows.push({ name: data.name[currentLang], result: item.rawValue || '—', range: '—', statusKey: 'unknown', statusLabel: '?' });
+                    notes.push({ name: data.name[currentLang], text: t.unparsedQualitative, statusKey: 'unknown' });
                     return;
                 }
-
-                const valueEntry = data[matched]; // data.negative or data.positive
+                const valueEntry = data[matched];
                 const statusClass = valueEntry.resultStatus; // 'normal' | 'low' | 'high'
                 if (statusClass !== 'normal') abnormalCount++;
 
-                const card = document.createElement('div');
-                card.className = `result-item ${statusClass}`;
-
-                const h3 = document.createElement('h3');
-                h3.textContent = `${data.name[currentLang]} — `;
-                const statusSpan = document.createElement('span');
-                statusSpan.className = statusClass;
-                statusSpan.textContent = valueEntry.label[currentLang];
-                h3.appendChild(statusSpan);
-
-                const pValue = document.createElement('p');
-                const strongValue = document.createElement('strong');
-                strongValue.textContent = t.resultLabel + ': ';
-                pValue.appendChild(strongValue);
-                pValue.appendChild(document.createTextNode(valueEntry.label[currentLang]));
-
-                const pExplain = document.createElement('p');
-                const strongExplain = document.createElement('strong');
-                strongExplain.textContent = t.explanation + ': ';
-                pExplain.appendChild(strongExplain);
-                pExplain.appendChild(document.createTextNode(valueEntry.interpretation[currentLang]));
-
-                card.appendChild(h3);
-                card.appendChild(makeDivider());
-                card.appendChild(pValue);
-                card.appendChild(pExplain);
-                cardsFragment.appendChild(card);
+                rows.push({
+                    name: data.name[currentLang],
+                    result: valueEntry.label[currentLang],
+                    range: data.negative.label[currentLang], // the expected/reference result
+                    statusKey: statusClass,
+                    statusLabel: statusClass === 'normal' ? t.statusNormal : (statusClass === 'low' ? t.statusLow : t.statusHigh)
+                });
+                if (statusClass !== 'normal') {
+                    notes.push({ name: data.name[currentLang], text: valueEntry.interpretation[currentLang], statusKey: statusClass });
+                }
                 return;
             }
 
             // --- Quantitative test (numeric range) ---
             const numberMatch = item.rawValue.match(/-?\d+(\.\d+)?/);
             if (!numberMatch) {
-                cardsFragment.appendChild(buildNoteCard(data.name[currentLang], item.rawValue, t.unparsedQuantitative));
+                rows.push({ name: data.name[currentLang], result: item.rawValue || '—', range: '—', statusKey: 'unknown', statusLabel: '?' });
+                notes.push({ name: data.name[currentLang], text: t.unparsedQuantitative, statusKey: 'unknown' });
                 return;
             }
             const value = parseFloat(numberMatch[0]);
-
             const range = data.range[selectedGender] || data.range.all;
-            let status, statusClass;
-            if (value < range.min) {
-                status = t.statusLow; statusClass = 'low';
-            } else if (value > range.max) {
-                status = t.statusHigh; statusClass = 'high';
-            } else {
-                status = t.statusNormal; statusClass = 'normal';
-            }
+            let statusClass;
+            if (value < range.min) statusClass = 'low';
+            else if (value > range.max) statusClass = 'high';
+            else statusClass = 'normal';
             if (statusClass !== 'normal') abnormalCount++;
 
-            const interpretationKey = statusClass; // 'low' | 'normal' | 'high'
-            const explanationText = data.interpretation[interpretationKey][currentLang];
             const unit = data.unit ? ` ${data.unit}` : '';
-
-            const card = document.createElement('div');
-            card.className = `result-item ${statusClass}`;
-
-            const h3 = document.createElement('h3');
-            h3.textContent = `${data.name[currentLang]} — `;
-            const statusSpan = document.createElement('span');
-            statusSpan.className = statusClass;
-            statusSpan.textContent = status;
-            h3.appendChild(statusSpan);
-
-            const pValue = document.createElement('p');
-            const strongValue = document.createElement('strong');
-            strongValue.textContent = t.yourValue + ': ';
-            pValue.appendChild(strongValue);
-            pValue.appendChild(document.createTextNode(`${value}${unit}`));
-
-            const pRange = document.createElement('p');
-            const strongRange = document.createElement('strong');
-            strongRange.textContent = t.normalRange + ': ';
-            pRange.appendChild(strongRange);
-            pRange.appendChild(document.createTextNode(`${range.min} - ${range.max}${unit}`));
-
-            const pExplain = document.createElement('p');
-            const strongExplain = document.createElement('strong');
-            strongExplain.textContent = t.explanation + ': ';
-            pExplain.appendChild(strongExplain);
-            pExplain.appendChild(document.createTextNode(explanationText));
-
-            card.appendChild(h3);
-            card.appendChild(makeDivider());
-            card.appendChild(pValue);
-            card.appendChild(pRange);
-            card.appendChild(pExplain);
-            cardsFragment.appendChild(card);
+            rows.push({
+                name: data.name[currentLang],
+                result: `${value}${unit}`,
+                range: `${range.min} - ${range.max}${unit}`,
+                statusKey: statusClass,
+                statusLabel: statusClass === 'normal' ? t.statusNormal : (statusClass === 'low' ? t.statusLow : t.statusHigh)
+            });
+            if (statusClass !== 'normal') {
+                notes.push({ name: data.name[currentLang], text: data.interpretation[statusClass][currentLang], statusKey: statusClass });
+            }
         });
 
-        // Summary line
+        const reportWrapper = document.createElement('div');
+        reportWrapper.className = 'lab-report';
+
+        // --- Report meta line (date + reference gender) — makes the printed
+        // page read like an actual lab report header. ---
+        const genderLabel = selectedGender === 'male' ? t.genderMale : t.genderFemale;
+        const dateStr = new Date().toLocaleDateString(currentLang === 'fa' ? 'fa-IR' : 'en-US');
+        const metaLine = document.createElement('p');
+        metaLine.className = 'lab-report-meta';
+        metaLine.textContent = `${t.reportDateLabel}: ${dateStr}   •   ${t.referenceGenderLabel}: ${genderLabel}`;
+        reportWrapper.appendChild(metaLine);
+
+        // --- Compact results table ---
+        const tableWrap = document.createElement('div');
+        tableWrap.className = 'lab-report-table-wrap';
+        const table = document.createElement('table');
+        table.className = 'lab-report-table';
+
+        const thead = document.createElement('thead');
+        const headRow = document.createElement('tr');
+        [t.colTest, t.colResult, t.colRange, t.colStatus].forEach(label => {
+            const th = document.createElement('th');
+            th.textContent = label;
+            headRow.appendChild(th);
+        });
+        thead.appendChild(headRow);
+        table.appendChild(thead);
+
+        const tbody = document.createElement('tbody');
+        rows.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.className = `row-${row.statusKey}`;
+
+            const tdName = document.createElement('td');
+            tdName.textContent = row.name;
+            tdName.className = 'col-name';
+
+            const tdResult = document.createElement('td');
+            tdResult.textContent = row.result;
+
+            const tdRange = document.createElement('td');
+            tdRange.textContent = row.range;
+            tdRange.className = 'col-range';
+
+            const tdStatus = document.createElement('td');
+            const badge = document.createElement('span');
+            badge.className = `status-badge ${row.statusKey}`;
+            badge.textContent = row.statusLabel;
+            tdStatus.appendChild(badge);
+
+            tr.appendChild(tdName);
+            tr.appendChild(tdResult);
+            tr.appendChild(tdRange);
+            tr.appendChild(tdStatus);
+            tbody.appendChild(tr);
+        });
+        table.appendChild(tbody);
+        tableWrap.appendChild(table);
+        reportWrapper.appendChild(tableWrap);
+
+        // --- Notes section — only for abnormal / unrecognized / unparsed items ---
+        if (notes.length > 0) {
+            const notesSection = document.createElement('div');
+            notesSection.className = 'lab-report-notes';
+            const notesHeading = document.createElement('h4');
+            notesHeading.textContent = t.notesHeader;
+            notesSection.appendChild(notesHeading);
+            notes.forEach(note => {
+                const p = document.createElement('p');
+                p.className = `note-line note-${note.statusKey}`;
+                const strong = document.createElement('strong');
+                strong.textContent = note.name + ': ';
+                p.appendChild(strong);
+                p.appendChild(document.createTextNode(note.text));
+                notesSection.appendChild(p);
+            });
+            reportWrapper.appendChild(notesSection);
+        }
+
+        // --- Summary + disclaimer ---
         const summaryElement = document.createElement('p');
         summaryElement.className = 'results-meta';
         summaryElement.style.fontStyle = 'italic';
         summaryElement.textContent = t.summaryText(parsedItems.length, abnormalCount);
-        resultsOutput.appendChild(summaryElement);
+        reportWrapper.appendChild(summaryElement);
 
-        resultsOutput.appendChild(cardsFragment);
-
-        // Disclaimer
         const disclaimerElement = document.createElement('p');
         disclaimerElement.className = 'results-meta';
         disclaimerElement.style.opacity = '0.75';
         disclaimerElement.textContent = t.disclaimer;
-        resultsOutput.appendChild(disclaimerElement);
+        reportWrapper.appendChild(disclaimerElement);
+
+        resultsOutput.appendChild(reportWrapper);
     };
 
     // Uses the browser's built-in print dialog. On virtually every OS this dialog
