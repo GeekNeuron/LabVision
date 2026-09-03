@@ -1,267 +1,385 @@
+/* ================================================================
+   LabVision — visual design tokens
+   A calm, clinical aesthetic: soft teal accent, generous rounding,
+   an ECG-pulse motif used as the section divider (ties to the
+   subject matter instead of a plain <hr>).
+   ================================================================ */
+
 :root {
-    /* Light Theme Colors */
-    --bg-color: #f4f7f9;
-    --card-bg-color: #ffffff;
-    --text-color: #333333;
-    --primary-color: #007bff;
-    --primary-text-color: #ffffff;
-    --border-color: #e0e0e0;
-    --placeholder-color: #999;
-    --shadow-color: rgba(0, 0, 0, 0.1);
+    /* Light theme */
+    --bg-color: #F1F6F5;
+    --card-bg-color: #FFFFFF;
+    --text-color: #1F2A2E;
+    --text-muted: #5B6B70;
+    --primary-color: #0D9488;
+    --primary-hover: #0F766E;
+    --primary-text-color: #FFFFFF;
+    --border-color: #E1E8E7;
+    --placeholder-color: #8A9A9D;
+    --shadow-color: rgba(15, 42, 46, 0.08);
+    --danger-color: #DC2626;
+    --warning-color: #B45309;
+    --success-color: #15803D;
+    --danger-bg: #FEF2F2;
+    --warning-bg: #FFFBEB;
+    --success-bg: #F0FDF4;
+
+    --radius-lg: 22px;
+    --radius-md: 16px;
+    --radius-sm: 10px;
 }
 
 body.dark-theme {
-    /* Dark Theme Colors */
-    --bg-color: #121212;
-    --card-bg-color: #1e1e1e;
-    --text-color: #e0e0e0;
-    --primary-color: #1e90ff;
-    --primary-text-color: #ffffff;
-    --border-color: #333333;
-    --placeholder-color: #777;
-    --shadow-color: rgba(0, 0, 0, 0.3);
+    --bg-color: #0B1416;
+    --card-bg-color: #142322;
+    --text-color: #E4EDEC;
+    --text-muted: #8FA6A3;
+    --primary-color: #2DD4BF;
+    --primary-hover: #5EEAD4;
+    --primary-text-color: #06201C;
+    --border-color: #223634;
+    --placeholder-color: #5F7876;
+    --shadow-color: rgba(0, 0, 0, 0.45);
+    --danger-color: #F87171;
+    --warning-color: #FBBF24;
+    --success-color: #4ADE80;
+    --danger-bg: rgba(248, 113, 113, 0.1);
+    --warning-bg: rgba(251, 191, 36, 0.1);
+    --success-bg: rgba(74, 222, 128, 0.1);
 }
 
+/* ============ Base & Vazirmatn font-face ============ */
+@font-face {
+    font-family: 'Vazirmatn';
+    src: local('Vazirmatn'), local('Vazirmatn-Regular'),
+         url('fonts/Vazirmatn-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Vazirmatn';
+    src: local('Vazirmatn Bold'), local('Vazirmatn-Bold'),
+         url('fonts/Vazirmatn-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+* { box-sizing: border-box; }
+
 body {
-    /* 'Vazirmatn' will be used automatically if the user installs it locally;
-       otherwise it falls back to common system fonts that render Persian well, with zero network requests. */
     font-family: 'Vazirmatn', Tahoma, 'Segoe UI', Arial, sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
     margin: 0;
+    padding: 1.25rem;
     transition: background-color 0.3s, color 0.3s;
+    -webkit-font-smoothing: antialiased;
 }
 
-header {
+/* ============ Header ============ */
+header#main-header {
+    max-width: 1100px;
+    margin: 0 auto 1.25rem;
     background-color: var(--card-bg-color);
-    padding: 1rem 2rem;
-    text-align: center;
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 2px 10px var(--shadow-color);
-    cursor: pointer;
-    transition: background-color 0.3s;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 20px var(--shadow-color);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.brand-icon {
+    width: 30px;
+    height: 30px;
+    color: var(--primary-color);
+    flex-shrink: 0;
 }
 
 header h1 {
     margin: 0;
-    font-size: 2rem;
-    color: var(--primary-color);
-    transition: color 0.3s;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background-color: transparent;
-    border-radius: 20px;
-    box-shadow: none;
-    transition: background-color 0.3s, box-shadow 0.3s;
-}
-
-h2 {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    color: var(--text-color);
-}
-
-textarea {
-    width: 100%;
-    padding: 15px;
-    border-radius: 15px;
-    border: 1px solid var(--border-color);
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    /* Monospace only for the input box, to match a code/terminal-style workflow
-       when typing lab values (e.g. "Hb: 14.5"). Fully offline system fonts. */
-    font-family: 'Consolas', 'Courier New', 'DejaVu Sans Mono', monospace;
-    font-size: 1rem;
-    box-sizing: border-box;
-    resize: vertical;
-    transition: background-color 0.3s, border-color 0.3s;
-}
-
-textarea:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-color) 20%, transparent);
-}
-
-button {
-    display: block;
-    width: 100%;
-    padding: 15px;
-    margin-top: 1rem;
-    border: none;
-    border-radius: 15px;
-    background-color: var(--primary-color);
-    color: var(--primary-text-color);
-    font-size: 1.2rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-button:hover {
-    transform: translateY(-2px);
-    opacity: 0.9;
-}
-
-#results-container {
-    margin-top: 2rem;
-}
-
-#results-output {
-    padding: 1rem;
-    border: 1px dashed var(--border-color);
-    border-radius: 15px;
-    min-height: 100px;
-}
-
-.placeholder {
-    color: var(--placeholder-color);
-    text-align: center;
-    padding: 2rem 0;
-}
-
-.result-item {
-    background-color: var(--bg-color);
-    border-radius: 15px;
-    padding: 1.5rem;
-    margin-bottom: 1rem;
-    border-left: 5px solid;
-}
-.result-item.normal { border-color: #28a745; }
-.result-item.low { border-color: #ffc107; }
-.result-item.high { border-color: #dc3545; }
-
-.result-item h3 { margin: 0 0 0.5rem; }
-.result-item p { margin: 0.2rem 0; }
-
-/* Language Switcher */
-.language-switcher {
-    position: fixed;
-    bottom: 30px;
-    right: 0;
-    background-color: var(--card-bg-color);
-    box-shadow: -2px 0 10px var(--shadow-color);
-    border-radius: 15px 0 0 15px;
+.header-controls {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Theme toggle button */
+#theme-toggle {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.15s;
+    flex-shrink: 0;
+}
+#theme-toggle:hover { transform: scale(1.06); }
+#theme-toggle svg { width: 19px; height: 19px; }
+#theme-toggle .icon-sun { display: none; }
+body.dark-theme #theme-toggle .icon-moon { display: none; }
+body.dark-theme #theme-toggle .icon-sun { display: block; }
+
+/* Language switcher — now docked in the header */
+.language-switcher {
+    display: flex;
+    background-color: var(--bg-color);
+    border-radius: var(--radius-sm);
     overflow: hidden;
 }
 .lang-tab {
-    padding: 10px 15px;
+    padding: 8px 14px;
     cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s;
-    text-align: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    transition: background-color 0.2s, color 0.2s;
+    color: var(--text-muted);
 }
-.lang-tab:hover {
-    background-color: color-mix(in srgb, var(--primary-color) 10%, transparent);
-}
+.lang-tab:hover { color: var(--text-color); }
 .lang-tab.active {
     background-color: var(--primary-color);
     color: var(--primary-text-color);
 }
 
-/* Add this new block to your style.css */
+/* ============ Layout ============ */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.main-content {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.input-section, .results-section {
+    background-color: var(--card-bg-color);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 20px var(--shadow-color);
+    padding: 1.5rem;
+    flex: 1 1 420px;
+    min-width: 300px;
+}
+
+h2 {
+    margin: 0 0 1rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+/* ============ ECG pulse divider ============
+   Used wherever the design calls for a separator — a nod to the
+   subject matter (a heartbeat trace) instead of a plain <hr>. */
+.pulse-divider {
+    width: 100%;
+    height: 20px;
+    margin: 1rem 0;
+    color: var(--primary-color);
+    opacity: 0.55;
+}
+.pulse-divider svg { width: 100%; height: 100%; display: block; }
+
+/* ============ Gender selector ============ */
 .gender-selector {
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    padding: 10px;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding: 6px;
     background-color: var(--bg-color);
-    border-radius: 15px;
+    border-radius: var(--radius-md);
+    width: fit-content;
 }
-
-.gender-selector span {
-    font-weight: bold;
-}
-
+.gender-selector span { font-weight: 700; padding-inline-start: 6px; font-size: 0.9rem; }
 .gender-selector label {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
     cursor: pointer;
-    padding: 8px 12px;
-    border-radius: 10px;
-    transition: background-color 0.3s;
+    padding: 7px 14px;
+    border-radius: var(--radius-sm);
+    transition: background-color 0.2s, color 0.2s;
+    font-size: 0.9rem;
 }
-
 .gender-selector input[type="radio"] {
-    /* Hide the default radio button */
     appearance: none;
     -webkit-appearance: none;
     margin: 0;
 }
-
 .gender-selector label:has(input:checked) {
     background-color: var(--primary-color);
     color: var(--primary-text-color);
 }
 
-/* Secondary (print) button */
+.input-hint {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin: 0 0 0.75rem;
+}
+
+/* ============ Input textarea — ruled like a vitals chart ============ */
+textarea {
+    width: 100%;
+    padding: 16px 18px;
+    border-radius: var(--radius-md);
+    border: 1.5px solid var(--border-color);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Consolas', 'Courier New', 'DejaVu Sans Mono', monospace;
+    font-size: 0.95rem;
+    line-height: 2rem;
+    /* Ruled-line background: a faint horizontal divider under every
+       line of typed text, like a vitals/prescription chart. */
+    background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent calc(2rem - 1px),
+        var(--border-color) calc(2rem - 1px),
+        var(--border-color) 2rem
+    );
+    background-attachment: local;
+    box-sizing: border-box;
+    resize: vertical;
+    transition: background-color 0.3s, border-color 0.3s;
+    outline: none;
+}
+textarea:focus {
+    border-color: var(--primary-color);
+}
+textarea::placeholder { color: var(--placeholder-color); }
+
+/* ============ Buttons ============ */
+button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: 1rem;
+    padding: 13px 20px;
+    border: none;
+    border-radius: var(--radius-md);
+    background-color: var(--primary-color);
+    color: var(--primary-text-color);
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+button:hover { background-color: var(--primary-hover); }
+button:active { transform: scale(0.98); }
+
 .btn-secondary {
     background-color: transparent;
     color: var(--primary-color);
-    border: 2px solid var(--primary-color);
+    border: 1.5px solid var(--primary-color);
 }
 .btn-secondary:hover {
-    background-color: color-mix(in srgb, var(--primary-color) 10%, transparent);
-    opacity: 1;
+    background-color: color-mix(in srgb, var(--primary-color) 12%, transparent);
 }
 
-/* ============ Print / PDF export styles ============
-   Use the browser's native Print dialog ("Save as PDF") — fully offline,
-   no external library or network request required. */
+/* ============ Results ============ */
+#results-output {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.placeholder {
+    color: var(--placeholder-color);
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+.result-item {
+    background-color: var(--bg-color);
+    border-radius: var(--radius-md);
+    border-inline-start: 5px solid var(--border-color);
+    padding: 1rem 1.1rem;
+}
+.result-item.normal { border-inline-start-color: var(--success-color); }
+.result-item.low    { border-inline-start-color: var(--warning-color); }
+.result-item.high   { border-inline-start-color: var(--danger-color); }
+
+.result-item h3 {
+    margin: 0 0 0.6rem;
+    font-size: 0.98rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+}
+.result-item h3 span.normal { color: var(--success-color); }
+.result-item h3 span.low    { color: var(--warning-color); }
+.result-item h3 span.high   { color: var(--danger-color); }
+
+/* Thin divider between the title/status row and the detail rows */
+.result-item .divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 0 0 0.6rem;
+}
+
+.result-item p { margin: 0.3rem 0; font-size: 0.9rem; line-height: 1.6; }
+.result-item p strong { color: var(--text-muted); font-weight: 700; }
+
+/* Summary + disclaimer lines rendered above/below the cards */
+.results-meta {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* ============ Print / PDF export ============ */
 @media print {
-    /* Hide everything that isn't part of the report itself */
-    header,
-    .input-section,
-    .language-switcher,
-    #process-btn,
-    #print-btn {
+    header, .input-section, #process-btn, #print-btn {
         display: none !important;
     }
-
-    body {
-        background: #ffffff !important;
-        color: #000000 !important;
-    }
-
-    .container {
-        max-width: 100%;
-        margin: 0;
-        padding: 0;
-    }
-
-    .main-content {
-        display: block !important;
-    }
-
-    .results-section h2 {
-        text-align: start;
-    }
-
-    #results-output {
-        border: none;
-        padding: 0;
-    }
-
+    body { background: #ffffff !important; color: #000000 !important; padding: 0; }
+    .container { max-width: 100%; margin: 0; }
+    .main-content { display: block !important; }
+    .results-section { box-shadow: none; border-radius: 0; padding: 0; }
+    #results-output { gap: 0.5rem; }
     .result-item {
         background-color: #ffffff !important;
         color: #000000 !important;
         border: 1px solid #999999;
-        border-left-width: 5px;
+        border-inline-start-width: 5px;
         box-shadow: none;
         page-break-inside: avoid;
         break-inside: avoid;
     }
+    .result-item.normal { border-inline-start-color: #28a745 !important; }
+    .result-item.low    { border-inline-start-color: #b45309 !important; }
+    .result-item.high   { border-inline-start-color: #dc3545 !important; }
+}
 
-    .result-item.normal { border-left-color: #28a745 !important; }
-    .result-item.low { border-left-color: #ffc107 !important; }
-    .result-item.high { border-left-color: #dc3545 !important; }
+/* ============ Responsive ============ */
+@media (max-width: 720px) {
+    body { padding: 0.75rem; }
+    header#main-header { flex-wrap: wrap; padding: 0.85rem 1rem; }
+    .input-section, .results-section { padding: 1.1rem; }
 }

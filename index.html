@@ -10,14 +10,34 @@
 <body class="light-theme">
 
     <header id="main-header">
-        <h1 data-lang-key="headerTitle">LabVision</h1>
+        <div class="brand">
+            <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12h4l2 7 4-14 2 7h6"></path>
+            </svg>
+            <h1 data-lang-key="headerTitle">LabVision</h1>
+        </div>
+        <div class="header-controls">
+            <div class="language-switcher">
+                <div class="lang-tab" id="lang-fa">FA</div>
+                <div class="lang-tab active" id="lang-en">EN</div>
+            </div>
+            <button id="theme-toggle" type="button" aria-label="Toggle dark mode">
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+                </svg>
+            </button>
+        </div>
     </header>
 
     <div class="container">
         <main class="main-content">
             <section class="input-section">
                 <h2 data-lang-key="inputHeader">اطلاعات برگه آزمایش</h2>
-                
+
                 <div class="gender-selector">
                     <span data-lang-key="selectGender">جنسیت:</span>
                     <label>
@@ -30,8 +50,15 @@
                     </label>
                 </div>
 
-                <p data-lang-key="inputHint">هر آیتم را در یک خط جدید وارد کنید. مثال: Glucose: 95</p>
-                <textarea id="lab-input" rows="15" placeholder="Hb: 14.5&#10;Platelet: 250&#10;TSH: 2.1"></textarea>
+                <p class="input-hint" data-lang-key="inputHint">هر آیتم را در یک خط جدید وارد کنید. مثال: Glucose: 95</p>
+
+                <div class="pulse-divider" aria-hidden="true">
+                    <svg viewBox="0 0 400 20" preserveAspectRatio="none">
+                        <polyline points="0,10 130,10 145,10 155,2 165,18 175,10 190,10 400,10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                    </svg>
+                </div>
+
+                <textarea id="lab-input" rows="14" placeholder="Hb: 14.5&#10;Platelet: 250&#10;TSH: 2.1"></textarea>
                 <button id="process-btn" data-lang-key="processButton">تحلیل نتایج</button>
             </section>
 
@@ -45,11 +72,6 @@
         </main>
     </div>
 
-    <div class="language-switcher">
-        <div class="lang-tab" id="lang-fa">FA</div>
-        <div class="lang-tab active" id="lang-en">EN</div>
-    </div>
-    
     <script src="database.js"></script>
     <script src="script.js"></script>
 </body>
