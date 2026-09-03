@@ -109,22 +109,46 @@ document.addEventListener('DOMContentLoaded', () => {
     // Keyword sets used to interpret qualitative (positive/negative) test results,
     // in both Persian and English, entered by the user as free text.
     const QUALITATIVE_KEYWORDS = {
-        negative: ["negative", "neg", "not detected", "non-reactive", "nonreactive", "no growth", "normal", "susceptible", "low risk", "mismatch", "منفی", "ندارد", "دیده نشد", "رشد نکرد", "طبیعی", "حساس", "کم خطر", "کم‌خطر", "عدم تطابق"],
-        positive: ["positive", "pos", "detected", "reactive", "present", "abnormal", "resistant", "high risk", "match", "growth", "مثبت", "دارد", "رشد کرد", "غیرطبیعی", "مقاوم", "پرخطر", "پر خطر", "تطابق", "واکنش‌دهنده", "واکنش دهنده"]
+        negative: ["not detected", "non-reactive", "nonreactive", "no growth", "low risk", "بدون رشد", "دیده نشد", "رشد نکرد", "کم خطر", "کم‌خطر", "عدم تطابق", "negative", "neg", "normal", "susceptible", "mismatch", "منفی", "ندارد", "طبیعی", "حساس"],
+        positive: ["high risk", "واکنش‌دهنده", "واکنش دهنده", "پر خطر", "پرخطر", "positive", "pos", "detected", "reactive", "present", "abnormal", "resistant", "match", "growth", "مثبت", "دارد", "رشد کرد", "غیرطبیعی", "مقاوم", "تطابق", "رشد"]
     };
 
-    // Match free-text qualitative input against known keyword sets.
-    // Longer/more specific keywords are checked first to avoid partial mismatches.
+    // Split free text into whitespace-separated tokens (also breaking on common
+    // punctuation), lower-cased for case-insensitive comparison.
+    const tokenizeText = (s) => s.toLowerCase().replace(/[\/,،.!?;:()]/g, ' ').split(/\s+/).filter(Boolean);
+
+    // Check whether a (possibly multi-word) keyword phrase appears as a
+    // consecutive, whole-token sequence within the tokenized input. This is
+    // deliberately NOT a substring check — a naive `.includes()` would match
+    // "normal" inside "abnormal" (and "طبیعی" inside "غیرطبیعی"), which
+    // silently flips the result to the opposite of what it should be.
+    const phraseTokensMatch = (tokens, phrase) => {
+        const phraseTokens = phrase.toLowerCase().split(/\s+/).filter(Boolean);
+        for (let i = 0; i <= tokens.length - phraseTokens.length; i++) {
+            let matchesHere = true;
+            for (let j = 0; j < phraseTokens.length; j++) {
+                if (tokens[i + j] !== phraseTokens[j]) { matchesHere = false; break; }
+            }
+            if (matchesHere) return true;
+        }
+        return false;
+    };
+
+    // Match free-text qualitative input against known keyword sets, using
+    // whole-word/whole-phrase comparison (see phraseTokensMatch above).
     const matchQualitativeValue = (rawValue) => {
-        const text = rawValue.toLowerCase().trim();
-        if (!text) return null;
-        const sortedNegative = [...QUALITATIVE_KEYWORDS.negative].sort((a, b) => b.length - a.length);
-        const sortedPositive = [...QUALITATIVE_KEYWORDS.positive].sort((a, b) => b.length - a.length);
+        const tokens = tokenizeText(rawValue);
+        if (tokens.length === 0) return null;
+        // Longer phrases are checked before shorter/single-word ones so that,
+        // e.g., "no growth" is recognized as one unit rather than falling
+        // through to a looser single-word match.
+        const sortedNegative = [...QUALITATIVE_KEYWORDS.negative].sort((a, b) => b.split(/\s+/).length - a.split(/\s+/).length);
+        const sortedPositive = [...QUALITATIVE_KEYWORDS.positive].sort((a, b) => b.split(/\s+/).length - a.split(/\s+/).length);
         for (const kw of sortedNegative) {
-            if (text.includes(kw.toLowerCase())) return 'negative';
+            if (phraseTokensMatch(tokens, kw)) return 'negative';
         }
         for (const kw of sortedPositive) {
-            if (text.includes(kw.toLowerCase())) return 'positive';
+            if (phraseTokensMatch(tokens, kw)) return 'positive';
         }
         return null;
     };

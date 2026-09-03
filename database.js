@@ -1842,7 +1842,7 @@ const labData = {
         type: "qualitative",
         name: { fa: "کشت مدفوع", en: "Stool Culture" },
         aliases: ["stool culture", "کشت مدفوع"],
-        negative: { label: { fa: "بدون رشد پاتوژن", en: "No Pathogen Growth" }, resultStatus: "normal", interpretation: { fa: "باکتری بیماری‌زای روده‌ای در کشت مدفوع رشد نکرد.", en: "No pathogenic intestinal bacteria grew in stool culture." } },
+        negative: { label: { fa: "بدون رشد پاتوژن", en: "No Growth" }, resultStatus: "normal", interpretation: { fa: "باکتری بیماری‌زای روده‌ای در کشت مدفوع رشد نکرد.", en: "No pathogenic intestinal bacteria grew in stool culture." } },
         positive: { label: { fa: "رشد پاتوژن", en: "Positive Growth" }, resultStatus: "high", interpretation: { fa: "نشانه عفونت باکتریایی گوارشی است.", en: "Indicates a bacterial gastrointestinal infection." } }
     },
     rotavirus_adenovirus_stool: {
