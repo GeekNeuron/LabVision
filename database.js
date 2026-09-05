@@ -10,7 +10,7 @@ const labData = {
         name: { fa: "هموگلوبین (Hb)", en: "Hemoglobin (Hb)" },
         aliases: ["hb", "hgb", "hemoglobin", "haemoglobin", "هموگلوبین"],
         unit: "g/dL",
-        range: { male: { min: 13.5, max: 17.5 }, female: { min: 12.0, max: 15.5 } },
+        range: { male: { min: 14, max: 18 }, female: { min: 12, max: 16 } },
         interpretation: {
             low: { fa: "کمبود هموگلوبین می‌تواند نشانه کم‌خونی (آنمی) باشد که علل مختلفی از جمله کمبود آهن، ویتامین B12 یا خونریزی دارد.", en: "Low hemoglobin may indicate anemia, which can result from iron deficiency, vitamin B12 deficiency, or blood loss." },
             normal: { fa: "مقدار هموگلوبین در محدوده طبیعی است و نشان‌دهنده ظرفیت مناسب خون برای حمل اکسیژن است.", en: "Hemoglobin is within the normal range, indicating adequate oxygen-carrying capacity of the blood." },
@@ -21,7 +21,7 @@ const labData = {
         name: { fa: "هماتوکریت (Hct)", en: "Hematocrit (Hct)" },
         aliases: ["hct", "hematocrit", "haematocrit", "هماتوکریت"],
         unit: "%",
-        range: { male: { min: 38.8, max: 50.0 }, female: { min: 34.9, max: 44.5 } },
+        range: { male: { min: 42, max: 50 }, female: { min: 37, max: 47 } },
         interpretation: {
             low: { fa: "هماتوکریت پایین معمولاً همراه با کم‌خونی یا از دست دادن خون دیده می‌شود.", en: "Low hematocrit is usually associated with anemia or blood loss." },
             normal: { fa: "درصد حجم گلبول‌های قرمز نسبت به کل خون طبیعی است.", en: "The proportion of red blood cells in your blood is normal." },
@@ -30,9 +30,9 @@ const labData = {
     },
     rbc: {
         name: { fa: "گلبول قرمز (RBC)", en: "Red Blood Cell Count (RBC)" },
-        aliases: ["rbc", "red blood cell", "red blood cells", "گلبول قرمز"],
+        aliases: ["rbc", "red blood cell", "red blood cells", "rbc count", "گلبول قرمز", "شمارش گلبول قرمز"],
         unit: "million/µL",
-        range: { male: { min: 4.7, max: 6.1 }, female: { min: 4.2, max: 5.4 } },
+        range: { male: { min: 4.3, max: 5.9 }, female: { min: 3.5, max: 5.5 } },
         interpretation: {
             low: { fa: "تعداد کم گلبول قرمز می‌تواند نشانه کم‌خونی، خونریزی یا مشکلات مغز استخوان باشد.", en: "A low red blood cell count may indicate anemia, blood loss, or bone marrow problems." },
             normal: { fa: "تعداد گلبول‌های قرمز خون طبیعی است.", en: "Your red blood cell count is normal." },
@@ -41,7 +41,7 @@ const labData = {
     },
     wbc: {
         name: { fa: "گلبول سفید (WBC)", en: "White Blood Cell Count (WBC)" },
-        aliases: ["wbc", "white blood cell", "white blood cells", "گلبول سفید"],
+        aliases: ["wbc", "white blood cell", "white blood cells", "tc", "t.c", "total count", "wbc count", "گلبول سفید", "شمارش کل", "تی سی"],
         unit: "x10³/µL",
         range: { all: { min: 4.5, max: 11.0 } },
         interpretation: {
@@ -52,7 +52,7 @@ const labData = {
     },
     platelet: {
         name: { fa: "پلاکت (Platelet)", en: "Platelet Count" },
-        aliases: ["plt", "platelet", "platelets", "پلاکت"],
+        aliases: ["plt", "platelet", "platelets", "plt count", "platelet count", "پلاکت"],
         unit: "x10³/µL",
         range: { all: { min: 150, max: 450 } },
         interpretation: {
@@ -65,7 +65,7 @@ const labData = {
         name: { fa: "MCV", en: "MCV" },
         aliases: ["mcv"],
         unit: "fL",
-        range: { all: { min: 80, max: 100 } },
+        range: { all: { min: 80, max: 98 } },
         interpretation: {
             low: { fa: "MCV پایین نشان‌دهنده گلبول‌های قرمز کوچک‌تر از حد طبیعی است، معمولاً در کم‌خونی فقر آهن دیده می‌شود.", en: "Low MCV indicates smaller than normal red blood cells, often seen in iron-deficiency anemia." },
             normal: { fa: "اندازه گلبول‌های قرمز طبیعی است.", en: "Red blood cell size is normal." },
@@ -76,7 +76,7 @@ const labData = {
         name: { fa: "MCH", en: "MCH" },
         aliases: ["mch"],
         unit: "pg",
-        range: { all: { min: 27, max: 33 } },
+        range: { all: { min: 28, max: 32 } },
         interpretation: {
             low: { fa: "میزان هموگلوبین در هر گلبول قرمز کمتر از حد طبیعی است.", en: "The amount of hemoglobin per red blood cell is lower than normal." },
             normal: { fa: "میانگین هموگلوبین در هر گلبول قرمز طبیعی است.", en: "Average hemoglobin per red blood cell is normal." },
@@ -87,7 +87,7 @@ const labData = {
         name: { fa: "MCHC", en: "MCHC" },
         aliases: ["mchc"],
         unit: "g/dL",
-        range: { all: { min: 32, max: 36 } },
+        range: { all: { min: 33, max: 36 } },
         interpretation: {
             low: { fa: "غلظت هموگلوبین در گلبول قرمز کمتر از حد طبیعی است.", en: "Hemoglobin concentration within red cells is lower than normal." },
             normal: { fa: "غلظت هموگلوبین در گلبول‌های قرمز طبیعی است.", en: "Hemoglobin concentration within red cells is normal." },
@@ -98,7 +98,7 @@ const labData = {
         name: { fa: "RDW", en: "RDW" },
         aliases: ["rdw"],
         unit: "%",
-        range: { all: { min: 11.5, max: 14.5 } },
+        range: { all: { min: 9.0, max: 14.5 } },
         interpretation: {
             low: { fa: "پراکندگی اندازه گلبول‌های قرمز کمتر از حد معمول است؛ معمولاً اهمیت بالینی کمی دارد.", en: "Variation in red cell size is below typical range; usually of limited clinical significance." },
             normal: { fa: "یکنواختی اندازه گلبول‌های قرمز طبیعی است.", en: "Red blood cell size variation is normal." },
@@ -120,7 +120,7 @@ const labData = {
         name: { fa: "لنفوسیت", en: "Lymphocytes" },
         aliases: ["lymph", "lymphocyte", "lymphocytes", "لنفوسیت"],
         unit: "%",
-        range: { all: { min: 20, max: 40 } },
+        range: { all: { min: 30, max: 45 } },
         interpretation: {
             low: { fa: "کاهش لنفوسیت می‌تواند ناشی از عفونت، استرس یا ضعف سیستم ایمنی باشد.", en: "Low lymphocytes can result from infection, stress, or a weakened immune system." },
             normal: { fa: "درصد لنفوسیت‌ها طبیعی است.", en: "Lymphocyte percentage is normal." },
@@ -131,7 +131,7 @@ const labData = {
         name: { fa: "مونوسیت", en: "Monocytes" },
         aliases: ["mono", "monocyte", "monocytes", "مونوسیت"],
         unit: "%",
-        range: { all: { min: 2, max: 8 } },
+        range: { all: { min: 0, max: 6 } },
         interpretation: {
             low: { fa: "کاهش مونوسیت معمولاً اهمیت بالینی محدودی دارد.", en: "Low monocytes usually have limited clinical significance." },
             normal: { fa: "درصد مونوسیت‌ها طبیعی است.", en: "Monocyte percentage is normal." },
@@ -142,7 +142,7 @@ const labData = {
         name: { fa: "ائوزینوفیل", en: "Eosinophils" },
         aliases: ["eos", "eosinophil", "eosinophils", "ائوزینوفیل"],
         unit: "%",
-        range: { all: { min: 1, max: 4 } },
+        range: { all: { min: 0, max: 3 } },
         interpretation: {
             low: { fa: "کاهش ائوزینوفیل معمولاً اهمیت بالینی محدودی دارد.", en: "Low eosinophils usually have limited clinical significance." },
             normal: { fa: "درصد ائوزینوفیل‌ها طبیعی است.", en: "Eosinophil percentage is normal." },
@@ -162,7 +162,7 @@ const labData = {
     },
     esr: {
         name: { fa: "سرعت رسوب گلبول قرمز (ESR)", en: "Erythrocyte Sedimentation Rate (ESR)" },
-        aliases: ["esr", "sed rate", "sedimentation rate", "esr test"],
+        aliases: ["esr", "sed rate", "sedimentation rate", "esr test", "vs", "v.s", "sed. rate", "سرعت رسوب"],
         unit: "mm/hr",
         range: { male: { min: 0, max: 15 }, female: { min: 0, max: 20 } },
         interpretation: {
@@ -175,7 +175,7 @@ const labData = {
     // ============ Biochemistry / Metabolic ============
     glucose: {
         name: { fa: "قند خون ناشتا (Glucose)", en: "Fasting Glucose" },
-        aliases: ["fbs", "glucose", "blood sugar", "fasting glucose", "fasting blood sugar", "قند خون", "gluc"],
+        aliases: ["fbs", "glucose", "blood sugar", "fasting glucose", "fasting blood sugar", "fbg", "fasting blood glucose", "glu", "قند خون", "قند خون ناشتا", "قند ناشتا", "gluc"],
         unit: "mg/dL",
         range: { all: { min: 70, max: 100 } },
         interpretation: {
@@ -197,9 +197,9 @@ const labData = {
     },
     urea: {
         name: { fa: "اوره خون (BUN)", en: "Blood Urea Nitrogen (BUN)" },
-        aliases: ["bun", "urea", "blood urea nitrogen", "اوره"],
+        aliases: ["bun", "urea", "blood urea nitrogen", "b.u.n", "blood urea", "اوره", "اوره خون"],
         unit: "mg/dL",
-        range: { all: { min: 7, max: 20 } },
+        range: { all: { min: 8, max: 20 } },
         interpretation: {
             low: { fa: "اوره پایین می‌تواند ناشی از رژیم کم‌پروتئین یا بیماری کبدی باشد.", en: "Low urea can result from a low-protein diet or liver disease." },
             normal: { fa: "سطح اوره خون طبیعی است.", en: "Blood urea nitrogen is within normal limits." },
@@ -208,9 +208,9 @@ const labData = {
     },
     creatinine: {
         name: { fa: "کراتینین", en: "Creatinine" },
-        aliases: ["cr", "creatinine", "کراتینین"],
+        aliases: ["cr", "creatinine", "creat", "کراتینین"],
         unit: "mg/dL",
-        range: { male: { min: 0.7, max: 1.3 }, female: { min: 0.6, max: 1.1 } },
+        range: { male: { min: 0.7, max: 1.3 }, female: { min: 0.5, max: 1.1 } },
         interpretation: {
             low: { fa: "کراتینین پایین معمولاً نگران‌کننده نیست و می‌تواند با توده عضلانی کم مرتبط باشد.", en: "Low creatinine is usually not concerning and can relate to lower muscle mass." },
             normal: { fa: "کراتینین طبیعی است، نشان‌دهنده عملکرد مناسب کلیه.", en: "Creatinine is normal, indicating proper kidney function." },
@@ -263,7 +263,7 @@ const labData = {
     },
     triglyceride: {
         name: { fa: "تری‌گلیسیرید", en: "Triglycerides" },
-        aliases: ["tg", "triglyceride", "triglycerides", "تری گلیسیرید"],
+        aliases: ["tg", "triglyceride", "triglycerides", "trig", "تری گلیسیرید", "تری‌گلیسیرید"],
         unit: "mg/dL",
         range: { all: { min: 0, max: 150 } },
         interpretation: {
@@ -274,9 +274,9 @@ const labData = {
     },
     ast: {
         name: { fa: "آنزیم کبدی AST (SGOT)", en: "AST (SGOT)" },
-        aliases: ["ast", "sgot", "aspartate aminotransferase"],
+        aliases: ["ast", "sgot", "got", "aspartate aminotransferase"],
         unit: "U/L",
-        range: { all: { min: 5, max: 40 } },
+        range: { all: { min: 10, max: 40 } },
         interpretation: {
             low: { fa: "AST پایین معمولاً اهمیت بالینی ندارد.", en: "Low AST is usually not clinically significant." },
             normal: { fa: "سطح آنزیم کبدی AST طبیعی است.", en: "Liver enzyme AST is within normal range." },
@@ -285,9 +285,9 @@ const labData = {
     },
     alt: {
         name: { fa: "آنزیم کبدی ALT (SGPT)", en: "ALT (SGPT)" },
-        aliases: ["alt", "sgpt", "alanine aminotransferase"],
+        aliases: ["alt", "sgpt", "gpt", "alanine aminotransferase"],
         unit: "U/L",
-        range: { all: { min: 7, max: 56 } },
+        range: { all: { min: 10, max: 40 } },
         interpretation: {
             low: { fa: "ALT پایین معمولاً اهمیت بالینی ندارد.", en: "Low ALT is usually not clinically significant." },
             normal: { fa: "سطح آنزیم کبدی ALT طبیعی است.", en: "Liver enzyme ALT is within normal range." },
@@ -298,7 +298,7 @@ const labData = {
         name: { fa: "آلکالین فسفاتاز (ALP)", en: "Alkaline Phosphatase (ALP)" },
         aliases: ["alp", "alkaline phosphatase"],
         unit: "U/L",
-        range: { all: { min: 44, max: 147 } },
+        range: { all: { min: 30, max: 120 } },
         interpretation: {
             low: { fa: "ALP پایین معمولاً اهمیت بالینی محدودی دارد.", en: "Low ALP usually has limited clinical significance." },
             normal: { fa: "سطح ALP طبیعی است.", en: "ALP level is normal." },
@@ -309,7 +309,7 @@ const labData = {
         name: { fa: "بیلی‌روبین تام", en: "Total Bilirubin" },
         aliases: ["bilirubin", "t.bil", "total bilirubin", "بیلی روبین"],
         unit: "mg/dL",
-        range: { all: { min: 0.1, max: 1.2 } },
+        range: { all: { min: 0.3, max: 1.0 } },
         interpretation: {
             low: { fa: "بیلی‌روبین پایین معمولاً نگران‌کننده نیست.", en: "Low bilirubin is usually not a concern." },
             normal: { fa: "سطح بیلی‌روبین تام طبیعی است.", en: "Total bilirubin is within normal range." },
@@ -342,7 +342,7 @@ const labData = {
         name: { fa: "آلبومین", en: "Albumin" },
         aliases: ["alb", "albumin", "آلبومین"],
         unit: "g/dL",
-        range: { all: { min: 3.4, max: 5.4 } },
+        range: { all: { min: 3.5, max: 5.5 } },
         interpretation: {
             low: { fa: "آلبومین پایین می‌تواند نشانه سوءتغذیه، بیماری کبدی یا کلیوی باشد.", en: "Low albumin can indicate malnutrition, liver disease, or kidney disease." },
             normal: { fa: "سطح آلبومین طبیعی است.", en: "Albumin level is normal." },
@@ -351,9 +351,9 @@ const labData = {
     },
     sodium: {
         name: { fa: "سدیم (Na)", en: "Sodium (Na)" },
-        aliases: ["na", "sodium", "سدیم"],
+        aliases: ["na", "na+", "sodium", "سدیم"],
         unit: "mEq/L",
-        range: { all: { min: 135, max: 145 } },
+        range: { all: { min: 136, max: 145 } },
         interpretation: {
             low: { fa: "سدیم پایین (هیپوناترمی) می‌تواند باعث خستگی، سردرد و در موارد شدید تشنج شود.", en: "Low sodium (hyponatremia) can cause fatigue, headache, and in severe cases seizures." },
             normal: { fa: "سطح سدیم خون طبیعی است.", en: "Blood sodium level is normal." },
@@ -362,7 +362,7 @@ const labData = {
     },
     potassium: {
         name: { fa: "پتاسیم (K)", en: "Potassium (K)" },
-        aliases: ["k", "potassium", "پتاسیم"],
+        aliases: ["k", "k+", "potassium", "پتاسیم"],
         unit: "mEq/L",
         range: { all: { min: 3.5, max: 5.1 } },
         interpretation: {
@@ -397,7 +397,7 @@ const labData = {
         name: { fa: "منیزیم", en: "Magnesium" },
         aliases: ["mg", "magnesium", "منیزیم"],
         unit: "mg/dL",
-        range: { all: { min: 1.7, max: 2.2 } },
+        range: { all: { min: 1.6, max: 2.6 } },
         interpretation: {
             low: { fa: "منیزیم پایین می‌تواند باعث گرفتگی عضلانی و ریتم نامنظم قلب شود.", en: "Low magnesium can cause muscle cramps and irregular heart rhythm." },
             normal: { fa: "سطح منیزیم خون طبیعی است.", en: "Blood magnesium level is normal." },
@@ -419,7 +419,7 @@ const labData = {
         name: { fa: "فریتین", en: "Ferritin" },
         aliases: ["ferritin", "فریتین"],
         unit: "ng/mL",
-        range: { male: { min: 24, max: 336 }, female: { min: 11, max: 307 } },
+        range: { male: { min: 24, max: 336 }, female: { min: 24, max: 307 } },
         interpretation: {
             low: { fa: "فریتین پایین قوی‌ترین نشانه کمبود ذخایر آهن بدن است.", en: "Low ferritin is the strongest indicator of depleted iron stores in the body." },
             normal: { fa: "ذخایر آهن بدن (فریتین) طبیعی است.", en: "Body iron stores (ferritin) are normal." },
@@ -439,7 +439,7 @@ const labData = {
     },
     vitamin_d: {
         name: { fa: "ویتامین D", en: "Vitamin D" },
-        aliases: ["vit d", "vitamin d", "25-oh vitamin d", "ویتامین د", "ویتامین d"],
+        aliases: ["vit d", "vitamin d", "25-oh vitamin d", "25(oh)d", "25 oh vitamin d", "vit. d3", "ویتامین د", "ویتامین d"],
         unit: "ng/mL",
         range: { all: { min: 30, max: 100 } },
         interpretation: {
@@ -452,7 +452,7 @@ const labData = {
         name: { fa: "ویتامین B12", en: "Vitamin B12" },
         aliases: ["b12", "vitamin b12", "vit b12", "ویتامین ب12", "ویتامین b12"],
         unit: "pg/mL",
-        range: { all: { min: 200, max: 900 } },
+        range: { all: { min: 200, max: 800 } },
         interpretation: {
             low: { fa: "کمبود ویتامین B12 می‌تواند باعث کم‌خونی و مشکلات عصبی شود.", en: "Vitamin B12 deficiency can cause anemia and neurological problems." },
             normal: { fa: "سطح ویتامین B12 کافی است.", en: "Vitamin B12 level is sufficient." },
@@ -463,7 +463,7 @@ const labData = {
         name: { fa: "فولات (اسید فولیک)", en: "Folate" },
         aliases: ["folate", "folic acid", "فولات"],
         unit: "ng/mL",
-        range: { all: { min: 2.7, max: 17.0 } },
+        range: { all: { min: 1.8, max: 9.0 } },
         interpretation: {
             low: { fa: "کمبود فولات می‌تواند باعث کم‌خونی مگالوبلاستیک شود.", en: "Folate deficiency can cause megaloblastic anemia." },
             normal: { fa: "سطح فولات کافی است.", en: "Folate level is sufficient." },
@@ -487,7 +487,7 @@ const labData = {
         name: { fa: "T3", en: "T3" },
         aliases: ["t3", "triiodothyronine"],
         unit: "ng/dL",
-        range: { all: { min: 80, max: 200 } },
+        range: { all: { min: 80, max: 180 } },
         interpretation: {
             low: { fa: "T3 پایین می‌تواند نشانه کم‌کاری تیروئید باشد.", en: "Low T3 can indicate hypothyroidism." },
             normal: { fa: "سطح T3 طبیعی است.", en: "T3 level is normal." },
@@ -533,7 +533,7 @@ const labData = {
         name: { fa: "زمان پروترومبین (PT)", en: "Prothrombin Time (PT)" },
         aliases: ["pt", "prothrombin time"],
         unit: "sec",
-        range: { all: { min: 11, max: 13.5 } },
+        range: { all: { min: 11, max: 13 } },
         interpretation: {
             low: { fa: "PT کوتاه‌تر از حد معمول به ندرت نگران‌کننده است.", en: "A PT shorter than usual is rarely concerning." },
             normal: { fa: "زمان انعقاد خون (PT) طبیعی است.", en: "Blood clotting time (PT) is normal." },
@@ -564,6 +564,17 @@ const labData = {
     },
 
     // ============ Extended Metabolic / Glucose ============
+    glucose_random: {
+        name: { fa: "قند خون تصادفی / غیرناشتا (BS)", en: "Random / Casual Blood Sugar (BS)" },
+        aliases: ["bs", "random blood sugar", "casual blood sugar", "random glucose", "2hpp", "bs 2hpp", "postprandial glucose", "قند خون رندوم", "قند تصادفی", "قند دو ساعته", "قند بعد از غذا"],
+        unit: "mg/dL",
+        range: { all: { min: 70, max: 140 } },
+        interpretation: {
+            low: { fa: "قند خون پایین (هیپوگلیسمی) می‌تواند باعث ضعف، لرزش و سرگیجه شود.", en: "Low blood sugar (hypoglycemia) can cause weakness, shakiness, and dizziness." },
+            normal: { fa: "قند خون غیرناشتا در محدوده طبیعی است.", en: "Non-fasting blood glucose is within the normal range." },
+            high: { fa: "قند خون غیرناشتای بالا (به‌ویژه بالای ۲۰۰) می‌تواند نشانه دیابت باشد و نیاز به بررسی با آزمایش ناشتا دارد.", en: "High non-fasting glucose (especially above 200) can indicate diabetes and warrants follow-up with a fasting test." }
+        }
+    },
     gtt_1hr: {
         name: { fa: "تست تحمل گلوکز - ساعت اول", en: "Glucose Tolerance Test - 1hr" },
         aliases: ["gtt 1hr", "gtt1", "1hr glucose", "تست تحمل گلوکز ساعت اول"],
@@ -590,7 +601,7 @@ const labData = {
         name: { fa: "انسولین ناشتا", en: "Fasting Insulin" },
         aliases: ["insulin", "fasting insulin", "انسولین"],
         unit: "µIU/mL",
-        range: { all: { min: 2.6, max: 24.9 } },
+        range: { all: { min: 2, max: 20 } },
         interpretation: {
             low: { fa: "انسولین پایین می‌تواند در دیابت نوع ۱ یا نارسایی پانکراس دیده شود.", en: "Low insulin can be seen in type 1 diabetes or pancreatic insufficiency." },
             normal: { fa: "سطح انسولین ناشتا طبیعی است.", en: "Fasting insulin level is normal." },
@@ -614,7 +625,7 @@ const labData = {
         name: { fa: "گاما گلوتامیل ترانسفراز (GGT)", en: "Gamma-Glutamyl Transferase (GGT)" },
         aliases: ["ggt", "gamma gt"],
         unit: "U/L",
-        range: { male: { min: 8, max: 61 }, female: { min: 5, max: 36 } },
+        range: { male: { min: 9, max: 50 }, female: { min: 8, max: 40 } },
         interpretation: {
             low: { fa: "GGT پایین معمولاً نگران‌کننده نیست.", en: "Low GGT is usually not a concern." },
             normal: { fa: "سطح GGT طبیعی است.", en: "GGT level is normal." },
@@ -647,7 +658,7 @@ const labData = {
         name: { fa: "لاکتات دهیدروژناز (LDH)", en: "Lactate Dehydrogenase (LDH)" },
         aliases: ["ldh", "lactate dehydrogenase"],
         unit: "U/L",
-        range: { all: { min: 140, max: 280 } },
+        range: { all: { min: 80, max: 225 } },
         interpretation: {
             low: { fa: "LDH پایین معمولاً اهمیت بالینی ندارد.", en: "Low LDH is usually not clinically significant." },
             normal: { fa: "سطح LDH طبیعی است.", en: "LDH level is normal." },
@@ -660,7 +671,7 @@ const labData = {
         name: { fa: "کلر (Cl)", en: "Chloride (Cl)" },
         aliases: ["cl", "chloride", "کلر"],
         unit: "mEq/L",
-        range: { all: { min: 96, max: 106 } },
+        range: { all: { min: 95, max: 105 } },
         interpretation: {
             low: { fa: "کلر پایین می‌تواند با استفراغ، اسهال یا مشکلات کلیوی مرتبط باشد.", en: "Low chloride can be related to vomiting, diarrhea, or kidney problems." },
             normal: { fa: "سطح کلر خون طبیعی است.", en: "Blood chloride level is normal." },
@@ -671,7 +682,7 @@ const labData = {
         name: { fa: "دی‌اکسید کربن / بی‌کربنات (CO2)", en: "Carbon Dioxide / Bicarbonate (CO2)" },
         aliases: ["co2", "bicarbonate", "hco3", "بی کربنات"],
         unit: "mEq/L",
-        range: { all: { min: 23, max: 29 } },
+        range: { all: { min: 22, max: 28 } },
         interpretation: {
             low: { fa: "بی‌کربنات پایین می‌تواند نشانه اسیدوز متابولیک باشد.", en: "Low bicarbonate can indicate metabolic acidosis." },
             normal: { fa: "سطح بی‌کربنات خون طبیعی است.", en: "Blood bicarbonate level is normal." },
@@ -682,7 +693,7 @@ const labData = {
         name: { fa: "آنیون گپ (Anion Gap)", en: "Anion Gap" },
         aliases: ["anion gap", "ag", "آنیون گپ"],
         unit: "mEq/L",
-        range: { all: { min: 8, max: 16 } },
+        range: { all: { min: 7, max: 13 } },
         interpretation: {
             low: { fa: "آنیون گپ پایین نادر است و می‌تواند با کاهش آلبومین مرتبط باشد.", en: "A low anion gap is rare and can be related to low albumin." },
             normal: { fa: "آنیون گپ طبیعی است.", en: "Anion gap is normal." },
@@ -703,10 +714,10 @@ const labData = {
         }
     },
     aldosterone: {
-        name: { fa: "آلدوسترون", en: "Aldosterone" },
+        name: { fa: "آلدوسترون (حالت نشسته/خوابیده)", en: "Aldosterone (Seated/Supine)" },
         aliases: ["aldosterone", "آلدوسترون"],
         unit: "ng/dL",
-        range: { all: { min: 1, max: 16 } },
+        range: { all: { min: 1, max: 10 } },
         interpretation: {
             low: { fa: "آلدوسترون پایین می‌تواند با نارسایی آدرنال مرتبط باشد.", en: "Low aldosterone can be related to adrenal insufficiency." },
             normal: { fa: "سطح آلدوسترون طبیعی است.", en: "Aldosterone level is normal." },
@@ -725,10 +736,10 @@ const labData = {
         }
     },
     cortisol: {
-        name: { fa: "کورتیزول", en: "Cortisol" },
+        name: { fa: "کورتیزول (نمونه صبحگاهی، ساعت ۸ صبح)", en: "Cortisol (Morning Sample, 8 AM)" },
         aliases: ["cortisol", "کورتیزول"],
         unit: "µg/dL",
-        range: { all: { min: 6, max: 23 } },
+        range: { all: { min: 5, max: 25 } },
         interpretation: {
             low: { fa: "کورتیزول پایین می‌تواند نشانه نارسایی آدرنال (بیماری آدیسون) باشد.", en: "Low cortisol can indicate adrenal insufficiency (Addison's disease)." },
             normal: { fa: "سطح کورتیزول صبحگاهی طبیعی است.", en: "Morning cortisol level is normal." },
@@ -750,7 +761,7 @@ const labData = {
         name: { fa: "هورمون FSH", en: "FSH" },
         aliases: ["fsh", "follicle stimulating hormone"],
         unit: "mIU/mL",
-        range: { male: { min: 1.5, max: 12.4 }, female: { min: 3.5, max: 12.5 } },
+        range: { male: { min: 1, max: 7 }, female: { min: 2, max: 22 } },
         interpretation: {
             low: { fa: "FSH پایین می‌تواند با اختلال هیپوفیز یا هیپوتالاموس مرتبط باشد.", en: "Low FSH can be related to pituitary or hypothalamic dysfunction." },
             normal: { fa: "سطح FSH طبیعی است (بازه ذکرشده برای فاز فولیکولار/مردان بزرگسال است؛ در یائسگی و اواسط سیکل به‌طور طبیعی بالاتر است).", en: "FSH level is normal (this range is for the follicular phase/adult men; it is naturally higher at menopause and mid-cycle)." },
@@ -761,7 +772,7 @@ const labData = {
         name: { fa: "هورمون LH", en: "LH" },
         aliases: ["lh", "luteinizing hormone"],
         unit: "mIU/mL",
-        range: { male: { min: 1.7, max: 8.6 }, female: { min: 2.4, max: 12.6 } },
+        range: { male: { min: 2, max: 9 }, female: { min: 1, max: 12 } },
         interpretation: {
             low: { fa: "LH پایین می‌تواند با اختلال هیپوفیز یا هیپوتالاموس مرتبط باشد.", en: "Low LH can be related to pituitary or hypothalamic dysfunction." },
             normal: { fa: "سطح LH طبیعی است (بازه ذکرشده برای فاز فولیکولار/مردان بزرگسال است؛ نزدیک تخمک‌گذاری به‌طور طبیعی جهش می‌کند).", en: "LH level is normal (this range is for the follicular phase/adult men; it naturally surges around ovulation)." },
@@ -772,7 +783,7 @@ const labData = {
         name: { fa: "استرادیول (E2)", en: "Estradiol (E2)" },
         aliases: ["estradiol", "e2", "استرادیول", "استروژن"],
         unit: "pg/mL",
-        range: { female: { min: 15, max: 350 }, male: { min: 10, max: 40 } },
+        range: { female: { min: 10, max: 300 }, male: { min: 20, max: 50 } },
         interpretation: {
             low: { fa: "استرادیول پایین می‌تواند با یائسگی یا نارسایی تخمدان مرتبط باشد.", en: "Low estradiol can be related to menopause or ovarian failure." },
             normal: { fa: "سطح استرادیول طبیعی است (این هورمون در طول سیکل قاعدگی به‌طور طبیعی نوسان زیادی دارد).", en: "Estradiol level is normal (this hormone naturally fluctuates widely across the menstrual cycle)." },
@@ -794,7 +805,7 @@ const labData = {
         name: { fa: "تستوسترون تام", en: "Total Testosterone" },
         aliases: ["testosterone", "تستوسترون"],
         unit: "ng/dL",
-        range: { male: { min: 264, max: 916 }, female: { min: 15, max: 70 } },
+        range: { male: { min: 291, max: 1100 }, female: { min: 18, max: 54 } },
         interpretation: {
             low: { fa: "تستوسترون پایین می‌تواند با هیپوگنادیسم مرتبط باشد.", en: "Low testosterone can be related to hypogonadism." },
             normal: { fa: "سطح تستوسترون تام طبیعی است.", en: "Total testosterone level is normal." },
@@ -805,7 +816,7 @@ const labData = {
         name: { fa: "DHEA-S", en: "DHEA-S" },
         aliases: ["dhea-s", "dheas", "dhea sulfate"],
         unit: "µg/dL",
-        range: { male: { min: 80, max: 560 }, female: { min: 35, max: 430 } },
+        range: { male: { min: 89, max: 457 }, female: { min: 44, max: 332 } },
         interpretation: {
             low: { fa: "DHEA-S پایین می‌تواند با نارسایی آدرنال مرتبط باشد.", en: "Low DHEA-S can be related to adrenal insufficiency." },
             normal: { fa: "سطح DHEA-S طبیعی است.", en: "DHEA-S level is normal." },
@@ -829,7 +840,7 @@ const labData = {
         name: { fa: "آمیلاز", en: "Amylase" },
         aliases: ["amylase", "آمیلاز"],
         unit: "U/L",
-        range: { all: { min: 23, max: 140 } },
+        range: { all: { min: 25, max: 125 } },
         interpretation: {
             low: { fa: "آمیلاز پایین می‌تواند با آسیب مزمن پانکراس مرتبط باشد.", en: "Low amylase can be related to chronic pancreatic damage." },
             normal: { fa: "سطح آمیلاز طبیعی است.", en: "Amylase level is normal." },
@@ -954,7 +965,7 @@ const labData = {
         name: { fa: "فاکتور روماتوئید (RF)", en: "Rheumatoid Factor (RF)" },
         aliases: ["rf", "rheumatoid factor", "فاکتور روماتوئید"],
         unit: "IU/mL",
-        range: { all: { min: 0, max: 14 } },
+        range: { all: { min: 0, max: 24 } },
         interpretation: {
             low: { fa: "مقدار پایین طبیعی است.", en: "A low value is normal." },
             normal: { fa: "RF در محدوده طبیعی است.", en: "RF is within the normal range." },
@@ -976,7 +987,7 @@ const labData = {
         name: { fa: "آنتی-dsDNA", en: "Anti-dsDNA" },
         aliases: ["anti-dsdna", "anti dsdna", "آنتی دی اس دی ان ای"],
         unit: "IU/mL",
-        range: { all: { min: 0, max: 30 } },
+        range: { all: { min: 0, max: 7 } },
         interpretation: {
             low: { fa: "مقدار پایین طبیعی است.", en: "A low value is normal." },
             normal: { fa: "آنتی-dsDNA در محدوده طبیعی است.", en: "Anti-dsDNA is within the normal range." },
@@ -1011,7 +1022,7 @@ const labData = {
         name: { fa: "IgE تام", en: "Total IgE" },
         aliases: ["ige", "total ige", "آی جی ای"],
         unit: "IU/mL",
-        range: { all: { min: 0, max: 100 } },
+        range: { all: { min: 0, max: 380 } },
         interpretation: {
             low: { fa: "مقدار پایین طبیعی است.", en: "A low value is normal." },
             normal: { fa: "IgE تام در محدوده طبیعی است.", en: "Total IgE is within the normal range." },
@@ -1033,7 +1044,7 @@ const labData = {
         name: { fa: "آلفا-۱ آنتی‌تریپسین", en: "Alpha-1 Antitrypsin" },
         aliases: ["alpha-1 antitrypsin", "a1at", "آلفا یک آنتی تریپسین"],
         unit: "mg/dL",
-        range: { all: { min: 100, max: 200 } },
+        range: { all: { min: 150, max: 350 } },
         interpretation: {
             low: { fa: "کمبود آلفا-۱ آنتی‌تریپسین می‌تواند خطر بیماری ریوی و کبدی را افزایش دهد.", en: "Alpha-1 antitrypsin deficiency can increase the risk of lung and liver disease." },
             normal: { fa: "سطح آلفا-۱ آنتی‌تریپسین طبیعی است.", en: "Alpha-1 antitrypsin level is normal." },
@@ -1044,7 +1055,7 @@ const labData = {
         name: { fa: "آنتی‌کاردیولیپین", en: "Anticardiolipin Antibody" },
         aliases: ["anticardiolipin", "آنتی کاردیولیپین"],
         unit: "GPL-U/mL",
-        range: { all: { min: 0, max: 15 } },
+        range: { all: { min: 0, max: 20 } },
         interpretation: {
             low: { fa: "مقدار پایین طبیعی است.", en: "A low value is normal." },
             normal: { fa: "آنتی‌کاردیولیپین در محدوده طبیعی است.", en: "Anticardiolipin is within the normal range." },
@@ -1055,7 +1066,7 @@ const labData = {
         name: { fa: "بتا-۲ میکروگلوبولین", en: "Beta-2 Microglobulin" },
         aliases: ["beta-2 microglobulin", "b2m", "بتا دو میکروگلوبولین"],
         unit: "mg/L",
-        range: { all: { min: 0.8, max: 2.2 } },
+        range: { all: { min: 0.54, max: 2.75 } },
         interpretation: {
             low: { fa: "مقدار پایین معمولاً اهمیت بالینی ندارد.", en: "A low value is usually not clinically significant." },
             normal: { fa: "سطح بتا-۲ میکروگلوبولین طبیعی است.", en: "Beta-2 microglobulin level is normal." },
@@ -1066,7 +1077,7 @@ const labData = {
         name: { fa: "ایمونوگلوبولین G (IgG)", en: "Immunoglobulin G (IgG)" },
         aliases: ["igg", "immunoglobulin g"],
         unit: "mg/dL",
-        range: { all: { min: 700, max: 1600 } },
+        range: { all: { min: 800, max: 1500 } },
         interpretation: {
             low: { fa: "IgG پایین می‌تواند نشانه نقص ایمنی باشد.", en: "Low IgG can indicate an immune deficiency." },
             normal: { fa: "سطح IgG طبیعی است.", en: "IgG level is normal." },
@@ -1077,7 +1088,7 @@ const labData = {
         name: { fa: "ایمونوگلوبولین A (IgA)", en: "Immunoglobulin A (IgA)" },
         aliases: ["iga", "immunoglobulin a"],
         unit: "mg/dL",
-        range: { all: { min: 70, max: 400 } },
+        range: { all: { min: 90, max: 325 } },
         interpretation: {
             low: { fa: "کمبود IgA یکی از شایع‌ترین نقص‌های ایمنی است و معمولاً خفیف است.", en: "IgA deficiency is one of the most common immune deficiencies and is usually mild." },
             normal: { fa: "سطح IgA طبیعی است.", en: "IgA level is normal." },
@@ -1088,7 +1099,7 @@ const labData = {
         name: { fa: "ایمونوگلوبولین M (IgM)", en: "Immunoglobulin M (IgM)" },
         aliases: ["igm", "immunoglobulin m"],
         unit: "mg/dL",
-        range: { all: { min: 40, max: 230 } },
+        range: { all: { min: 45, max: 150 } },
         interpretation: {
             low: { fa: "IgM پایین می‌تواند نشانه نقص ایمنی باشد.", en: "Low IgM can indicate an immune deficiency." },
             normal: { fa: "سطح IgM طبیعی است.", en: "IgM level is normal." },
@@ -1191,7 +1202,7 @@ const labData = {
         name: { fa: "کراتین کیناز (CK/CPK)", en: "Creatine Kinase (CK/CPK)" },
         aliases: ["ck", "cpk", "creatine kinase", "کراتین کیناز"],
         unit: "U/L",
-        range: { male: { min: 39, max: 308 }, female: { min: 26, max: 192 } },
+        range: { male: { min: 55, max: 170 }, female: { min: 30, max: 135 } },
         interpretation: {
             low: { fa: "CK پایین معمولاً اهمیت بالینی ندارد.", en: "Low CK is usually not clinically significant." },
             normal: { fa: "سطح CK طبیعی است.", en: "CK level is normal." },
@@ -1213,7 +1224,7 @@ const labData = {
         name: { fa: "میوگلوبین", en: "Myoglobin" },
         aliases: ["myoglobin", "میوگلوبین"],
         unit: "ng/mL",
-        range: { all: { min: 25, max: 72 } },
+        range: { all: { min: 0, max: 100 } },
         interpretation: {
             low: { fa: "مقدار پایین معمولاً اهمیت بالینی ندارد.", en: "A low value is usually not clinically significant." },
             normal: { fa: "سطح میوگلوبین طبیعی است.", en: "Myoglobin level is normal." },
@@ -1246,7 +1257,7 @@ const labData = {
         name: { fa: "آپولیپوپروتئین A (Apo-A)", en: "Apolipoprotein A (Apo-A)" },
         aliases: ["apo-a", "apoa", "apolipoprotein a"],
         unit: "mg/dL",
-        range: { all: { min: 110, max: 205 } },
+        range: { male: { min: 120, max: 250 }, female: { min: 140, max: 250 } },
         interpretation: {
             low: { fa: "Apo-A پایین می‌تواند با افزایش خطر قلبی-عروقی مرتبط باشد.", en: "Low Apo-A can be related to increased cardiovascular risk." },
             normal: { fa: "سطح Apo-A طبیعی است.", en: "Apo-A level is normal." },
@@ -1257,7 +1268,7 @@ const labData = {
         name: { fa: "آپولیپوپروتئین B (Apo-B)", en: "Apolipoprotein B (Apo-B)" },
         aliases: ["apo-b", "apob", "apolipoprotein b"],
         unit: "mg/dL",
-        range: { all: { min: 55, max: 100 } },
+        range: { all: { min: 0, max: 90 } },
         interpretation: {
             low: { fa: "Apo-B پایین از نظر قلبی-عروقی مطلوب است.", en: "Low Apo-B is favorable for cardiovascular health." },
             normal: { fa: "سطح Apo-B طبیعی است.", en: "Apo-B level is normal." },
@@ -1292,7 +1303,7 @@ const labData = {
         name: { fa: "آنتی‌ترومبین III", en: "Antithrombin III" },
         aliases: ["antithrombin iii", "antithrombin 3", "at3", "آنتی ترومبین"],
         unit: "%",
-        range: { all: { min: 80, max: 130 } },
+        range: { all: { min: 80, max: 120 } },
         interpretation: {
             low: { fa: "آنتی‌ترومبین III پایین می‌تواند خطر لخته شدن خون را افزایش دهد.", en: "Low antithrombin III can increase clotting risk." },
             normal: { fa: "سطح آنتی‌ترومبین III طبیعی است.", en: "Antithrombin III level is normal." },
@@ -1303,7 +1314,7 @@ const labData = {
         name: { fa: "پروتئین C", en: "Protein C" },
         aliases: ["protein c", "پروتئین سی"],
         unit: "%",
-        range: { all: { min: 70, max: 140 } },
+        range: { all: { min: 65, max: 150 } },
         interpretation: {
             low: { fa: "پروتئین C پایین خطر لخته شدن خون را افزایش می‌دهد.", en: "Low protein C increases clotting risk." },
             normal: { fa: "سطح پروتئین C طبیعی است.", en: "Protein C level is normal." },
@@ -1314,7 +1325,7 @@ const labData = {
         name: { fa: "پروتئین S", en: "Protein S" },
         aliases: ["protein s", "پروتئین اس"],
         unit: "%",
-        range: { all: { min: 65, max: 140 } },
+        range: { all: { min: 57, max: 131 } },
         interpretation: {
             low: { fa: "پروتئین S پایین خطر لخته شدن خون را افزایش می‌دهد.", en: "Low protein S increases clotting risk." },
             normal: { fa: "سطح پروتئین S طبیعی است.", en: "Protein S level is normal." },
@@ -1327,7 +1338,7 @@ const labData = {
         name: { fa: "آنزیم G6PD", en: "G6PD Enzyme" },
         aliases: ["g6pd", "g6pd enzyme"],
         unit: "U/g Hb",
-        range: { all: { min: 4.6, max: 13.5 } },
+        range: { all: { min: 5, max: 15 } },
         interpretation: {
             low: { fa: "کمبود G6PD می‌تواند باعث همولیز گلبول قرمز پس از مصرف برخی داروها یا غذاها (مثل باقلا) شود.", en: "G6PD deficiency can cause red blood cell hemolysis after certain medications or foods (such as fava beans)." },
             normal: { fa: "سطح آنزیم G6PD طبیعی است.", en: "G6PD enzyme level is normal." },
@@ -2023,7 +2034,7 @@ const labData = {
         name: { fa: "گلوبولین متصل‌شونده به هورمون جنسی (SHBG)", en: "Sex Hormone-Binding Globulin (SHBG)" },
         aliases: ["shbg", "sex hormone binding globulin", "اس اچ بی جی"],
         unit: "nmol/L",
-        range: { male: { min: 10, max: 57 }, female: { min: 18, max: 114 } },
+        range: { male: { min: 10, max: 57 }, female: { min: 18, max: 144 } },
         interpretation: {
             low: { fa: "SHBG پایین می‌تواند با چاقی، مقاومت به انسولین یا کم‌کاری تیروئید مرتبط باشد و تستوسترون آزاد را بالا نشان می‌دهد.", en: "Low SHBG can be related to obesity, insulin resistance, or hypothyroidism, and raises apparent free testosterone." },
             normal: { fa: "سطح SHBG طبیعی است.", en: "SHBG level is normal." },
@@ -2034,7 +2045,7 @@ const labData = {
         name: { fa: "تستوسترون آزاد", en: "Free Testosterone" },
         aliases: ["free testosterone", "تستوسترون آزاد"],
         unit: "pg/mL",
-        range: { male: { min: 9.0, max: 30.0 }, female: { min: 0.3, max: 1.9 } },
+        range: { male: { min: 70, max: 300 }, female: { min: 1, max: 10 } },
         interpretation: {
             low: { fa: "تستوسترون آزاد پایین می‌تواند با هیپوگنادیسم مرتبط باشد، حتی اگر تستوسترون تام طبیعی باشد.", en: "Low free testosterone can be related to hypogonadism, even when total testosterone is normal." },
             normal: { fa: "سطح تستوسترون آزاد طبیعی است.", en: "Free testosterone level is normal." },
@@ -2056,10 +2067,20 @@ const labData = {
         name: { fa: "فاکتور رشد شبه‌انسولین (IGF-1)", en: "Insulin-like Growth Factor 1 (IGF-1)" },
         aliases: ["igf-1", "igf1", "insulin-like growth factor"],
         unit: "ng/mL",
-        range: { all: { min: 100, max: 250 } },
+        // IGF-1 varies a lot by age, so a per-age-band range is used when the
+        // person's age is provided; otherwise this falls back to the widest
+        // plausible adult range below (deliberately wide, since guessing a
+        // narrow "typical adult" band without knowing age would be misleading).
+        ageRanges: [
+            { minAge: 16, maxAge: 24, range: { min: 182, max: 780 } },
+            { minAge: 25, maxAge: 39, range: { min: 114, max: 492 } },
+            { minAge: 40, maxAge: 54, range: { min: 90, max: 360 } },
+            { minAge: 55, maxAge: 200, range: { min: 71, max: 290 } }
+        ],
+        range: { all: { min: 71, max: 780 } },
         interpretation: {
             low: { fa: "IGF-1 پایین می‌تواند نشانه کمبود هورمون رشد باشد.", en: "Low IGF-1 can indicate growth hormone deficiency." },
-            normal: { fa: "سطح IGF-1 طبیعی است (این بازه به‌شدت به سن وابسته است).", en: "IGF-1 level is normal (this range is strongly age-dependent)." },
+            normal: { fa: "سطح IGF-1 طبیعی است (برای دقت بیشتر، سن بیمار را در بخش «مشخصات برگه» وارد کنید).", en: "IGF-1 level is normal (for better accuracy, enter the patient's age in the \"Report Details\" section)." },
             high: { fa: "IGF-1 بالا می‌تواند نشانه آکرومگالی یا افزایش هورمون رشد باشد.", en: "High IGF-1 can indicate acromegaly or excess growth hormone." }
         }
     },
@@ -2124,7 +2145,7 @@ const labData = {
         name: { fa: "ویتامین A", en: "Vitamin A" },
         aliases: ["vitamin a", "ویتامین آ"],
         unit: "µg/dL",
-        range: { all: { min: 20, max: 60 } },
+        range: { all: { min: 32.5, max: 78.0 } },
         interpretation: {
             low: { fa: "کمبود ویتامین A می‌تواند باعث مشکلات بینایی (به‌ویژه شب‌کوری) شود.", en: "Vitamin A deficiency can cause vision problems (especially night blindness)." },
             normal: { fa: "سطح ویتامین A کافی است.", en: "Vitamin A level is sufficient." },
@@ -2157,7 +2178,7 @@ const labData = {
         name: { fa: "روی (Zinc)", en: "Zinc" },
         aliases: ["zinc", "روی"],
         unit: "µg/dL",
-        range: { all: { min: 60, max: 130 } },
+        range: { all: { min: 75, max: 140 } },
         interpretation: {
             low: { fa: "کمبود روی می‌تواند باعث ضعف سیستم ایمنی، ریزش مو و کندی بهبود زخم شود.", en: "Zinc deficiency can cause weakened immunity, hair loss, and slow wound healing." },
             normal: { fa: "سطح روی خون طبیعی است.", en: "Blood zinc level is normal." },
@@ -2214,7 +2235,7 @@ const labData = {
         name: { fa: "رتیکولوسیت", en: "Reticulocyte Count" },
         aliases: ["reticulocyte", "reticulocyte count", "رتیکولوسیت"],
         unit: "%",
-        range: { all: { min: 0.5, max: 2.5 } },
+        range: { all: { min: 0.5, max: 1.5 } },
         interpretation: {
             low: { fa: "رتیکولوسیت پایین می‌تواند نشانه تولید ناکافی گلبول قرمز در مغز استخوان باشد.", en: "Low reticulocyte count can indicate inadequate red blood cell production by the bone marrow." },
             normal: { fa: "تولید گلبول قرمز جدید طبیعی است.", en: "New red blood cell production is normal." },
@@ -2225,7 +2246,7 @@ const labData = {
         name: { fa: "هاپتوگلوبین", en: "Haptoglobin" },
         aliases: ["haptoglobin", "هاپتوگلوبین"],
         unit: "mg/dL",
-        range: { all: { min: 30, max: 200 } },
+        range: { all: { min: 83, max: 267 } },
         interpretation: {
             low: { fa: "کاهش هاپتوگلوبین نشانه تخریب گلبول قرمز (همولیز) است.", en: "Low haptoglobin indicates red blood cell destruction (hemolysis)." },
             normal: { fa: "سطح هاپتوگلوبین طبیعی است.", en: "Haptoglobin level is normal." },
@@ -2378,6 +2399,131 @@ const labData = {
             low: { fa: "زمان ترومبین کوتاه‌تر از حد معمول به ندرت نگران‌کننده است.", en: "A shorter-than-usual thrombin time is rarely concerning." },
             normal: { fa: "زمان ترومبین طبیعی است.", en: "Thrombin time is normal." },
             high: { fa: "طولانی‌شدن زمان ترومبین می‌تواند نشانه کمبود یا اختلال فیبرینوژن یا مصرف هپارین باشد.", en: "A prolonged thrombin time can indicate fibrinogen deficiency/dysfunction or heparin use." }
+        }
+    },
+
+    // ============================================================
+    // Phase 2: added after cross-checking against the NBME Laboratory
+    // Reference Values table — tests that were referenced there but
+    // were completely missing from our database.
+    // ============================================================
+
+    abg_ph: {
+        name: { fa: "pH خون شریانی (ABG)", en: "Arterial Blood pH (ABG)" },
+        aliases: ["ph", "arterial ph", "abg ph", "پی اچ خون شریانی"],
+        unit: "",
+        range: { all: { min: 7.35, max: 7.45 } },
+        interpretation: {
+            low: { fa: "pH پایین (اسیدوز) می‌تواند تنفسی یا متابولیک باشد و نیاز به بررسی فوری علت دارد.", en: "Low pH (acidosis) can be respiratory or metabolic and needs urgent evaluation of the cause." },
+            normal: { fa: "pH خون شریانی طبیعی است.", en: "Arterial blood pH is normal." },
+            high: { fa: "pH بالا (آلکالوز) می‌تواند تنفسی یا متابولیک باشد و نیاز به بررسی فوری علت دارد.", en: "High pH (alkalosis) can be respiratory or metabolic and needs urgent evaluation of the cause." }
+        }
+    },
+    abg_po2: {
+        name: { fa: "فشار اکسیژن خون شریانی (PaO2)", en: "Arterial Oxygen Pressure (PaO2)" },
+        aliases: ["po2", "pao2", "arterial oxygen", "فشار اکسیژن شریانی"],
+        unit: "mmHg",
+        range: { all: { min: 75, max: 105 } },
+        interpretation: {
+            low: { fa: "کاهش PaO2 نشانه هیپوکسمی است و می‌تواند نشانه مشکل تنفسی یا قلبی باشد.", en: "Low PaO2 indicates hypoxemia and can signal a respiratory or cardiac problem." },
+            normal: { fa: "اکسیژن‌رسانی خون شریانی طبیعی است.", en: "Arterial blood oxygenation is normal." },
+            high: { fa: "افزایش PaO2 معمولاً مربوط به اکسیژن‌درمانی است و به‌خودی‌خود نگران‌کننده نیست.", en: "High PaO2 is usually related to supplemental oxygen therapy and is not concerning on its own." }
+        }
+    },
+    abg_pco2: {
+        name: { fa: "فشار دی‌اکسیدکربن خون شریانی (PaCO2)", en: "Arterial CO2 Pressure (PaCO2)" },
+        aliases: ["pco2", "paco2", "arterial co2", "فشار دی اکسید کربن شریانی"],
+        unit: "mmHg",
+        range: { all: { min: 33, max: 45 } },
+        interpretation: {
+            low: { fa: "کاهش PaCO2 نشانه هایپرونتیلاسیون (تنفس سریع/عمیق) است.", en: "Low PaCO2 indicates hyperventilation (rapid/deep breathing)." },
+            normal: { fa: "تهویه ریوی (PaCO2) طبیعی است.", en: "Lung ventilation (PaCO2) is normal." },
+            high: { fa: "افزایش PaCO2 نشانه هایپوونتیلاسیون است و می‌تواند با بیماری‌های ریوی مزمن مرتبط باشد.", en: "High PaCO2 indicates hypoventilation and can be related to chronic lung disease." }
+        }
+    },
+    pth: {
+        name: { fa: "هورمون پاراتیروئید (PTH)", en: "Parathyroid Hormone (PTH)" },
+        aliases: ["pth", "parathyroid hormone", "intact pth", "هورمون پاراتیروئید", "پی تی اچ"],
+        unit: "pg/mL",
+        range: { all: { min: 10, max: 65 } },
+        interpretation: {
+            low: { fa: "PTH پایین می‌تواند نشانه کم‌کاری پاراتیروئید باشد.", en: "Low PTH can indicate hypoparathyroidism." },
+            normal: { fa: "سطح هورمون پاراتیروئید طبیعی است.", en: "Parathyroid hormone level is normal." },
+            high: { fa: "PTH بالا می‌تواند نشانه پرکاری پاراتیروئید باشد که بر متابولیسم کلسیم اثر می‌گذارد.", en: "High PTH can indicate hyperparathyroidism, which affects calcium metabolism." }
+        }
+    },
+    transferrin: {
+        name: { fa: "ترانسفرین", en: "Transferrin" },
+        aliases: ["transferrin", "ترانسفرین"],
+        unit: "mg/dL",
+        range: { all: { min: 200, max: 400 } },
+        interpretation: {
+            low: { fa: "ترانسفرین پایین می‌تواند نشانه سوءتغذیه، التهاب مزمن یا بیماری کبدی باشد.", en: "Low transferrin can indicate malnutrition, chronic inflammation, or liver disease." },
+            normal: { fa: "سطح ترانسفرین طبیعی است.", en: "Transferrin level is normal." },
+            high: { fa: "افزایش ترانسفرین معمولاً نشانه کمبود آهن است (بدن پروتئین انتقال‌دهنده بیشتری می‌سازد).", en: "Elevated transferrin usually indicates iron deficiency (the body produces more carrier protein)." }
+        }
+    },
+    cd4_count: {
+        name: { fa: "شمارش CD4", en: "CD4 Count" },
+        aliases: ["cd4", "cd4 count", "cd4+ count", "شمارش سی دی۴"],
+        unit: "cells/mm3",
+        range: { all: { min: 530, max: 1570 } },
+        interpretation: {
+            low: { fa: "کاهش CD4 نشانه تضعیف سیستم ایمنی است و در پایش عفونت HIV اهمیت زیادی دارد؛ زیر ۲۰۰ خطر عفونت‌های فرصت‌طلب را به‌شدت افزایش می‌دهد.", en: "Low CD4 indicates weakened immunity and is important in HIV monitoring; below 200 sharply increases the risk of opportunistic infections." },
+            normal: { fa: "شمارش CD4 طبیعی است.", en: "CD4 count is normal." },
+            high: { fa: "افزایش آن معمولاً اهمیت بالینی ندارد.", en: "An elevated count is usually not clinically significant." }
+        }
+    },
+    urine_calcium: {
+        name: { fa: "کلسیم ادرار ۲۴ساعته", en: "24-Hour Urine Calcium" },
+        aliases: ["urine calcium", "24hr urine calcium", "کلسیم ادرار"],
+        unit: "mg/24hr",
+        range: { all: { min: 100, max: 300 } },
+        interpretation: {
+            low: { fa: "کلسیم پایین ادرار می‌تواند با کمبود ویتامین D یا کاهش دریافت کلسیم مرتبط باشد.", en: "Low urine calcium can be related to vitamin D deficiency or low calcium intake." },
+            normal: { fa: "دفع کلسیم ادرار طبیعی است.", en: "Urinary calcium excretion is normal." },
+            high: { fa: "افزایش کلسیم ادرار (هیپرکلسیوری) می‌تواند خطر سنگ کلیه را بالا ببرد.", en: "Elevated urine calcium (hypercalciuria) can increase kidney stone risk." }
+        }
+    },
+    urine_protein_24hr: {
+        name: { fa: "پروتئین ادرار ۲۴ساعته", en: "24-Hour Urine Protein" },
+        aliases: ["urine protein", "24hr urine protein", "total urine protein", "پروتئین ادرار"],
+        unit: "mg/24hr",
+        range: { all: { min: 0, max: 150 } },
+        interpretation: {
+            low: { fa: "مقدار پایین طبیعی است.", en: "A low value is normal." },
+            normal: { fa: "دفع پروتئین ادرار طبیعی است.", en: "Urinary protein excretion is normal." },
+            high: { fa: "افزایش پروتئین ادرار (پروتئینوری) می‌تواند نشانه آسیب کلیوی باشد و نیاز به بررسی بیشتر دارد.", en: "Elevated urine protein (proteinuria) can indicate kidney damage and warrants further evaluation." }
+        }
+    },
+
+    // ============================================================
+    // Phase 2b: added after cross-checking against the ABIM (American
+    // Board of Internal Medicine) Laboratory Reference Ranges,
+    // January 2026 edition — the most comprehensive and current source
+    // used for this pass.
+    // ============================================================
+
+    mpv: {
+        name: { fa: "حجم متوسط پلاکت (MPV)", en: "Mean Platelet Volume (MPV)" },
+        aliases: ["mpv", "mean platelet volume", "حجم متوسط پلاکت"],
+        unit: "fL",
+        range: { all: { min: 7, max: 9 } },
+        interpretation: {
+            low: { fa: "MPV پایین می‌تواند نشانه کاهش تولید پلاکت در مغز استخوان باشد.", en: "Low MPV can indicate reduced platelet production in the bone marrow." },
+            normal: { fa: "حجم متوسط پلاکت طبیعی است.", en: "Mean platelet volume is normal." },
+            high: { fa: "MPV بالا نشانه تولید پلاکت‌های جوان‌تر و بزرگ‌تر است، معمولاً در پاسخ به تخریب پلاکتی.", en: "High MPV indicates production of younger, larger platelets, usually in response to platelet destruction." }
+        }
+    },
+    transferrin_saturation: {
+        name: { fa: "درصد اشباع ترانسفرین", en: "Transferrin Saturation" },
+        aliases: ["transferrin saturation", "tsat", "درصد اشباع ترانسفرین"],
+        unit: "%",
+        range: { all: { min: 20, max: 50 } },
+        interpretation: {
+            low: { fa: "اشباع ترانسفرین پایین نشانه کمبود آهن است.", en: "Low transferrin saturation indicates iron deficiency." },
+            normal: { fa: "درصد اشباع ترانسفرین طبیعی است.", en: "Transferrin saturation percentage is normal." },
+            high: { fa: "اشباع ترانسفرین بالا می‌تواند نشانه اضافه‌بار آهن یا هموکروماتوز باشد.", en: "High transferrin saturation can indicate iron overload or hemochromatosis." }
         }
     }
 };

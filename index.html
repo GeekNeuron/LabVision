@@ -50,6 +50,32 @@
                     </label>
                 </div>
 
+                <details class="optional-details">
+                    <summary data-lang-key="optionalDetailsSummary">مشخصات برگه (اختیاری)</summary>
+                    <div class="optional-details-grid">
+                        <div class="field">
+                            <label for="patient-name" data-lang-key="patientNameLabel">نام بیمار</label>
+                            <input type="text" id="patient-name" data-lang-key-placeholder="patientNamePlaceholder">
+                        </div>
+                        <div class="field">
+                            <label for="patient-age" data-lang-key="patientAgeLabel">سن بیمار</label>
+                            <input type="number" id="patient-age" min="0" max="120" data-lang-key-placeholder="patientAgePlaceholder">
+                        </div>
+                        <div class="field">
+                            <label for="doctor-name" data-lang-key="doctorNameLabel">پزشک معالج</label>
+                            <input type="text" id="doctor-name" data-lang-key-placeholder="doctorNamePlaceholder">
+                        </div>
+                        <div class="field">
+                            <label for="lab-name" data-lang-key="labNameLabel">نام آزمایشگاه</label>
+                            <input type="text" id="lab-name" data-lang-key-placeholder="labNamePlaceholder">
+                        </div>
+                        <div class="field">
+                            <label for="sample-date" data-lang-key="sampleDateLabel">تاریخ نمونه‌گیری</label>
+                            <input type="date" id="sample-date">
+                        </div>
+                    </div>
+                </details>
+
                 <p class="input-hint" data-lang-key="inputHint">هر آیتم را در یک خط جدید وارد کنید. مثال: Glucose: 95</p>
 
                 <div class="pulse-divider" aria-hidden="true">

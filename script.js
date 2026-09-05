@@ -5,6 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const processBtn = document.getElementById('process-btn');
     const printBtn = document.getElementById('print-btn');
     const labInput = document.getElementById('lab-input');
+    const patientNameInput = document.getElementById('patient-name');
+    const patientAgeInput = document.getElementById('patient-age');
+    const doctorNameInput = document.getElementById('doctor-name');
+    const labNameInput = document.getElementById('lab-name');
+    const sampleDateInput = document.getElementById('sample-date');
     const resultsOutput = document.getElementById('results-output');
     const langFaBtn = document.getElementById('lang-fa');
     const langEnBtn = document.getElementById('lang-en');
@@ -39,6 +44,12 @@ document.addEventListener('DOMContentLoaded', () => {
             notesHeader: "یادداشت‌های بالینی",
             reportDateLabel: "تاریخ گزارش",
             referenceGenderLabel: "جنسیت مرجع",
+            optionalDetailsSummary: "مشخصات برگه (اختیاری)",
+            patientNameLabel: "نام بیمار", patientNamePlaceholder: "مثلاً: علی رضایی",
+            patientAgeLabel: "سن بیمار", patientAgePlaceholder: "مثلاً: ۳۵ (برای دقت بیشتر برخی تست‌ها مثل IGF-1)",
+            doctorNameLabel: "پزشک معالج", doctorNamePlaceholder: "مثلاً: دکتر محمدی",
+            labNameLabel: "نام آزمایشگاه", labNamePlaceholder: "مثلاً: آزمایشگاه پاستور",
+            sampleDateLabel: "تاریخ نمونه‌گیری",
             summaryText: (total, abnormal) => abnormal === 0
                 ? `از مجموع ${total} آیتم بررسی‌شده، همه در محدوده نرمال قرار دارند.`
                 : `از مجموع ${total} آیتم بررسی‌شده، ${abnormal} مورد نیاز به توجه دارد (به یادداشت‌ها مراجعه کنید).`,
@@ -67,6 +78,12 @@ document.addEventListener('DOMContentLoaded', () => {
             notesHeader: "Clinical Notes",
             reportDateLabel: "Report Date",
             referenceGenderLabel: "Reference Gender",
+            optionalDetailsSummary: "Report Details (optional)",
+            patientNameLabel: "Patient Name", patientNamePlaceholder: "e.g., John Smith",
+            patientAgeLabel: "Patient Age", patientAgePlaceholder: "e.g., 35 (improves accuracy for tests like IGF-1)",
+            doctorNameLabel: "Referring Doctor", doctorNamePlaceholder: "e.g., Dr. Smith",
+            labNameLabel: "Laboratory Name", labNamePlaceholder: "e.g., Central Lab",
+            sampleDateLabel: "Sample Date",
             summaryText: (total, abnormal) => abnormal === 0
                 ? `Of ${total} item(s) reviewed, all are within the normal range.`
                 : `Of ${total} item(s) reviewed, ${abnormal} need attention (see notes below).`,
@@ -96,6 +113,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const key = el.getAttribute('data-lang-key');
             if (translations[lang][key]) {
                 el.innerText = translations[lang][key];
+            }
+        });
+
+        document.querySelectorAll('[data-lang-key-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-lang-key-placeholder');
+            if (translations[lang][key]) {
+                el.placeholder = translations[lang][key];
             }
         });
 
@@ -271,7 +295,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             const value = parseFloat(numberMatch[0]);
-            const range = data.range[selectedGender] || data.range.all;
+            // Some tests (e.g., IGF-1) vary mainly by age rather than gender.
+            // If the test defines age bands and the person entered an age,
+            // use the matching band; otherwise fall back to the normal
+            // gender/all range (which for age-dependent tests is a
+            // deliberately wide "safe default").
+            let range = data.range[selectedGender] || data.range.all;
+            const enteredAge = parseInt(patientAgeInput.value, 10);
+            if (data.ageRanges && !isNaN(enteredAge)) {
+                const band = data.ageRanges.find(b => enteredAge >= b.minAge && enteredAge <= b.maxAge);
+                if (band) range = band.range;
+            }
             let statusClass;
             if (value < range.min) statusClass = 'low';
             else if (value > range.max) statusClass = 'high';
@@ -294,14 +328,44 @@ document.addEventListener('DOMContentLoaded', () => {
         const reportWrapper = document.createElement('div');
         reportWrapper.className = 'lab-report';
 
-        // --- Report meta line (date + reference gender) — makes the printed
-        // page read like an actual lab report header. ---
+        // --- Report header / letterhead ---
+        // Always shows the report date + reference gender. Patient/doctor/lab/
+        // sample-date fields are optional — each row only renders if the
+        // person actually filled it in, so the header stays compact when unused.
         const genderLabel = selectedGender === 'male' ? t.genderMale : t.genderFemale;
         const dateStr = new Date().toLocaleDateString(currentLang === 'fa' ? 'fa-IR' : 'en-US');
-        const metaLine = document.createElement('p');
-        metaLine.className = 'lab-report-meta';
-        metaLine.textContent = `${t.reportDateLabel}: ${dateStr}   •   ${t.referenceGenderLabel}: ${genderLabel}`;
-        reportWrapper.appendChild(metaLine);
+
+        const sampleDateRaw = sampleDateInput.value; // yyyy-mm-dd from <input type="date">
+        const sampleDateDisplay = sampleDateRaw
+            ? new Date(sampleDateRaw + 'T00:00:00').toLocaleDateString(currentLang === 'fa' ? 'fa-IR' : 'en-US')
+            : '';
+
+        const headerFields = [
+            [t.patientNameLabel, patientNameInput.value.trim()],
+            [t.patientAgeLabel, patientAgeInput.value.trim()],
+            [t.doctorNameLabel, doctorNameInput.value.trim()],
+            [t.labNameLabel, labNameInput.value.trim()],
+            [t.sampleDateLabel, sampleDateDisplay],
+            [t.referenceGenderLabel, genderLabel],
+            [t.reportDateLabel, dateStr]
+        ].filter(([, value]) => value);
+
+        const headerBlock = document.createElement('div');
+        headerBlock.className = 'lab-report-header';
+        headerFields.forEach(([label, value]) => {
+            const row = document.createElement('div');
+            row.className = 'field-row';
+            const fLabel = document.createElement('span');
+            fLabel.className = 'f-label';
+            fLabel.textContent = label + ':';
+            const fValue = document.createElement('span');
+            fValue.className = 'f-value';
+            fValue.textContent = value;
+            row.appendChild(fLabel);
+            row.appendChild(fValue);
+            headerBlock.appendChild(row);
+        });
+        reportWrapper.appendChild(headerBlock);
 
         // --- Compact results table ---
         const tableWrap = document.createElement('div');
