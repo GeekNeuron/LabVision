@@ -2,6 +2,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- DOM Elements ---
     const themeToggleBtn = document.getElementById('theme-toggle');
+    const infoBtn = document.getElementById('info-btn');
+    const infoDialog = document.getElementById('info-dialog');
+    const infoCloseBtn = document.getElementById('info-close-btn');
+    const infoTestCount = document.getElementById('info-test-count');
+    const infoTestList = document.getElementById('info-test-list');
     const processBtn = document.getElementById('process-btn');
     const printBtn = document.getElementById('print-btn');
     const labInput = document.getElementById('lab-input');
@@ -50,6 +55,12 @@ document.addEventListener('DOMContentLoaded', () => {
             doctorNameLabel: "پزشک معالج", doctorNamePlaceholder: "مثلاً: دکتر محمدی",
             labNameLabel: "نام آزمایشگاه", labNamePlaceholder: "مثلاً: آزمایشگاه پاستور",
             sampleDateLabel: "تاریخ نمونه‌گیری",
+            infoTitle: "درباره LabVision",
+            infoSourcesTitle: "منابع مورد استفاده",
+            infoMayoNote: "برای تست‌هایی با تفکیک جنسیتی رایج در عمل بالینی",
+            infoGeneralKnowledge: "دانش پزشکی عمومی و استاندارد، برای تفسیرهای بالینی و توضیحات",
+            infoDisclaimer: "این رنج‌ها می‌توانند بین آزمایشگاه‌ها و روش‌های سنجش مختلف کمی متفاوت باشند. همیشه رنج مرجع چاپ‌شده روی برگه آزمایش خودتان را نیز در نظر بگیرید.",
+            infoCountText: (total, quant, qual) => `این نسخه از LabVision ${total} آزمایش را پشتیبانی می‌کند (${quant} آزمایش کمّی + ${qual} آزمایش کیفی):`,
             summaryText: (total, abnormal) => abnormal === 0
                 ? `از مجموع ${total} آیتم بررسی‌شده، همه در محدوده نرمال قرار دارند.`
                 : `از مجموع ${total} آیتم بررسی‌شده، ${abnormal} مورد نیاز به توجه دارد (به یادداشت‌ها مراجعه کنید).`,
@@ -84,6 +95,12 @@ document.addEventListener('DOMContentLoaded', () => {
             doctorNameLabel: "Referring Doctor", doctorNamePlaceholder: "e.g., Dr. Smith",
             labNameLabel: "Laboratory Name", labNamePlaceholder: "e.g., Central Lab",
             sampleDateLabel: "Sample Date",
+            infoTitle: "About LabVision",
+            infoSourcesTitle: "Sources Used",
+            infoMayoNote: "for tests with gender-specific ranges common in clinical practice",
+            infoGeneralKnowledge: "General standard medical knowledge, for clinical interpretations and explanations",
+            infoDisclaimer: "These ranges can vary somewhat between laboratories and assay methods. Always also consider the reference range printed on your own lab report.",
+            infoCountText: (total, quant, qual) => `This version of LabVision supports ${total} tests (${quant} quantitative + ${qual} qualitative):`,
             summaryText: (total, abnormal) => abnormal === 0
                 ? `Of ${total} item(s) reviewed, all are within the normal range.`
                 : `Of ${total} item(s) reviewed, ${abnormal} need attention (see notes below).`,
@@ -104,7 +121,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         currentLang = lang;
         document.documentElement.lang = lang;
-        document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
+        // Layout direction is intentionally fixed (RTL) and does NOT follow the
+        // selected language — only the text content is translated. This keeps
+        // the overall UI structure stable when switching between fa/en.
 
         langFaBtn.classList.toggle('active', lang === 'fa');
         langEnBtn.classList.toggle('active', lang === 'en');
@@ -394,10 +413,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const tdResult = document.createElement('td');
             tdResult.textContent = row.result;
+            tdResult.className = 'ltr-value';
 
             const tdRange = document.createElement('td');
             tdRange.textContent = row.range;
-            tdRange.className = 'col-range';
+            tdRange.className = 'col-range ltr-value';
 
             const tdStatus = document.createElement('td');
             const badge = document.createElement('span');
@@ -457,12 +477,40 @@ document.addEventListener('DOMContentLoaded', () => {
         window.print();
     };
 
+    // Build the "supported tests" list from the live database and open the dialog.
+    const openInfoDialog = () => {
+        const t = translations[currentLang];
+        const keys = Object.keys(labData);
+        const quantCount = keys.filter(k => labData[k].type !== 'qualitative').length;
+        const qualCount = keys.length - quantCount;
+
+        infoTestCount.textContent = t.infoCountText(keys.length, quantCount, qualCount);
+
+        infoTestList.innerHTML = '';
+        const sortedNames = keys
+            .map(k => labData[k].name[currentLang])
+            .sort((a, b) => a.localeCompare(b, currentLang === 'fa' ? 'fa' : 'en'));
+        sortedNames.forEach(name => {
+            const span = document.createElement('span');
+            span.textContent = name;
+            infoTestList.appendChild(span);
+        });
+
+        infoDialog.showModal();
+    };
+
     // --- Event Listeners ---
     themeToggleBtn.addEventListener('click', toggleTheme);
     processBtn.addEventListener('click', interpretResults);
     printBtn.addEventListener('click', printReport);
     langFaBtn.addEventListener('click', () => switchLanguage('fa'));
     langEnBtn.addEventListener('click', () => switchLanguage('en'));
+    infoBtn.addEventListener('click', openInfoDialog);
+    infoCloseBtn.addEventListener('click', () => infoDialog.close());
+    infoDialog.addEventListener('click', (e) => {
+        // Close when clicking the backdrop (outside the dialog's content box)
+        if (e.target === infoDialog) infoDialog.close();
+    });
 
     // Set initial language
     switchLanguage('fa');

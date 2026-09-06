@@ -2525,5 +2525,122 @@ const labData = {
             normal: { fa: "درصد اشباع ترانسفرین طبیعی است.", en: "Transferrin saturation percentage is normal." },
             high: { fa: "اشباع ترانسفرین بالا می‌تواند نشانه اضافه‌بار آهن یا هموکروماتوز باشد.", en: "High transferrin saturation can indicate iron overload or hemochromatosis." }
         }
+    },
+
+    // ============================================================
+    // Phase 3: completeness re-check additions (thyroid antibodies,
+    // autoimmune panel, GI, and nutrition markers that were missing).
+    // ============================================================
+
+    anti_tpo: {
+        name: { fa: "آنتی‌بادی ضد پراکسیداز تیروئید (Anti-TPO)", en: "Anti-Thyroid Peroxidase (Anti-TPO)" },
+        aliases: ["anti-tpo", "anti tpo", "thyroid peroxidase antibody", "آنتی تی پی او", "آنتی پراکسیداز تیروئید"],
+        unit: "IU/mL",
+        range: { all: { min: 0, max: 35 } },
+        interpretation: {
+            low: { fa: "مقدار پایین طبیعی است.", en: "A low value is normal." },
+            normal: { fa: "آنتی‌بادی ضد TPO در محدوده طبیعی است.", en: "Anti-TPO antibody is within the normal range." },
+            high: { fa: "افزایش آن می‌تواند نشانه تیروئیدیت هاشیموتو یا سایر بیماری‌های خودایمنی تیروئید باشد.", en: "Elevated levels can indicate Hashimoto's thyroiditis or other autoimmune thyroid disease." }
+        }
+    },
+    anti_tg: {
+        name: { fa: "آنتی‌بادی ضد تیروگلوبولین (Anti-Tg)", en: "Anti-Thyroglobulin Antibody (Anti-Tg)" },
+        aliases: ["anti-tg", "anti tg", "antithyroglobulin", "آنتی تیروگلوبولین"],
+        unit: "U/mL",
+        range: { all: { min: 0, max: 20 } },
+        interpretation: {
+            low: { fa: "مقدار پایین طبیعی است.", en: "A low value is normal." },
+            normal: { fa: "آنتی‌بادی ضد تیروگلوبولین در محدوده طبیعی است.", en: "Anti-thyroglobulin antibody is within the normal range." },
+            high: { fa: "افزایش آن می‌تواند نشانه تیروئیدیت هاشیموتو یا بیماری گریوز باشد؛ همچنین می‌تواند در پیگیری سرطان تیروئید تفسیر تیروگلوبولین را دشوار کند.", en: "Elevated levels can indicate Hashimoto's thyroiditis or Graves' disease; it can also interfere with thyroglobulin interpretation during thyroid cancer follow-up." }
+        }
+    },
+    thyroglobulin: {
+        name: { fa: "تیروگلوبولین", en: "Thyroglobulin" },
+        aliases: ["thyroglobulin", "تیروگلوبولین"],
+        unit: "ng/mL",
+        range: { all: { min: 0, max: 20 } },
+        interpretation: {
+            low: { fa: "مقدار پایین طبیعی است.", en: "A low value is normal." },
+            normal: { fa: "سطح تیروگلوبولین طبیعی است.", en: "Thyroglobulin level is normal." },
+            high: { fa: "افزایش تیروگلوبولین می‌تواند نشانه فعالیت بافت تیروئیدی باقی‌مانده یا عودکننده باشد؛ بیشتر در پیگیری بعد از تیروئیدکتومی برای سرطان تیروئید استفاده می‌شود.", en: "Elevated thyroglobulin can indicate residual or recurrent thyroid tissue activity; mainly used for follow-up after thyroidectomy for thyroid cancer." }
+        }
+    },
+    calprotectin: {
+        name: { fa: "کالپروتکتین مدفوع", en: "Fecal Calprotectin" },
+        aliases: ["calprotectin", "fecal calprotectin", "کالپروتکتین"],
+        unit: "µg/g",
+        range: { all: { min: 0, max: 50 } },
+        interpretation: {
+            low: { fa: "مقدار پایین طبیعی است.", en: "A low value is normal." },
+            normal: { fa: "کالپروتکتین مدفوع طبیعی است و التهاب روده‌ای فعال بعید است.", en: "Fecal calprotectin is normal, and active intestinal inflammation is unlikely." },
+            high: { fa: "افزایش کالپروتکتین نشانه التهاب روده است و می‌تواند با بیماری‌های التهابی روده (IBD) مانند کرون یا کولیت اولسراتیو مرتبط باشد.", en: "Elevated calprotectin indicates intestinal inflammation and can be related to inflammatory bowel disease (IBD) such as Crohn's or ulcerative colitis." }
+        }
+    },
+    prealbumin: {
+        name: { fa: "پره‌آلبومین (ترانستیرتین)", en: "Prealbumin (Transthyretin)" },
+        aliases: ["prealbumin", "transthyretin", "پره آلبومین"],
+        unit: "mg/dL",
+        range: { all: { min: 15, max: 36 } },
+        interpretation: {
+            low: { fa: "پره‌آلبومین پایین می‌تواند نشانه سوءتغذیه یا التهاب حاد باشد و برای پایش وضعیت تغذیه‌ای (به‌ویژه در بیماران بستری) کاربرد دارد.", en: "Low prealbumin can indicate malnutrition or acute inflammation, and is used to monitor nutritional status (especially in hospitalized patients)." },
+            normal: { fa: "سطح پره‌آلبومین طبیعی است.", en: "Prealbumin level is normal." },
+            high: { fa: "افزایش آن معمولاً اهمیت بالینی ندارد.", en: "An elevated level is usually not clinically significant." }
+        }
+    },
+    hla_b27: {
+        type: "qualitative",
+        name: { fa: "HLA-B27", en: "HLA-B27" },
+        aliases: ["hla-b27", "hla b27", "اچ ال ای بی۲۷"],
+        negative: { label: { fa: "منفی", en: "Negative" }, resultStatus: "normal", interpretation: { fa: "ژن HLA-B27 شناسایی نشد.", en: "The HLA-B27 gene was not detected." } },
+        positive: { label: { fa: "مثبت", en: "Positive" }, resultStatus: "high", interpretation: { fa: "ژن HLA-B27 شناسایی شد؛ با اسپوندیلیت آنکیلوزان و برخی آرتریت‌های واکنشی مرتبط است، هرچند خیلی از افراد مثبت هرگز بیمار نمی‌شوند.", en: "The HLA-B27 gene was detected; it is associated with ankylosing spondylitis and certain reactive arthritides, though many positive individuals never develop disease." } }
+    },
+    ama: {
+        type: "qualitative",
+        name: { fa: "آنتی‌بادی ضد میتوکندری (AMA)", en: "Anti-Mitochondrial Antibody (AMA)" },
+        aliases: ["ama", "anti-mitochondrial antibody", "آنتی میتوکندری"],
+        negative: { label: { fa: "منفی", en: "Negative" }, resultStatus: "normal", interpretation: { fa: "نشانه‌ای از سیروز صفراوی اولیه یافت نشد.", en: "No sign of primary biliary cholangitis found." } },
+        positive: { label: { fa: "مثبت", en: "Positive" }, resultStatus: "high", interpretation: { fa: "نشانه احتمالی سیروز صفراوی اولیه (PBC) است و نیاز به بررسی تخصصی کبد دارد.", en: "Suggests possible primary biliary cholangitis (PBC) and requires specialist liver evaluation." } }
+    },
+    asma: {
+        type: "qualitative",
+        name: { fa: "آنتی‌بادی ضد عضله صاف (ASMA)", en: "Anti-Smooth Muscle Antibody (ASMA)" },
+        aliases: ["asma", "anti-smooth muscle antibody", "آنتی عضله صاف"],
+        negative: { label: { fa: "منفی", en: "Negative" }, resultStatus: "normal", interpretation: { fa: "نشانه‌ای از هپاتیت خودایمنی یافت نشد.", en: "No sign of autoimmune hepatitis found." } },
+        positive: { label: { fa: "مثبت", en: "Positive" }, resultStatus: "high", interpretation: { fa: "نشانه احتمالی هپاتیت خودایمنی است و نیاز به بررسی تخصصی کبد دارد.", en: "Suggests possible autoimmune hepatitis and requires specialist liver evaluation." } }
+    },
+    anti_ro: {
+        type: "qualitative",
+        name: { fa: "آنتی-Ro / SSA", en: "Anti-Ro / SSA" },
+        aliases: ["anti-ro", "ssa", "anti-ssa", "آنتی رو"],
+        negative: { label: { fa: "منفی", en: "Negative" }, resultStatus: "normal", interpretation: { fa: "نشانه‌ای یافت نشد.", en: "No sign found." } },
+        positive: { label: { fa: "مثبت", en: "Positive" }, resultStatus: "high", interpretation: { fa: "می‌تواند نشانه سندرم شوگرن یا لوپوس باشد؛ در بارداری برای خطر بلوک قلبی جنین اهمیت دارد.", en: "Can indicate Sjögren's syndrome or lupus; important in pregnancy due to fetal heart block risk." } }
+    },
+    anti_la: {
+        type: "qualitative",
+        name: { fa: "آنتی-La / SSB", en: "Anti-La / SSB" },
+        aliases: ["anti-la", "ssb", "anti-ssb", "آنتی لا"],
+        negative: { label: { fa: "منفی", en: "Negative" }, resultStatus: "normal", interpretation: { fa: "نشانه‌ای یافت نشد.", en: "No sign found." } },
+        positive: { label: { fa: "مثبت", en: "Positive" }, resultStatus: "high", interpretation: { fa: "می‌تواند نشانه سندرم شوگرن یا لوپوس باشد.", en: "Can indicate Sjögren's syndrome or lupus." } }
+    },
+    anti_smith: {
+        type: "qualitative",
+        name: { fa: "آنتی-Smith (Anti-Sm)", en: "Anti-Smith (Anti-Sm)" },
+        aliases: ["anti-smith", "anti-sm", "آنتی اسمیت"],
+        negative: { label: { fa: "منفی", en: "Negative" }, resultStatus: "normal", interpretation: { fa: "نشانه‌ای یافت نشد.", en: "No sign found." } },
+        positive: { label: { fa: "مثبت", en: "Positive" }, resultStatus: "high", interpretation: { fa: "آنتی‌بادی بسیار اختصاصی برای لوپوس اریتماتوز سیستمیک (SLE) است.", en: "A highly specific antibody for systemic lupus erythematosus (SLE)." } }
+    },
+    anti_scl70: {
+        type: "qualitative",
+        name: { fa: "آنتی-Scl-70", en: "Anti-Scl-70" },
+        aliases: ["anti-scl-70", "anti scl70", "آنتی اسکل ۷۰"],
+        negative: { label: { fa: "منفی", en: "Negative" }, resultStatus: "normal", interpretation: { fa: "نشانه‌ای یافت نشد.", en: "No sign found." } },
+        positive: { label: { fa: "مثبت", en: "Positive" }, resultStatus: "high", interpretation: { fa: "با اسکلرودرمی سیستمیک منتشر مرتبط است.", en: "Associated with diffuse systemic sclerosis (scleroderma)." } }
+    },
+    anti_centromere: {
+        type: "qualitative",
+        name: { fa: "آنتی-سانترومر", en: "Anti-Centromere Antibody" },
+        aliases: ["anti-centromere", "آنتی سانترومر"],
+        negative: { label: { fa: "منفی", en: "Negative" }, resultStatus: "normal", interpretation: { fa: "نشانه‌ای یافت نشد.", en: "No sign found." } },
+        positive: { label: { fa: "مثبت", en: "Positive" }, resultStatus: "high", interpretation: { fa: "با اسکلرودرمی محدود (سندرم CREST) مرتبط است.", en: "Associated with limited systemic sclerosis (CREST syndrome)." } }
     }
 };

@@ -17,6 +17,13 @@
             <h1 data-lang-key="headerTitle">LabVision</h1>
         </div>
         <div class="header-controls">
+            <button id="info-btn" type="button" aria-label="Info & Sources">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+            </button>
             <div class="language-switcher">
                 <div class="lang-tab" id="lang-fa">FA</div>
                 <div class="lang-tab active" id="lang-en">EN</div>
@@ -32,6 +39,27 @@
             </button>
         </div>
     </header>
+
+    <dialog id="info-dialog">
+        <div class="info-dialog-header">
+            <h2 data-lang-key="infoTitle">درباره LabVision</h2>
+            <button id="info-close-btn" class="icon-btn" type="button" aria-label="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="info-dialog-body">
+            <p id="info-test-count" class="info-count"></p>
+            <div id="info-test-list" class="info-test-list"></div>
+            <h3 data-lang-key="infoSourcesTitle">منابع مورد استفاده</h3>
+            <ul class="info-sources-list">
+                <li><strong>NBME</strong> — Laboratory Reference Values (National Board of Medical Examiners)</li>
+                <li><strong>ABIM</strong> — Laboratory Reference Ranges, Jan 2026 (American Board of Internal Medicine)</li>
+                <li><strong>Mayo Clinic Laboratories</strong> — <span data-lang-key="infoMayoNote">برای تست‌هایی با تفکیک جنسیتی رایج در عمل بالینی</span></li>
+                <li><span data-lang-key="infoGeneralKnowledge">دانش پزشکی عمومی و استاندارد، برای تفسیرهای بالینی و توضیحات</span></li>
+            </ul>
+            <p class="info-disclaimer" data-lang-key="infoDisclaimer">این رنج‌ها می‌توانند بین آزمایشگاه‌ها و روش‌های سنجش مختلف کمی متفاوت باشند. همیشه رنج مرجع چاپ‌شده روی برگه آزمایش خودتان را نیز در نظر بگیرید.</p>
+        </div>
+    </dialog>
 
     <div class="container">
         <main class="main-content">
