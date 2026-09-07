@@ -121,9 +121,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         currentLang = lang;
         document.documentElement.lang = lang;
-        // Layout direction is intentionally fixed (RTL) and does NOT follow the
-        // selected language — only the text content is translated. This keeps
-        // the overall UI structure stable when switching between fa/en.
+        // Overall page direction follows the selected language (English =
+        // fully LTR, Persian = RTL). Test result values keep their own
+        // fixed LTR direction regardless (see the .ltr-value class), since
+        // numbers/units read better left-to-right even inside an RTL page.
+        document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
 
         langFaBtn.classList.toggle('active', lang === 'fa');
         langEnBtn.classList.toggle('active', lang === 'en');

@@ -123,6 +123,7 @@ header h1 {
 #theme-toggle {
     width: 40px;
     height: 40px;
+    margin: 0;
     padding: 0;
     border-radius: var(--radius-sm);
     background-color: var(--bg-color);
@@ -145,6 +146,7 @@ body.dark-theme #theme-toggle .icon-sun { display: block; }
 #info-btn {
     width: 40px;
     height: 40px;
+    margin: 0;
     padding: 0;
     border-radius: var(--radius-sm);
     background-color: var(--bg-color);
@@ -255,7 +257,9 @@ h2 {
 .gender-selector label {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    justify-content: center;
+    position: relative;
+    min-width: 68px;
     cursor: pointer;
     padding: 7px 14px;
     border-radius: var(--radius-sm);
@@ -263,9 +267,17 @@ h2 {
     font-size: 0.9rem;
 }
 .gender-selector input[type="radio"] {
-    appearance: none;
-    -webkit-appearance: none;
+    /* The radio itself is never drawn — the whole label pill acts as the
+       selected indicator via :has(input:checked) — so it's removed from
+       layout entirely instead of just visually hidden, which previously
+       left an invisible gap that pushed the text off-center. */
+    position: absolute;
+    width: 0;
+    height: 0;
     margin: 0;
+    padding: 0;
+    border: 0;
+    opacity: 0;
 }
 .gender-selector label:has(input:checked) {
     background-color: var(--primary-color);
@@ -496,7 +508,7 @@ button:active { transform: scale(0.98); }
 .ltr-value {
     direction: ltr;
     unicode-bidi: embed;
-    text-align: end; /* keeps it visually aligned with the column header in RTL layout */
+    text-align: left; /* fixed left alignment, independent of overall page direction */
 }
 
 /* Colored accent bar on the row, aligned exactly to that row's own borders */

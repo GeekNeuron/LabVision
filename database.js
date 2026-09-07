@@ -177,7 +177,7 @@ const labData = {
         name: { fa: "قند خون ناشتا (Glucose)", en: "Fasting Glucose" },
         aliases: ["fbs", "glucose", "blood sugar", "fasting glucose", "fasting blood sugar", "fbg", "fasting blood glucose", "glu", "قند خون", "قند خون ناشتا", "قند ناشتا", "gluc"],
         unit: "mg/dL",
-        range: { all: { min: 70, max: 100 } },
+        range: { all: { min: 70, max: 99 } },
         interpretation: {
             low: { fa: "قند خون پایین (هیپوگلیسمی) می‌تواند باعث ضعف، لرزش و سرگیجه شود.", en: "Low blood sugar (hypoglycemia) can cause weakness, shakiness, and dizziness." },
             normal: { fa: "قند خون ناشتا در محدوده طبیعی است.", en: "Fasting blood glucose is within the normal range." },
@@ -364,7 +364,7 @@ const labData = {
         name: { fa: "پتاسیم (K)", en: "Potassium (K)" },
         aliases: ["k", "k+", "potassium", "پتاسیم"],
         unit: "mEq/L",
-        range: { all: { min: 3.5, max: 5.1 } },
+        range: { all: { min: 3.5, max: 5.0 } },
         interpretation: {
             low: { fa: "پتاسیم پایین می‌تواند باعث ضعف عضلانی و ریتم نامنظم قلب شود.", en: "Low potassium can cause muscle weakness and irregular heart rhythm." },
             normal: { fa: "سطح پتاسیم خون طبیعی است.", en: "Blood potassium level is normal." },
@@ -476,7 +476,7 @@ const labData = {
         name: { fa: "TSH", en: "TSH" },
         aliases: ["tsh", "thyroid stimulating hormone"],
         unit: "mIU/L",
-        range: { all: { min: 0.4, max: 4.0 } },
+        range: { all: { min: 0.5, max: 4.0 } },
         interpretation: {
             low: { fa: "TSH پایین می‌تواند نشانه پرکاری تیروئید باشد.", en: "Low TSH can indicate an overactive thyroid (hyperthyroidism)." },
             normal: { fa: "عملکرد تیروئید از نظر TSH طبیعی است.", en: "Thyroid function (TSH) is normal." },
@@ -612,7 +612,7 @@ const labData = {
         name: { fa: "سی‌پپتید (C-Peptide)", en: "C-Peptide" },
         aliases: ["c-peptide", "c peptide", "سی پپتید"],
         unit: "ng/mL",
-        range: { all: { min: 0.8, max: 3.9 } },
+        range: { all: { min: 0.8, max: 3.1 } },
         interpretation: {
             low: { fa: "سی‌پپتید پایین نشانه تولید کم انسولین توسط پانکراس است.", en: "Low C-peptide indicates low insulin production by the pancreas." },
             normal: { fa: "تولید انسولین داخلی طبیعی است.", en: "Endogenous insulin production is normal." },
@@ -671,7 +671,7 @@ const labData = {
         name: { fa: "کلر (Cl)", en: "Chloride (Cl)" },
         aliases: ["cl", "chloride", "کلر"],
         unit: "mEq/L",
-        range: { all: { min: 95, max: 105 } },
+        range: { all: { min: 98, max: 106 } },
         interpretation: {
             low: { fa: "کلر پایین می‌تواند با استفراغ، اسهال یا مشکلات کلیوی مرتبط باشد.", en: "Low chloride can be related to vomiting, diarrhea, or kidney problems." },
             normal: { fa: "سطح کلر خون طبیعی است.", en: "Blood chloride level is normal." },
@@ -682,7 +682,7 @@ const labData = {
         name: { fa: "دی‌اکسید کربن / بی‌کربنات (CO2)", en: "Carbon Dioxide / Bicarbonate (CO2)" },
         aliases: ["co2", "bicarbonate", "hco3", "بی کربنات"],
         unit: "mEq/L",
-        range: { all: { min: 22, max: 28 } },
+        range: { all: { min: 23, max: 28 } },
         interpretation: {
             low: { fa: "بی‌کربنات پایین می‌تواند نشانه اسیدوز متابولیک باشد.", en: "Low bicarbonate can indicate metabolic acidosis." },
             normal: { fa: "سطح بی‌کربنات خون طبیعی است.", en: "Blood bicarbonate level is normal." },
@@ -794,7 +794,7 @@ const labData = {
         name: { fa: "پروژسترون", en: "Progesterone" },
         aliases: ["progesterone", "پروژسترون"],
         unit: "ng/mL",
-        range: { female: { min: 0.1, max: 25 }, male: { min: 0.1, max: 1.0 } },
+        range: { female: { min: 0.02, max: 30 }, male: { min: 0.12, max: 0.3 } },
         interpretation: {
             low: { fa: "پروژسترون پایین می‌تواند با عدم تخمک‌گذاری یا خطر سقط زودرس مرتبط باشد.", en: "Low progesterone can be related to anovulation or early miscarriage risk." },
             normal: { fa: "سطح پروژسترون طبیعی است (بسته به فاز سیکل یا سه‌ماهه بارداری متفاوت است).", en: "Progesterone level is normal (this varies widely by cycle phase or pregnancy trimester)." },
@@ -998,7 +998,7 @@ const labData = {
         name: { fa: "کمپلمان C3", en: "Complement C3" },
         aliases: ["c3", "complement c3"],
         unit: "mg/dL",
-        range: { all: { min: 90, max: 180 } },
+        range: { all: { min: 100, max: 233 } },
         interpretation: {
             low: { fa: "کاهش C3 می‌تواند در بیماری‌های خودایمنی فعال مانند لوپوس دیده شود.", en: "Low C3 can be seen in active autoimmune diseases such as lupus." },
             normal: { fa: "سطح کمپلمان C3 طبیعی است.", en: "Complement C3 level is normal." },
@@ -1009,7 +1009,7 @@ const labData = {
         name: { fa: "کمپلمان C4", en: "Complement C4" },
         aliases: ["c4", "complement c4"],
         unit: "mg/dL",
-        range: { all: { min: 10, max: 40 } },
+        range: { all: { min: 14, max: 48 } },
         interpretation: {
             low: { fa: "کاهش C4 می‌تواند در بیماری‌های خودایمنی فعال یا آنژیوادم ارثی دیده شود.", en: "Low C4 can be seen in active autoimmune diseases or hereditary angioedema." },
             normal: { fa: "سطح کمپلمان C4 طبیعی است.", en: "Complement C4 level is normal." },
@@ -1123,7 +1123,7 @@ const labData = {
         name: { fa: "آنتی‌ژن کارسینوآمبریونیک (CEA)", en: "Carcinoembryonic Antigen (CEA)" },
         aliases: ["cea", "carcinoembryonic antigen"],
         unit: "ng/mL",
-        range: { all: { min: 0, max: 3 } },
+        range: { all: { min: 0, max: 2.5 } },
         interpretation: {
             low: { fa: "مقدار پایین طبیعی است.", en: "A low value is normal." },
             normal: { fa: "CEA در محدوده طبیعی است.", en: "CEA is within the normal range." },
@@ -1507,7 +1507,7 @@ const labData = {
         name: { fa: "هموگلوبین A2 (الکتروفورز)", en: "Hemoglobin A2 (Electrophoresis)" },
         aliases: ["hba2", "hemoglobin a2"],
         unit: "%",
-        range: { all: { min: 2.0, max: 3.5 } },
+        range: { all: { min: 1.5, max: 3.5 } },
         interpretation: {
             low: { fa: "کاهش HbA2 نادر است و معمولاً اهمیت بالینی کمی دارد.", en: "Low HbA2 is rare and usually has limited clinical significance." },
             normal: { fa: "درصد HbA2 طبیعی است.", en: "HbA2 percentage is normal." },
@@ -1518,7 +1518,7 @@ const labData = {
         name: { fa: "هموگلوبین جنینی F (الکتروفورز)", en: "Fetal Hemoglobin F (Electrophoresis)" },
         aliases: ["hbf", "hemoglobin f", "fetal hemoglobin"],
         unit: "%",
-        range: { all: { min: 0, max: 2 } },
+        range: { all: { min: 0, max: 1 } },
         interpretation: {
             low: { fa: "مقدار پایین طبیعی است.", en: "A low value is normal." },
             normal: { fa: "درصد هموگلوبین F طبیعی است.", en: "Hemoglobin F percentage is normal." },
@@ -2003,7 +2003,7 @@ const labData = {
         name: { fa: "آنتی-بتا۲-گلیکوپروتئین I", en: "Anti-Beta2-Glycoprotein I" },
         aliases: ["anti-beta2-glycoprotein", "anti beta2 glycoprotein", "آنتی بتا۲ گلیکوپروتئین"],
         unit: "U/mL",
-        range: { all: { min: 0, max: 20 } },
+        range: { all: { min: 0, max: 21 } },
         interpretation: {
             low: { fa: "مقدار پایین طبیعی است.", en: "A low value is normal." },
             normal: { fa: "آنتی-بتا۲-گلیکوپروتئین I در محدوده طبیعی است.", en: "Anti-beta2-glycoprotein I is within the normal range." },
@@ -2045,7 +2045,7 @@ const labData = {
         name: { fa: "تستوسترون آزاد", en: "Free Testosterone" },
         aliases: ["free testosterone", "تستوسترون آزاد"],
         unit: "pg/mL",
-        range: { male: { min: 70, max: 300 }, female: { min: 1, max: 10 } },
+        range: { male: { min: 70, max: 300 }, female: { min: 1, max: 30 } },
         interpretation: {
             low: { fa: "تستوسترون آزاد پایین می‌تواند با هیپوگنادیسم مرتبط باشد، حتی اگر تستوسترون تام طبیعی باشد.", en: "Low free testosterone can be related to hypogonadism, even when total testosterone is normal." },
             normal: { fa: "سطح تستوسترون آزاد طبیعی است.", en: "Free testosterone level is normal." },
@@ -2056,7 +2056,7 @@ const labData = {
         name: { fa: "دی‌هیدروتستوسترون (DHT)", en: "Dihydrotestosterone (DHT)" },
         aliases: ["dht", "dihydrotestosterone"],
         unit: "ng/dL",
-        range: { male: { min: 30, max: 85 }, female: { min: 4, max: 22 } },
+        range: { male: { min: 25, max: 80 }, female: { min: 4, max: 22 } },
         interpretation: {
             low: { fa: "DHT پایین می‌تواند با کمبود آنزیم ۵-آلفا-ردوکتاز مرتبط باشد.", en: "Low DHT can be related to 5-alpha-reductase enzyme deficiency." },
             normal: { fa: "سطح DHT طبیعی است.", en: "DHT level is normal." },
@@ -2099,7 +2099,7 @@ const labData = {
         name: { fa: "کلسی‌تونین", en: "Calcitonin" },
         aliases: ["calcitonin", "کلسی تونین"],
         unit: "pg/mL",
-        range: { male: { min: 0, max: 8.4 }, female: { min: 0, max: 5.0 } },
+        range: { male: { min: 0, max: 10 }, female: { min: 0, max: 5 } },
         interpretation: {
             low: { fa: "مقدار پایین طبیعی است.", en: "A low value is normal." },
             normal: { fa: "سطح کلسی‌تونین طبیعی است.", en: "Calcitonin level is normal." },
@@ -2257,7 +2257,7 @@ const labData = {
         name: { fa: "سرولوپلاسمین", en: "Ceruloplasmin" },
         aliases: ["ceruloplasmin", "سرولوپلاسمین"],
         unit: "mg/dL",
-        range: { all: { min: 20, max: 60 } },
+        range: { all: { min: 25, max: 43 } },
         interpretation: {
             low: { fa: "کاهش سرولوپلاسمین نشانه مشخصه‌ی بیماری ویلسون است.", en: "Low ceruloplasmin is a characteristic finding of Wilson's disease." },
             normal: { fa: "سطح سرولوپلاسمین طبیعی است.", en: "Ceruloplasmin level is normal." },
@@ -2301,7 +2301,7 @@ const labData = {
         name: { fa: "VMA ادرار (اسید وانیلیل ماندلیک)", en: "Urine VMA (Vanillylmandelic Acid)" },
         aliases: ["vma", "vanillylmandelic acid", "وی ام ای ادرار"],
         unit: "mg/24hr",
-        range: { all: { min: 2, max: 7 } },
+        range: { all: { min: 0, max: 9 } },
         interpretation: {
             low: { fa: "مقدار پایین معمولاً نگران‌کننده نیست.", en: "A low value is usually not concerning." },
             normal: { fa: "VMA ادرار طبیعی است.", en: "Urine VMA is normal." },
@@ -2383,7 +2383,7 @@ const labData = {
         name: { fa: "فاکتور انعقادی IX", en: "Coagulation Factor IX" },
         aliases: ["factor ix", "factor 9", "فاکتور نه"],
         unit: "%",
-        range: { all: { min: 50, max: 150 } },
+        range: { all: { min: 60, max: 130 } },
         interpretation: {
             low: { fa: "کاهش فاکتور IX نشانه هموفیلی B است که خطر خونریزی را افزایش می‌دهد.", en: "Reduced Factor IX indicates hemophilia B, which increases bleeding risk." },
             normal: { fa: "سطح فاکتور IX طبیعی است.", en: "Factor IX level is normal." },
@@ -2394,7 +2394,7 @@ const labData = {
         name: { fa: "زمان ترومبین (TT)", en: "Thrombin Time (TT)" },
         aliases: ["thrombin time", "tt", "زمان ترومبین"],
         unit: "sec",
-        range: { all: { min: 14, max: 21 } },
+        range: { all: { min: 17, max: 23 } },
         interpretation: {
             low: { fa: "زمان ترومبین کوتاه‌تر از حد معمول به ندرت نگران‌کننده است.", en: "A shorter-than-usual thrombin time is rarely concerning." },
             normal: { fa: "زمان ترومبین طبیعی است.", en: "Thrombin time is normal." },
@@ -2478,7 +2478,7 @@ const labData = {
         name: { fa: "کلسیم ادرار ۲۴ساعته", en: "24-Hour Urine Calcium" },
         aliases: ["urine calcium", "24hr urine calcium", "کلسیم ادرار"],
         unit: "mg/24hr",
-        range: { all: { min: 100, max: 300 } },
+        range: { male: { min: 0, max: 300 }, female: { min: 0, max: 250 } },
         interpretation: {
             low: { fa: "کلسیم پایین ادرار می‌تواند با کمبود ویتامین D یا کاهش دریافت کلسیم مرتبط باشد.", en: "Low urine calcium can be related to vitamin D deficiency or low calcium intake." },
             normal: { fa: "دفع کلسیم ادرار طبیعی است.", en: "Urinary calcium excretion is normal." },
@@ -2580,7 +2580,7 @@ const labData = {
         name: { fa: "پره‌آلبومین (ترانستیرتین)", en: "Prealbumin (Transthyretin)" },
         aliases: ["prealbumin", "transthyretin", "پره آلبومین"],
         unit: "mg/dL",
-        range: { all: { min: 15, max: 36 } },
+        range: { all: { min: 16, max: 30 } },
         interpretation: {
             low: { fa: "پره‌آلبومین پایین می‌تواند نشانه سوءتغذیه یا التهاب حاد باشد و برای پایش وضعیت تغذیه‌ای (به‌ویژه در بیماران بستری) کاربرد دارد.", en: "Low prealbumin can indicate malnutrition or acute inflammation, and is used to monitor nutritional status (especially in hospitalized patients)." },
             normal: { fa: "سطح پره‌آلبومین طبیعی است.", en: "Prealbumin level is normal." },
@@ -2642,5 +2642,17 @@ const labData = {
         aliases: ["anti-centromere", "آنتی سانترومر"],
         negative: { label: { fa: "منفی", en: "Negative" }, resultStatus: "normal", interpretation: { fa: "نشانه‌ای یافت نشد.", en: "No sign found." } },
         positive: { label: { fa: "مثبت", en: "Positive" }, resultStatus: "high", interpretation: { fa: "با اسکلرودرمی محدود (سندرم CREST) مرتبط است.", en: "Associated with limited systemic sclerosis (CREST syndrome)." } }
+    },
+
+    egfr: {
+        name: { fa: "نرخ فیلتراسیون گلومرولی تخمینی (eGFR)", en: "Estimated Glomerular Filtration Rate (eGFR)" },
+        aliases: ["egfr", "gfr", "estimated gfr", "نرخ فیلتراسیون گلومرولی"],
+        unit: "mL/min/1.73m²",
+        range: { all: { min: 90, max: 200 } },
+        interpretation: {
+            low: { fa: "کاهش eGFR نشانه کاهش عملکرد کلیه است؛ زیر ۶۰ به مدت بیش از سه ماه نشانه بیماری مزمن کلیه (CKD) است — هرچه عدد پایین‌تر، مرحله شدیدتر.", en: "Reduced eGFR indicates decreased kidney function; below 60 for more than three months indicates chronic kidney disease (CKD) — the lower the number, the more advanced the stage." },
+            normal: { fa: "عملکرد فیلتراسیون کلیه طبیعی است.", en: "Kidney filtration function is normal." },
+            high: { fa: "مقدار بالا معمولاً یافته طبیعی است و نگران‌کننده نیست.", en: "A high value is usually a normal finding and not concerning." }
+        }
     }
 };
