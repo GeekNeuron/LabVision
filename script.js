@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- DOM Elements ---
     const themeToggleBtn = document.getElementById('theme-toggle');
     const infoBtn = document.getElementById('info-btn');
     const infoDialog = document.getElementById('info-dialog');
@@ -12,19 +11,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const labInput = document.getElementById('lab-input');
     const patientNameInput = document.getElementById('patient-name');
     const patientAgeInput = document.getElementById('patient-age');
+    const pregnancySelector = document.getElementById('pregnancy-selector');
+    const isPregnantCheckbox = document.getElementById('is-pregnant');
+    const trimesterWrapper = document.getElementById('trimester-wrapper');
+    const trimesterSelect = document.getElementById('trimester-select');
+    const genderRadios = document.querySelectorAll('input[name="gender"]');
     const doctorNameInput = document.getElementById('doctor-name');
     const labNameInput = document.getElementById('lab-name');
     const sampleDateInput = document.getElementById('sample-date');
     const resultsOutput = document.getElementById('results-output');
+    const resultsSection = document.getElementById('results-section');
     const langFaBtn = document.getElementById('lang-fa');
     const langEnBtn = document.getElementById('lang-en');
     const body = document.body;
 
-    // --- State ---
     let currentTheme = 'light';
     let currentLang = 'en';
 
-    // --- Translations Database ---
     const translations = {
         fa: {
             headerTitle: "LabVision",
@@ -51,7 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
             referenceGenderLabel: "جنسیت مرجع",
             optionalDetailsSummary: "مشخصات برگه (اختیاری)",
             patientNameLabel: "نام بیمار", patientNamePlaceholder: "مثلاً: علی رضایی",
-            patientAgeLabel: "سن بیمار", patientAgePlaceholder: "مثلاً: ۳۵ (برای دقت بیشتر برخی تست‌ها مثل IGF-1)",
+            patientAgeLabel: "سن بیمار", patientAgePlaceholder: "مثلاً: ۳۵ (برای دقت بیشتر برخی تست‌ها مثل IGF-1 و رنج‌های کودکان)",
+            isPregnant: "باردار", trimesterLabel: "سه‌ماهه:", trimester1: "اول", trimester2: "دوم", trimester3: "سوم",
+            pregnancyNote: "برخی رنج‌های نرمال (تیروئید، هموگلوبین) در بارداری متفاوت است.",
             doctorNameLabel: "پزشک معالج", doctorNamePlaceholder: "مثلاً: دکتر محمدی",
             labNameLabel: "نام آزمایشگاه", labNamePlaceholder: "مثلاً: آزمایشگاه پاستور",
             sampleDateLabel: "تاریخ نمونه‌گیری",
@@ -92,7 +97,9 @@ document.addEventListener('DOMContentLoaded', () => {
             referenceGenderLabel: "Reference Gender",
             optionalDetailsSummary: "Report Details (optional)",
             patientNameLabel: "Patient Name", patientNamePlaceholder: "e.g., John Smith",
-            patientAgeLabel: "Patient Age", patientAgePlaceholder: "e.g., 35 (improves accuracy for tests like IGF-1)",
+            patientAgeLabel: "Patient Age", patientAgePlaceholder: "e.g., 35 (improves accuracy for tests like IGF-1 and pediatric ranges)",
+            isPregnant: "Pregnant", trimesterLabel: "Trimester:", trimester1: "1st", trimester2: "2nd", trimester3: "3rd",
+            pregnancyNote: "Some normal ranges (thyroid, hemoglobin) differ during pregnancy.",
             doctorNameLabel: "Referring Doctor", doctorNamePlaceholder: "e.g., Dr. Smith",
             labNameLabel: "Laboratory Name", labNamePlaceholder: "e.g., Central Lab",
             sampleDateLabel: "Sample Date",
@@ -110,9 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // --- Lab Data "Database" is loaded globally from database.js (100% offline, no network calls) ---
-
-    // --- Functions ---
     const toggleTheme = () => {
         body.classList.toggle('dark-theme');
         currentTheme = body.classList.contains('dark-theme') ? 'dark' : 'light';
@@ -123,11 +127,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         currentLang = lang;
         document.documentElement.lang = lang;
-        // Overall page direction follows the selected language (English =
-        // fully LTR, Persian = RTL). Test result values keep their own
-        // fixed LTR direction regardless (see the .ltr-value class), since
-        // numbers/units read better left-to-right even inside an RTL page.
-        document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
+        document.documentElement.dir = 'rtl';
+        body.classList.toggle('lang-en', lang === 'en');
 
         langFaBtn.classList.toggle('active', lang === 'fa');
         langEnBtn.classList.toggle('active', lang === 'en');
@@ -153,22 +154,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Keyword sets used to interpret qualitative (positive/negative) test results,
-    // in both Persian and English, entered by the user as free text.
     const QUALITATIVE_KEYWORDS = {
         negative: ["not detected", "non-reactive", "nonreactive", "no growth", "low risk", "بدون رشد", "دیده نشد", "رشد نکرد", "کم خطر", "کم‌خطر", "عدم تطابق", "negative", "neg", "normal", "susceptible", "mismatch", "منفی", "ندارد", "طبیعی", "حساس"],
         positive: ["high risk", "واکنش‌دهنده", "واکنش دهنده", "پر خطر", "پرخطر", "positive", "pos", "detected", "reactive", "present", "abnormal", "resistant", "match", "growth", "مثبت", "دارد", "رشد کرد", "غیرطبیعی", "مقاوم", "تطابق", "رشد"]
     };
 
-    // Split free text into whitespace-separated tokens (also breaking on common
-    // punctuation), lower-cased for case-insensitive comparison.
     const tokenizeText = (s) => s.toLowerCase().replace(/[\/,،.!?;:()]/g, ' ').split(/\s+/).filter(Boolean);
 
-    // Check whether a (possibly multi-word) keyword phrase appears as a
-    // consecutive, whole-token sequence within the tokenized input. This is
-    // deliberately NOT a substring check — a naive `.includes()` would match
-    // "normal" inside "abnormal" (and "طبیعی" inside "غیرطبیعی"), which
-    // silently flips the result to the opposite of what it should be.
     const phraseTokensMatch = (tokens, phrase) => {
         const phraseTokens = phrase.toLowerCase().split(/\s+/).filter(Boolean);
         for (let i = 0; i <= tokens.length - phraseTokens.length; i++) {
@@ -181,14 +173,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return false;
     };
 
-    // Match free-text qualitative input against known keyword sets, using
-    // whole-word/whole-phrase comparison (see phraseTokensMatch above).
     const matchQualitativeValue = (rawValue) => {
         const tokens = tokenizeText(rawValue);
         if (tokens.length === 0) return null;
-        // Longer phrases are checked before shorter/single-word ones so that,
-        // e.g., "no growth" is recognized as one unit rather than falling
-        // through to a looser single-word match.
         const sortedNegative = [...QUALITATIVE_KEYWORDS.negative].sort((a, b) => b.split(/\s+/).length - a.split(/\s+/).length);
         const sortedPositive = [...QUALITATIVE_KEYWORDS.positive].sort((a, b) => b.split(/\s+/).length - a.split(/\s+/).length);
         for (const kw of sortedNegative) {
@@ -200,7 +187,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return null;
     };
 
-    // Find a test's key in labData by exact key or by alias (case-insensitive)
     const findTestKey = (name) => {
         const lowerCaseName = name.toLowerCase().trim();
         if (!lowerCaseName) return null;
@@ -214,11 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return null;
     };
 
-    // Parse a single input line into { rawName, rawValue }.
-    // rawValue is kept as raw text — numeric tests extract a number from it later,
-    // qualitative tests match keywords against it directly.
     const parseLine = (line) => {
-        // Split on first ':' or first '-' (whichever comes first) to separate name from value
         let separatorIndex = line.indexOf(':');
         if (separatorIndex === -1) separatorIndex = line.indexOf('-');
         let namePart, valuePart;
@@ -235,7 +217,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     };
 
-    // Fully local, offline interpretation engine — no network requests of any kind.
     const interpretResults = () => {
         const input = labInput.value.trim();
         const t = translations[currentLang];
@@ -245,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const selectedGender = document.querySelector('input[name="gender"]:checked').value; // 'male' | 'female'
+        const selectedGender = document.querySelector('input[name="gender"]:checked').value;
 
         const lines = input.split('\n').map(l => l.trim()).filter(l => l.length > 0);
         const parsedItems = [];
@@ -269,14 +250,16 @@ document.addEventListener('DOMContentLoaded', () => {
         resultsOutput.innerHTML = '';
 
         let abnormalCount = 0;
-        // Rows for the compact table, and separate notes for anything that needs
-        // explanation (abnormal, unrecognized, or unparsed items — normal results
-        // don't need a note, exactly like a real printed lab report).
         const rows = [];
         const notes = [];
 
+        const displayName = (item, data) => {
+            const canonical = data.name[currentLang];
+            if (item.rawName.trim().toLowerCase() === canonical.trim().toLowerCase()) return canonical;
+            return `${canonical} (${item.rawName})`;
+        };
+
         parsedItems.forEach(item => {
-            // --- Test not found in database ---
             if (!item.key) {
                 rows.push({ name: item.rawName, result: item.rawValue || '—', range: '—', statusKey: 'unknown', statusLabel: '?' });
                 notes.push({ name: item.rawName, text: t.unrecognized, statusKey: 'unknown' });
@@ -285,49 +268,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const data = labData[item.key];
 
-            // --- Qualitative test (positive/negative style) ---
             if (data.type === 'qualitative') {
                 const matched = matchQualitativeValue(item.rawValue);
                 if (!matched) {
-                    rows.push({ name: data.name[currentLang], result: item.rawValue || '—', range: '—', statusKey: 'unknown', statusLabel: '?' });
-                    notes.push({ name: data.name[currentLang], text: t.unparsedQualitative, statusKey: 'unknown' });
+                    rows.push({ name: displayName(item, data), result: item.rawValue || '—', range: '—', statusKey: 'unknown', statusLabel: '?' });
+                    notes.push({ name: displayName(item, data), text: t.unparsedQualitative, statusKey: 'unknown' });
                     return;
                 }
                 const valueEntry = data[matched];
-                const statusClass = valueEntry.resultStatus; // 'normal' | 'low' | 'high'
+                const statusClass = valueEntry.resultStatus;
                 if (statusClass !== 'normal') abnormalCount++;
 
                 rows.push({
-                    name: data.name[currentLang],
+                    name: displayName(item, data),
                     result: valueEntry.label[currentLang],
-                    range: data.negative.label[currentLang], // the expected/reference result
+                    range: data.negative.label[currentLang],
                     statusKey: statusClass,
                     statusLabel: statusClass === 'normal' ? t.statusNormal : (statusClass === 'low' ? t.statusLow : t.statusHigh)
                 });
                 if (statusClass !== 'normal') {
-                    notes.push({ name: data.name[currentLang], text: valueEntry.interpretation[currentLang], statusKey: statusClass });
+                    notes.push({ name: displayName(item, data), text: valueEntry.interpretation[currentLang], statusKey: statusClass });
                 }
                 return;
             }
 
-            // --- Quantitative test (numeric range) ---
             const numberMatch = item.rawValue.match(/-?\d+(\.\d+)?/);
             if (!numberMatch) {
-                rows.push({ name: data.name[currentLang], result: item.rawValue || '—', range: '—', statusKey: 'unknown', statusLabel: '?' });
-                notes.push({ name: data.name[currentLang], text: t.unparsedQuantitative, statusKey: 'unknown' });
+                rows.push({ name: displayName(item, data), result: item.rawValue || '—', range: '—', statusKey: 'unknown', statusLabel: '?' });
+                notes.push({ name: displayName(item, data), text: t.unparsedQuantitative, statusKey: 'unknown' });
                 return;
             }
             const value = parseFloat(numberMatch[0]);
-            // Some tests (e.g., IGF-1) vary mainly by age rather than gender.
-            // If the test defines age bands and the person entered an age,
-            // use the matching band; otherwise fall back to the normal
-            // gender/all range (which for age-dependent tests is a
-            // deliberately wide "safe default").
             let range = data.range[selectedGender] || data.range.all;
             const enteredAge = parseInt(patientAgeInput.value, 10);
             if (data.ageRanges && !isNaN(enteredAge)) {
                 const band = data.ageRanges.find(b => enteredAge >= b.minAge && enteredAge <= b.maxAge);
                 if (band) range = band.range;
+            }
+            if (selectedGender === 'female' && isPregnantCheckbox.checked && data.pregnancyRanges) {
+                const trimester = trimesterSelect.value;
+                const pregRange = data.pregnancyRanges['trimester' + trimester];
+                if (pregRange) range = pregRange;
             }
             let statusClass;
             if (value < range.min) statusClass = 'low';
@@ -337,28 +318,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const unit = data.unit ? ` ${data.unit}` : '';
             rows.push({
-                name: data.name[currentLang],
+                name: displayName(item, data),
                 result: `${value}${unit}`,
                 range: `${range.min} - ${range.max}${unit}`,
                 statusKey: statusClass,
                 statusLabel: statusClass === 'normal' ? t.statusNormal : (statusClass === 'low' ? t.statusLow : t.statusHigh)
             });
             if (statusClass !== 'normal') {
-                notes.push({ name: data.name[currentLang], text: data.interpretation[statusClass][currentLang], statusKey: statusClass });
+                notes.push({ name: displayName(item, data), text: data.interpretation[statusClass][currentLang], statusKey: statusClass });
             }
         });
 
         const reportWrapper = document.createElement('div');
         reportWrapper.className = 'lab-report';
 
-        // --- Report header / letterhead ---
-        // Always shows the report date + reference gender. Patient/doctor/lab/
-        // sample-date fields are optional — each row only renders if the
-        // person actually filled it in, so the header stays compact when unused.
-        const genderLabel = selectedGender === 'male' ? t.genderMale : t.genderFemale;
+        let genderLabel = selectedGender === 'male' ? t.genderMale : t.genderFemale;
+        if (selectedGender === 'female' && isPregnantCheckbox.checked) {
+            const trimesterNames = { '1': t.trimester1, '2': t.trimester2, '3': t.trimester3 };
+            genderLabel += ` (${t.isPregnant} — ${t.trimesterLabel} ${trimesterNames[trimesterSelect.value]})`;
+        }
         const dateStr = new Date().toLocaleDateString(currentLang === 'fa' ? 'fa-IR' : 'en-US');
 
-        const sampleDateRaw = sampleDateInput.value; // yyyy-mm-dd from <input type="date">
+        const sampleDateRaw = sampleDateInput.value;
         const sampleDateDisplay = sampleDateRaw
             ? new Date(sampleDateRaw + 'T00:00:00').toLocaleDateString(currentLang === 'fa' ? 'fa-IR' : 'en-US')
             : '';
@@ -390,7 +371,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         reportWrapper.appendChild(headerBlock);
 
-        // --- Compact results table ---
         const tableWrap = document.createElement('div');
         tableWrap.className = 'lab-report-table-wrap';
         const table = document.createElement('table');
@@ -439,7 +419,6 @@ document.addEventListener('DOMContentLoaded', () => {
         tableWrap.appendChild(table);
         reportWrapper.appendChild(tableWrap);
 
-        // --- Notes section — only for abnormal / unrecognized / unparsed items ---
         if (notes.length > 0) {
             const notesSection = document.createElement('div');
             notesSection.className = 'lab-report-notes';
@@ -458,7 +437,6 @@ document.addEventListener('DOMContentLoaded', () => {
             reportWrapper.appendChild(notesSection);
         }
 
-        // --- Summary + disclaimer ---
         const summaryElement = document.createElement('p');
         summaryElement.className = 'results-meta';
         summaryElement.style.fontStyle = 'italic';
@@ -472,16 +450,16 @@ document.addEventListener('DOMContentLoaded', () => {
         reportWrapper.appendChild(disclaimerElement);
 
         resultsOutput.appendChild(reportWrapper);
+
+        if (window.innerWidth <= 720) {
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     };
 
-    // Uses the browser's built-in print dialog. On virtually every OS this dialog
-    // offers a "Save as PDF" destination, so this gives PDF export with zero
-    // external libraries and zero network requests.
     const printReport = () => {
         window.print();
     };
 
-    // Build the "supported tests" list from the live database and open the dialog.
     const openInfoDialog = () => {
         const t = translations[currentLang];
         const keys = Object.keys(labData);
@@ -503,7 +481,22 @@ document.addEventListener('DOMContentLoaded', () => {
         infoDialog.showModal();
     };
 
-    // --- Event Listeners ---
+    function updatePregnancyUI() {
+        const gender = document.querySelector('input[name="gender"]:checked').value;
+        if (gender === 'female') {
+            pregnancySelector.hidden = false;
+        } else {
+            pregnancySelector.hidden = true;
+            isPregnantCheckbox.checked = false;
+            trimesterWrapper.hidden = true;
+        }
+    }
+    genderRadios.forEach(r => r.addEventListener('change', updatePregnancyUI));
+    isPregnantCheckbox.addEventListener('change', () => {
+        trimesterWrapper.hidden = !isPregnantCheckbox.checked;
+    });
+    updatePregnancyUI();
+
     themeToggleBtn.addEventListener('click', toggleTheme);
     processBtn.addEventListener('click', interpretResults);
     printBtn.addEventListener('click', printReport);
@@ -512,10 +505,8 @@ document.addEventListener('DOMContentLoaded', () => {
     infoBtn.addEventListener('click', openInfoDialog);
     infoCloseBtn.addEventListener('click', () => infoDialog.close());
     infoDialog.addEventListener('click', (e) => {
-        // Close when clicking the backdrop (outside the dialog's content box)
         if (e.target === infoDialog) infoDialog.close();
     });
 
-    // Set initial language
     switchLanguage('fa');
 });

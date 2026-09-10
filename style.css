@@ -1,12 +1,5 @@
-/* ================================================================
-   LabVision — visual design tokens
-   A calm, clinical aesthetic: soft teal accent, generous rounding,
-   an ECG-pulse motif used as the section divider (ties to the
-   subject matter instead of a plain <hr>).
-   ================================================================ */
-
 :root {
-    /* Light theme */
+
     --bg-color: #F1F6F5;
     --card-bg-color: #FFFFFF;
     --text-color: #1F2A2E;
@@ -48,7 +41,6 @@ body.dark-theme {
     --success-bg: rgba(74, 222, 128, 0.1);
 }
 
-/* ============ Base & Vazirmatn font-face ============ */
 @font-face {
     font-family: 'Vazirmatn';
     src: local('Vazirmatn'), local('Vazirmatn-Regular'),
@@ -68,6 +60,10 @@ body.dark-theme {
 
 * { box-sizing: border-box; }
 
+html {
+    height: 100%;
+}
+
 body {
     font-family: 'Vazirmatn', Tahoma, 'Segoe UI', Arial, sans-serif;
     background-color: var(--bg-color);
@@ -76,11 +72,25 @@ body {
     padding: 1.25rem;
     transition: background-color 0.3s, color 0.3s;
     -webkit-font-smoothing: antialiased;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
-/* ============ Header ============ */
+body.lang-en {
+    direction: ltr;
+}
+
+body.lang-en textarea#lab-input {
+    direction: ltr;
+    text-align: left;
+}
+
 header#main-header {
     max-width: 1100px;
+    width: 100%;
+    flex: 0 0 auto;
     margin: 0 auto 1.25rem;
     background-color: var(--card-bg-color);
     border-radius: var(--radius-lg);
@@ -119,7 +129,6 @@ header h1 {
     gap: 0.5rem;
 }
 
-/* Theme toggle button */
 #theme-toggle {
     width: 40px;
     height: 40px;
@@ -142,7 +151,6 @@ header h1 {
 body.dark-theme #theme-toggle .icon-moon { display: none; }
 body.dark-theme #theme-toggle .icon-sun { display: block; }
 
-/* Info button — same size/shape as the theme toggle for visual consistency */
 #info-btn {
     width: 40px;
     height: 40px;
@@ -161,7 +169,6 @@ body.dark-theme #theme-toggle .icon-sun { display: block; }
 #info-btn:hover { transform: scale(1.06); }
 #info-btn svg { width: 19px; height: 19px; }
 
-/* Language switcher — now docked in the header, same height as the theme toggle */
 .language-switcher {
     display: flex;
     align-items: stretch;
@@ -187,17 +194,23 @@ body.dark-theme #theme-toggle .icon-sun { display: block; }
     color: var(--primary-text-color);
 }
 
-/* ============ Layout ============ */
 .container {
     max-width: 1100px;
+    width: 100%;
     margin: 0 auto;
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .main-content {
     display: flex;
     gap: 1.25rem;
     align-items: stretch;
-    flex-wrap: wrap;
+    flex: 1 1 auto;
+    min-height: 0;
 }
 
 .input-section, .results-section {
@@ -207,18 +220,11 @@ body.dark-theme #theme-toggle .icon-sun { display: block; }
     padding: 1.5rem;
     flex: 1 1 420px;
     min-width: 300px;
+    min-height: 0;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* On wide desktop windows, let both panels fill the available window
-   height so their bottoms line up with a maximized browser window
-   instead of stopping short and leaving empty space below. */
-@media (min-width: 900px) {
-    .input-section, .results-section {
-        min-height: calc(100vh - 170px);
-    }
 }
 
 #lab-input { flex: 1 1 auto; }
@@ -230,9 +236,6 @@ h2 {
     font-weight: 700;
 }
 
-/* ============ ECG pulse divider ============
-   Used wherever the design calls for a separator — a nod to the
-   subject matter (a heartbeat trace) instead of a plain <hr>. */
 .pulse-divider {
     width: 100%;
     height: 20px;
@@ -242,7 +245,6 @@ h2 {
 }
 .pulse-divider svg { width: 100%; height: 100%; display: block; }
 
-/* ============ Gender selector ============ */
 .gender-selector {
     display: flex;
     align-items: center;
@@ -267,10 +269,7 @@ h2 {
     font-size: 0.9rem;
 }
 .gender-selector input[type="radio"] {
-    /* The radio itself is never drawn — the whole label pill acts as the
-       selected indicator via :has(input:checked) — so it's removed from
-       layout entirely instead of just visually hidden, which previously
-       left an invisible gap that pushed the text off-center. */
+
     position: absolute;
     width: 0;
     height: 0;
@@ -284,13 +283,35 @@ h2 {
     color: var(--primary-text-color);
 }
 
+.pregnancy-selector {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    padding: 6px 10px;
+    background-color: var(--bg-color);
+    border-radius: var(--radius-md);
+    width: fit-content;
+    font-size: 0.9rem;
+}
+.pregnancy-selector label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.pregnancy-selector select {
+    font-family: inherit;
+    font-size: 0.85rem;
+    padding: 3px 6px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    background-color: var(--card-bg-color);
+    color: inherit;
+}
+
 .input-hint {
     color: var(--text-muted);
     font-size: 0.85rem;
     margin: 0 0 0.75rem;
 }
 
-/* ============ Optional patient/doctor/lab details ============ */
 .optional-details {
     margin-bottom: 0.9rem;
     border: 1.5px solid var(--border-color);
@@ -334,7 +355,7 @@ h2 {
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
-    min-width: 0; /* allow grid/flex children to shrink instead of overflowing */
+    min-width: 0;
 }
 .optional-details .field label {
     font-size: 0.75rem;
@@ -359,7 +380,6 @@ h2 {
     .optional-details-grid { grid-template-columns: 1fr; }
 }
 
-/* ============ Input textarea — ruled like a vitals chart ============ */
 textarea {
     width: 100%;
     padding: 16px 18px;
@@ -370,12 +390,7 @@ textarea {
     font-family: 'Consolas', 'Courier New', 'DejaVu Sans Mono', monospace;
     font-size: 0.95rem;
     line-height: 2rem;
-    /* Ruled-line background: a faint horizontal divider under every
-       line of typed text, like a vitals/prescription chart.
-       background-origin/clip: content-box makes the ruling start at
-       the exact same point as the text (inside the padding), so the
-       lines land under each line of text instead of being offset by
-       the textarea's own padding. */
+
     background-image: repeating-linear-gradient(
         to bottom,
         transparent 0,
@@ -389,13 +404,14 @@ textarea {
     resize: vertical;
     transition: background-color 0.3s, border-color 0.3s;
     outline: none;
+    direction: ltr;
+    text-align: left;
 }
 textarea:focus {
     border-color: var(--primary-color);
 }
 textarea::placeholder { color: var(--placeholder-color); }
 
-/* ============ Buttons ============ */
 button {
     display: inline-flex;
     align-items: center;
@@ -426,7 +442,6 @@ button:active { transform: scale(0.98); }
     background-color: color-mix(in srgb, var(--primary-color) 12%, transparent);
 }
 
-/* ============ Results — rendered as a compact lab-report table ============ */
 #results-output {
     display: flex;
     flex-direction: column;
@@ -444,8 +459,6 @@ button:active { transform: scale(0.98); }
     margin: 0 0 0.85rem;
 }
 
-/* Patient/doctor/lab letterhead — only rendered when at least one optional
-   field was filled in. Falls back to just date + reference gender. */
 .lab-report-header {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -466,8 +479,6 @@ button:active { transform: scale(0.98); }
     .lab-report-header { grid-template-columns: 1fr; }
 }
 
-/* Table wrapper handles the rounded corners + clipping, since border-radius
-   on <table> itself doesn't clip cell borders consistently across browsers. */
 .lab-report-table-wrap {
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
@@ -491,8 +502,7 @@ button:active { transform: scale(0.98); }
 
 .lab-report-table td {
     padding: 10px 12px;
-    /* A real row divider: a border on the cell itself is always perfectly
-       aligned with that row's text, unlike a separately-positioned line. */
+
     border-top: 1px solid var(--border-color);
     vertical-align: middle;
 }
@@ -502,16 +512,12 @@ button:active { transform: scale(0.98); }
 .lab-report-table td.col-name { font-weight: 700; }
 .lab-report-table td.col-range { color: var(--text-muted); font-size: 0.8rem; }
 
-/* Result & reference-range values always read left-to-right — numbers and
-   units (e.g. "12.5 - 15.5 g/dL") are clearer this way even inside an
-   RTL page, and this stays fixed regardless of the selected UI language. */
 .ltr-value {
     direction: ltr;
     unicode-bidi: embed;
-    text-align: left; /* fixed left alignment, independent of overall page direction */
+    text-align: left;
 }
 
-/* Colored accent bar on the row, aligned exactly to that row's own borders */
 .lab-report-table tr.row-normal  td.col-name { border-inline-start: 3px solid var(--success-color); }
 .lab-report-table tr.row-low     td.col-name { border-inline-start: 3px solid var(--warning-color); }
 .lab-report-table tr.row-high    td.col-name { border-inline-start: 3px solid var(--danger-color); }
@@ -530,7 +536,6 @@ button:active { transform: scale(0.98); }
 .status-badge.high    { background-color: var(--danger-bg);  color: var(--danger-color); }
 .status-badge.unknown { background-color: var(--bg-color);   color: var(--text-muted); }
 
-/* --- Notes: only rendered for abnormal / unrecognized / unparsed items --- */
 .lab-report-notes {
     margin-top: 1rem;
     padding-top: 0.9rem;
@@ -553,7 +558,6 @@ button:active { transform: scale(0.98); }
 .note-line.note-unknown { border-inline-start-color: var(--placeholder-color); }
 .note-line strong { color: var(--text-color); }
 
-/* Summary + disclaimer lines rendered above/below the report */
 .results-meta {
     text-align: center;
     font-size: 0.8rem;
@@ -561,15 +565,15 @@ button:active { transform: scale(0.98); }
     margin-top: 1rem;
 }
 
-/* ============ Print / PDF export — styled to resemble a real printed lab sheet ============ */
 @media print {
     header, .input-section, #process-btn, #print-btn, #info-dialog {
         display: none !important;
     }
+    html, body { height: auto !important; overflow: visible !important; }
     body { background: #ffffff !important; color: #000000 !important; padding: 0; font-size: 11px; }
-    .container { max-width: 100%; margin: 0; }
-    .main-content { display: block !important; }
-    .results-section { box-shadow: none; border-radius: 0; padding: 0; }
+    .container { max-width: 100%; margin: 0; height: auto !important; overflow: visible !important; }
+    .main-content { display: block !important; height: auto !important; overflow: visible !important; }
+    .results-section { box-shadow: none; border-radius: 0; padding: 0; height: auto !important; max-height: none !important; overflow: visible !important; }
     .results-section h2 { font-size: 13px; margin-bottom: 8px; }
 
     .lab-report-meta { color: #333333 !important; font-size: 9px; }
@@ -608,7 +612,6 @@ button:active { transform: scale(0.98); }
     .results-meta { font-size: 8.5px; margin-top: 6px; }
 }
 
-/* ============ Motion / animation ============ */
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -628,8 +631,7 @@ button:active { transform: scale(0.98); }
 .lab-report-table tbody tr:hover td {
     background-color: color-mix(in srgb, var(--primary-color) 6%, transparent);
 }
-/* Stagger the first several rows so the table feels like it's settling in,
-   rather than popping in all at once. */
+
 .lab-report-table tbody tr:nth-child(1)  { animation-delay: 0.02s; }
 .lab-report-table tbody tr:nth-child(2)  { animation-delay: 0.05s; }
 .lab-report-table tbody tr:nth-child(3)  { animation-delay: 0.08s; }
@@ -651,7 +653,6 @@ button:active:not(:disabled) { transform: scale(0.98) translateY(0); }
 .optional-details summary { transition: background-color 0.2s ease; }
 .optional-details summary:hover { background-color: var(--bg-color); }
 
-/* ============ Info / Sources dialog ============ */
 #info-dialog {
     border: none;
     border-radius: var(--radius-lg);
@@ -717,12 +718,18 @@ button:active:not(:disabled) { transform: scale(0.98) translateY(0); }
     .info-test-list { grid-template-columns: 1fr; }
 }
 
-/* ============ Responsive ============ */
 @media (max-width: 720px) {
-    body { padding: 0.75rem; }
+    body { padding: 0.75rem; height: auto; min-height: 100dvh; overflow: visible; }
+    .container { overflow: visible; }
+    .main-content { flex-direction: column; }
     header#main-header { flex-wrap: wrap; padding: 0.85rem 1rem; }
-    .input-section, .results-section { padding: 1.1rem; }
+    .input-section, .results-section {
+        padding: 1.1rem;
+        min-height: calc(100dvh - 110px);
+        max-height: none;
+        overflow-y: auto;
+    }
     .lab-report-table { font-size: 0.78rem; }
     .lab-report-table th, .lab-report-table td { padding: 8px 8px; }
-    .lab-report-table td.col-range { display: none; } /* keep mobile table narrow; range is still in the note for abnormal items */
+    .lab-report-table td.col-range { display: none; }
 }

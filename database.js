@@ -1,15 +1,20 @@
-// File: database.js
-// LabVision Offline Lab Reference Database
-// All ranges are general reference ranges for adults and can vary slightly between labs.
-// This data is for educational purposes only and is NOT a substitute for professional medical advice.
-
 const labData = {
 
-    // ============ CBC (Complete Blood Count) ============
     hemoglobin: {
         name: { fa: "هموگلوبین (Hb)", en: "Hemoglobin (Hb)" },
         aliases: ["hb", "hgb", "hemoglobin", "haemoglobin", "هموگلوبین"],
         unit: "g/dL",
+        ageRanges: [
+            { minAge: 0, maxAge: 0, range: { min: 9.0, max: 24 } },
+            { minAge: 1, maxAge: 1, range: { min: 10.5, max: 14.0 } },
+            { minAge: 2, maxAge: 9, range: { min: 11.5, max: 14.5 } },
+            { minAge: 10, maxAge: 15, range: { min: 11.5, max: 15.5 } }
+        ],
+        pregnancyRanges: {
+            trimester1: { min: 11.0, max: 15.0 },
+            trimester2: { min: 10.5, max: 15.0 },
+            trimester3: { min: 11.0, max: 15.0 }
+        },
         range: { male: { min: 14, max: 18 }, female: { min: 12, max: 16 } },
         interpretation: {
             low: { fa: "کمبود هموگلوبین می‌تواند نشانه کم‌خونی (آنمی) باشد که علل مختلفی از جمله کمبود آهن، ویتامین B12 یا خونریزی دارد.", en: "Low hemoglobin may indicate anemia, which can result from iron deficiency, vitamin B12 deficiency, or blood loss." },
@@ -21,6 +26,17 @@ const labData = {
         name: { fa: "هماتوکریت (Hct)", en: "Hematocrit (Hct)" },
         aliases: ["hct", "hematocrit", "haematocrit", "هماتوکریت"],
         unit: "%",
+        ageRanges: [
+            { minAge: 0, maxAge: 0, range: { min: 28, max: 70 } },
+            { minAge: 1, maxAge: 1, range: { min: 32, max: 42 } },
+            { minAge: 2, maxAge: 9, range: { min: 33, max: 43 } },
+            { minAge: 10, maxAge: 15, range: { min: 34, max: 46 } }
+        ],
+        pregnancyRanges: {
+            trimester1: { min: 33, max: 45 },
+            trimester2: { min: 31, max: 45 },
+            trimester3: { min: 33, max: 45 }
+        },
         range: { male: { min: 41, max: 50 }, female: { min: 36, max: 46 } },
         interpretation: {
             low: { fa: "هماتوکریت پایین معمولاً همراه با کم‌خونی یا از دست دادن خون دیده می‌شود.", en: "Low hematocrit is usually associated with anemia or blood loss." },
@@ -43,6 +59,12 @@ const labData = {
         name: { fa: "گلبول سفید (WBC)", en: "White Blood Cell Count (WBC)" },
         aliases: ["wbc", "white blood cell", "white blood cells", "tc", "t.c", "total count", "wbc count", "گلبول سفید", "شمارش کل", "تی سی"],
         unit: "x10³/µL",
+        ageRanges: [
+            { minAge: 0, maxAge: 0, range: { min: 6, max: 34 } },
+            { minAge: 1, maxAge: 1, range: { min: 6, max: 17 } },
+            { minAge: 2, maxAge: 9, range: { min: 4, max: 15.5 } },
+            { minAge: 10, maxAge: 15, range: { min: 4.5, max: 13.5 } }
+        ],
         range: { all: { min: 4, max: 11 } },
         interpretation: {
             low: { fa: "کاهش گلبول سفید (لکوپنی) می‌تواند خطر عفونت را افزایش دهد و علل مختلفی از عفونت ویروسی تا مشکلات مغز استخوان دارد.", en: "Low white blood cell count (leukopenia) can increase infection risk and has causes ranging from viral infections to bone marrow issues." },
@@ -172,7 +194,6 @@ const labData = {
         }
     },
 
-    // ============ Biochemistry / Metabolic ============
     glucose: {
         name: { fa: "قند خون ناشتا (Glucose)", en: "Fasting Glucose" },
         aliases: ["fbs", "glucose", "blood sugar", "fasting glucose", "fasting blood sugar", "fbg", "fasting blood glucose", "glu", "قند خون", "قند خون ناشتا", "قند ناشتا", "gluc"],
@@ -471,11 +492,15 @@ const labData = {
         }
     },
 
-    // ============ Thyroid ============
     tsh: {
         name: { fa: "TSH", en: "TSH" },
         aliases: ["tsh", "thyroid stimulating hormone"],
         unit: "mIU/L",
+        pregnancyRanges: {
+            trimester1: { min: 0.1, max: 2.5 },
+            trimester2: { min: 0.2, max: 3.0 },
+            trimester3: { min: 0.3, max: 3.0 }
+        },
         range: { all: { min: 0.5, max: 5.0 } },
         interpretation: {
             low: { fa: "TSH پایین می‌تواند نشانه پرکاری تیروئید باشد.", en: "Low TSH can indicate an overactive thyroid (hyperthyroidism)." },
@@ -509,6 +534,11 @@ const labData = {
         name: { fa: "T4 آزاد (FT4)", en: "Free T4 (FT4)" },
         aliases: ["ft4", "free t4"],
         unit: "ng/dL",
+        pregnancyRanges: {
+            trimester1: { min: 0.7, max: 1.7 },
+            trimester2: { min: 0.6, max: 1.4 },
+            trimester3: { min: 0.5, max: 1.3 }
+        },
         range: { all: { min: 0.8, max: 1.9 } },
         interpretation: {
             low: { fa: "FT4 پایین می‌تواند نشانه کم‌کاری تیروئید باشد.", en: "Low FT4 can indicate hypothyroidism." },
@@ -528,7 +558,6 @@ const labData = {
         }
     },
 
-    // ============ Coagulation ============
     pt: {
         name: { fa: "زمان پروترومبین (PT)", en: "Prothrombin Time (PT)" },
         aliases: ["pt", "prothrombin time"],
@@ -563,7 +592,6 @@ const labData = {
         }
     },
 
-    // ============ Extended Metabolic / Glucose ============
     glucose_random: {
         name: { fa: "قند خون تصادفی / غیرناشتا (BS)", en: "Random / Casual Blood Sugar (BS)" },
         aliases: ["bs", "random blood sugar", "casual blood sugar", "random glucose", "2hpp", "bs 2hpp", "postprandial glucose", "قند خون رندوم", "قند تصادفی", "قند دو ساعته", "قند بعد از غذا"],
@@ -620,7 +648,6 @@ const labData = {
         }
     },
 
-    // ============ Extended Liver ============
     ggt: {
         name: { fa: "گاما گلوتامیل ترانسفراز (GGT)", en: "Gamma-Glutamyl Transferase (GGT)" },
         aliases: ["ggt", "gamma gt"],
@@ -666,7 +693,6 @@ const labData = {
         }
     },
 
-    // ============ Extended Electrolytes ============
     chloride: {
         name: { fa: "کلر (Cl)", en: "Chloride (Cl)" },
         aliases: ["cl", "chloride", "کلر"],
@@ -701,7 +727,6 @@ const labData = {
         }
     },
 
-    // ============ Endocrine / Hormones ============
     acth: {
         name: { fa: "هورمون ACTH", en: "ACTH" },
         aliases: ["acth", "adrenocorticotropic hormone"],
@@ -835,7 +860,6 @@ const labData = {
         }
     },
 
-    // ============ Pancreatic / GI Enzymes ============
     amylase: {
         name: { fa: "آمیلاز", en: "Amylase" },
         aliases: ["amylase", "آمیلاز"],
@@ -870,7 +894,6 @@ const labData = {
         }
     },
 
-    // ============ Kidney / Urine (Quantitative) ============
     microalbumin: {
         name: { fa: "میکروآلبومین ادرار", en: "Urine Microalbumin" },
         aliases: ["microalbumin", "urine microalbumin", "میکروآلبومین"],
@@ -938,7 +961,6 @@ const labData = {
         }
     },
 
-    // ============ Inflammatory Markers ============
     crp: {
         name: { fa: "پروتئین واکنشی C (CRP)", en: "C-Reactive Protein (CRP)" },
         aliases: ["crp", "c-reactive protein", "سی آر پی"],
@@ -1017,7 +1039,6 @@ const labData = {
         }
     },
 
-    // ============ Allergy / Immunology ============
     ige_total: {
         name: { fa: "IgE تام", en: "Total IgE" },
         aliases: ["ige", "total ige", "آی جی ای"],
@@ -1107,7 +1128,6 @@ const labData = {
         }
     },
 
-    // ============ Tumor Markers ============
     afp: {
         name: { fa: "آلفا-فتوپروتئین (AFP)", en: "Alpha-Fetoprotein (AFP)" },
         aliases: ["afp", "alpha-fetoprotein", "آلفا فتوپروتئین"],
@@ -1186,7 +1206,6 @@ const labData = {
         }
     },
 
-    // ============ Cardiac Markers ============
     troponin: {
         name: { fa: "تروپونین", en: "Troponin" },
         aliases: ["troponin", "تروپونین"],
@@ -1276,7 +1295,6 @@ const labData = {
         }
     },
 
-    // ============ Coagulation (Extended) ============
     fibrinogen: {
         name: { fa: "فیبرینوژن", en: "Fibrinogen" },
         aliases: ["fibrinogen", "فیبرینوژن"],
@@ -1333,7 +1351,6 @@ const labData = {
         }
     },
 
-    // ============ Other Hematology ============
     g6pd: {
         name: { fa: "آنزیم G6PD", en: "G6PD Enzyme" },
         aliases: ["g6pd", "g6pd enzyme"],
@@ -1346,7 +1363,6 @@ const labData = {
         }
     },
 
-    // ============ Toxicology ============
     lactic_acid: {
         name: { fa: "اسید لاکتیک", en: "Lactic Acid" },
         aliases: ["lactic acid", "lactate", "اسید لاکتیک"],
@@ -1425,7 +1441,6 @@ const labData = {
         }
     },
 
-    // ============ Semi-quantitative panel components ============
     semen_volume: {
         name: { fa: "حجم مایع منی", en: "Semen Volume" },
         aliases: ["semen volume", "حجم منی"],
@@ -1525,14 +1540,6 @@ const labData = {
             high: { fa: "افزایش HbF می‌تواند در تالاسمی، بیماری سلول داسی‌شکل یا سایر هموگلوبینوپاتی‌ها دیده شود.", en: "Elevated HbF can be seen in thalassemia, sickle cell disease, or other hemoglobinopathies." }
         }
     },
-
-    // ============================================================
-    // QUALITATIVE TESTS (positive/negative, reactive/non-reactive, etc.)
-    // These have no numeric range. `type: 'qualitative'` tells the
-    // interpretation engine in script.js to match text values instead
-    // of numbers. `resultStatus` maps to a CSS class: normal | low | high
-    // (used here loosely as normal=favorable, high=unfavorable/positive)
-    // ============================================================
 
     hbsag: {
         type: "qualitative",
@@ -1920,7 +1927,6 @@ const labData = {
         positive: { label: { fa: "غیرطبیعی", en: "Abnormal" }, resultStatus: "high", interpretation: { fa: "نتیجه غیرطبیعی است و نیاز به آزمایش تاییدی فوری دارد (تشخیص و درمان زودهنگام حیاتی است).", en: "The result is abnormal and requires immediate confirmatory testing (early diagnosis and treatment is critical)." } }
     },
 
-    // --- Drug / Substance Screening ---
     drug_morphine: {
         type: "qualitative",
         name: { fa: "مورفین (تست مواد مخدر)", en: "Morphine (Drug Screen)" },
@@ -1964,7 +1970,6 @@ const labData = {
         positive: { label: { fa: "مثبت", en: "Positive" }, resultStatus: "high", interpretation: { fa: "THC در نمونه شناسایی شد.", en: "THC detected in the sample." } }
     },
 
-    // --- Additional culture/sensitivity tests ---
     pseudomonas_culture: {
         type: "qualitative",
         name: { fa: "کشت اختصاصی سودوموناس", en: "Pseudomonas Culture" },
@@ -1980,11 +1985,6 @@ const labData = {
         positive: { label: { fa: "مقاوم", en: "Resistant" }, resultStatus: "high", interpretation: { fa: "قارچ شناسایی‌شده به داروی ضدقارچی مورد آزمایش مقاوم است؛ نیاز به تغییر درمان دارد.", en: "The identified fungus is resistant to the tested antifungal drug; treatment needs to be adjusted." } }
     },
 
-    // ============================================================
-    // BATCH: Previously-missed items + deep-search additions
-    // ============================================================
-
-    // --- Missed from original autoimmune list ---
     ana: {
         type: "qualitative",
         name: { fa: "آنتی‌بادی ضد هسته (ANA)", en: "Antinuclear Antibody (ANA)" },
@@ -2018,7 +2018,6 @@ const labData = {
         positive: { label: { fa: "مثبت", en: "Positive" }, resultStatus: "high", interpretation: { fa: "نشانه احتمالی کرایوگلوبولینمی است که می‌تواند با هپاتیت C، بیماری‌های خودایمنی یا اختلالات پلاسماسل مرتبط باشد.", en: "Suggests possible cryoglobulinemia, which can be related to hepatitis C, autoimmune diseases, or plasma cell disorders." }}
     },
 
-    // --- Reproductive / additional endocrine hormones ---
     amh: {
         name: { fa: "هورمون ضد مولرین (AMH)", en: "Anti-Müllerian Hormone (AMH)" },
         aliases: ["amh", "anti-mullerian hormone", "آ ام اچ"],
@@ -2067,10 +2066,6 @@ const labData = {
         name: { fa: "فاکتور رشد شبه‌انسولین (IGF-1)", en: "Insulin-like Growth Factor 1 (IGF-1)" },
         aliases: ["igf-1", "igf1", "insulin-like growth factor"],
         unit: "ng/mL",
-        // IGF-1 varies a lot by age, so a per-age-band range is used when the
-        // person's age is provided; otherwise this falls back to the widest
-        // plausible adult range below (deliberately wide, since guessing a
-        // narrow "typical adult" band without knowing age would be misleading).
         ageRanges: [
             { minAge: 16, maxAge: 24, range: { min: 182, max: 780 } },
             { minAge: 25, maxAge: 39, range: { min: 114, max: 492 } },
@@ -2118,7 +2113,6 @@ const labData = {
         }
     },
 
-    // --- Vitamins & minerals (extended) ---
     vitamin_b1: {
         name: { fa: "ویتامین B1 (تیامین)", en: "Vitamin B1 (Thiamine)" },
         aliases: ["vitamin b1", "thiamine", "ویتامین ب1", "تیامین"],
@@ -2230,7 +2224,6 @@ const labData = {
         }
     },
 
-    // --- Other hematology / miscellaneous ---
     reticulocyte: {
         name: { fa: "رتیکولوسیت", en: "Reticulocyte Count" },
         aliases: ["reticulocyte", "reticulocyte count", "رتیکولوسیت"],
@@ -2349,7 +2342,6 @@ const labData = {
         positive: { label: { fa: "غیرطبیعی", en: "Abnormal" }, resultStatus: "high", interpretation: { fa: "شکنندگی افزایش‌یافته می‌تواند نشانه اسفروسیتوز ارثی باشد؛ شکنندگی کاهش‌یافته می‌تواند در تالاسمی دیده شود.", en: "Increased fragility can indicate hereditary spherocytosis; decreased fragility can be seen in thalassemia." } }
     },
 
-    // --- Final batch: genetic + extended coagulation ---
     mthfr: {
         type: "qualitative",
         name: { fa: "جهش ژن MTHFR", en: "MTHFR Gene Mutation" },
@@ -2412,12 +2404,6 @@ const labData = {
             high: { fa: "طولانی‌شدن زمان ترومبین می‌تواند نشانه کمبود یا اختلال فیبرینوژن یا مصرف هپارین باشد.", en: "A prolonged thrombin time can indicate fibrinogen deficiency/dysfunction or heparin use." }
         }
     },
-
-    // ============================================================
-    // Phase 2: added after cross-checking against the NBME Laboratory
-    // Reference Values table — tests that were referenced there but
-    // were completely missing from our database.
-    // ============================================================
 
     abg_ph: {
         name: { fa: "pH خون شریانی (ABG)", en: "Arterial Blood pH (ABG)" },
@@ -2508,13 +2494,6 @@ const labData = {
         }
     },
 
-    // ============================================================
-    // Phase 2b: added after cross-checking against the ABIM (American
-    // Board of Internal Medicine) Laboratory Reference Ranges,
-    // January 2026 edition — the most comprehensive and current source
-    // used for this pass.
-    // ============================================================
-
     mpv: {
         name: { fa: "حجم متوسط پلاکت (MPV)", en: "Mean Platelet Volume (MPV)" },
         aliases: ["mpv", "mean platelet volume", "حجم متوسط پلاکت"],
@@ -2537,11 +2516,6 @@ const labData = {
             high: { fa: "اشباع ترانسفرین بالا می‌تواند نشانه اضافه‌بار آهن یا هموکروماتوز باشد.", en: "High transferrin saturation can indicate iron overload or hemochromatosis." }
         }
     },
-
-    // ============================================================
-    // Phase 3: completeness re-check additions (thyroid antibodies,
-    // autoimmune panel, GI, and nutrition markers that were missing).
-    // ============================================================
 
     anti_tpo: {
         name: { fa: "آنتی‌بادی ضد پراکسیداز تیروئید (Anti-TPO)", en: "Anti-Thyroid Peroxidase (Anti-TPO)" },
@@ -2666,12 +2640,6 @@ const labData = {
             high: { fa: "مقدار بالا معمولاً یافته طبیعی است و نگران‌کننده نیست.", en: "A high value is usually a normal finding and not concerning." }
         }
     },
-
-    // ============================================================
-    // Phase 4: additional high-value tests found in a full, complete
-    // re-check against the ABIM Laboratory Reference Ranges
-    // (January 2026 edition).
-    // ============================================================
 
     ttg_iga: {
         type: "qualitative",
@@ -2832,11 +2800,6 @@ const labData = {
             high: { fa: "مقدار بالا معمولاً یافته طبیعی است و نگران‌کننده نیست.", en: "A high value is usually a normal finding and not concerning." }
         }
     },
-
-    // ============================================================
-    // Phase 5: additions confirmed present in a major Iranian
-    // reference lab's actual test catalog (Daneshbod Pathobiology Lab).
-    // ============================================================
 
     anti_gad: {
         type: "qualitative",

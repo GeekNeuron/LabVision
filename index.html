@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LabVision</title>
     <link rel="stylesheet" href="style.css">
-    <!-- No external fonts/CDN links: the app relies only on locally installed system fonts to stay 100% offline. -->
 </head>
 <body class="light-theme">
 
@@ -82,6 +81,21 @@
                     </label>
                 </div>
 
+                <div class="pregnancy-selector" id="pregnancy-selector" hidden>
+                    <label>
+                        <input type="checkbox" id="is-pregnant">
+                        <span data-lang-key="isPregnant">باردار</span>
+                    </label>
+                    <label id="trimester-wrapper" hidden>
+                        <span data-lang-key="trimesterLabel">سه‌ماهه:</span>
+                        <select id="trimester-select">
+                            <option value="1" data-lang-key="trimester1">اول</option>
+                            <option value="2" data-lang-key="trimester2">دوم</option>
+                            <option value="3" data-lang-key="trimester3">سوم</option>
+                        </select>
+                    </label>
+                </div>
+
                 <details class="optional-details">
                     <summary data-lang-key="optionalDetailsSummary">مشخصات برگه (اختیاری)</summary>
                     <div class="optional-details-grid">
@@ -120,7 +134,7 @@
                 <button id="process-btn" data-lang-key="processButton">تحلیل نتایج</button>
             </section>
 
-            <section class="results-section">
+            <section class="results-section" id="results-section">
                 <h2 data-lang-key="resultsHeader">تفسیر نتایج</h2>
                 <div id="results-output">
                     <p class="placeholder" data-lang-key="resultsPlaceholder">نتایج تحلیل آزمایش شما در اینجا نمایش داده می‌شود.</p>
