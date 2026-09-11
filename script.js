@@ -130,7 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         currentLang = lang;
         document.documentElement.lang = lang;
-        document.documentElement.dir = 'ltr';
+        document.documentElement.dir = 'rtl';
+        body.classList.toggle('lang-en', lang === 'en');
 
         langFaBtn.classList.toggle('active', lang === 'fa');
         langEnBtn.classList.toggle('active', lang === 'en');
