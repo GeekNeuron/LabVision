@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const infoCloseBtn = document.getElementById('info-close-btn');
     const infoTestCount = document.getElementById('info-test-count');
     const infoTestList = document.getElementById('info-test-list');
+    const optionalDetailsBtn = document.getElementById('optional-details-btn');
+    const optionalDetailsDialog = document.getElementById('optional-details-dialog');
+    const optionalDetailsCloseBtn = document.getElementById('optional-details-close-btn');
     const processBtn = document.getElementById('process-btn');
     const printBtn = document.getElementById('print-btn');
     const labInput = document.getElementById('lab-input');
@@ -54,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
             referenceGenderLabel: "جنسیت مرجع",
             optionalDetailsSummary: "مشخصات برگه (اختیاری)",
             patientNameLabel: "نام بیمار", patientNamePlaceholder: "مثلاً: علی رضایی",
-            patientAgeLabel: "سن بیمار", patientAgePlaceholder: "مثلاً: ۳۵ (برای دقت بیشتر برخی تست‌ها مثل IGF-1 و رنج‌های کودکان)",
+            patientAgeLabel: "سن بیمار", patientAgeHint: "برای دقت بیشتر برخی تست‌ها مثل IGF-1 و رنج‌های کودکان",
             isPregnant: "باردار", trimesterLabel: "سه‌ماهه:", trimester1: "اول", trimester2: "دوم", trimester3: "سوم",
             pregnancyNote: "برخی رنج‌های نرمال (تیروئید، هموگلوبین) در بارداری متفاوت است.",
             doctorNameLabel: "پزشک معالج", doctorNamePlaceholder: "مثلاً: دکتر محمدی",
@@ -97,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
             referenceGenderLabel: "Reference Gender",
             optionalDetailsSummary: "Report Details (optional)",
             patientNameLabel: "Patient Name", patientNamePlaceholder: "e.g., John Smith",
-            patientAgeLabel: "Patient Age", patientAgePlaceholder: "e.g., 35 (improves accuracy for tests like IGF-1 and pediatric ranges)",
+            patientAgeLabel: "Patient Age", patientAgeHint: "Improves accuracy for tests like IGF-1 and pediatric ranges",
             isPregnant: "Pregnant", trimesterLabel: "Trimester:", trimester1: "1st", trimester2: "2nd", trimester3: "3rd",
             pregnancyNote: "Some normal ranges (thyroid, hemoglobin) differ during pregnancy.",
             doctorNameLabel: "Referring Doctor", doctorNamePlaceholder: "e.g., Dr. Smith",
@@ -128,7 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
         currentLang = lang;
         document.documentElement.lang = lang;
         document.documentElement.dir = 'ltr';
-        body.classList.toggle('lang-fa', lang === 'fa');
 
         langFaBtn.classList.toggle('active', lang === 'fa');
         langEnBtn.classList.toggle('active', lang === 'en');
@@ -511,6 +513,11 @@ document.addEventListener('DOMContentLoaded', () => {
     infoCloseBtn.addEventListener('click', () => infoDialog.close());
     infoDialog.addEventListener('click', (e) => {
         if (e.target === infoDialog) infoDialog.close();
+    });
+    optionalDetailsBtn.addEventListener('click', () => optionalDetailsDialog.showModal());
+    optionalDetailsCloseBtn.addEventListener('click', () => optionalDetailsDialog.close());
+    optionalDetailsDialog.addEventListener('click', (e) => {
+        if (e.target === optionalDetailsDialog) optionalDetailsDialog.close();
     });
 
     switchLanguage('fa');

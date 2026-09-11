@@ -64,65 +64,78 @@
         </div>
     </dialog>
 
+    <dialog id="optional-details-dialog">
+        <div class="info-dialog-header">
+            <h2 data-lang-key="optionalDetailsSummary">مشخصات برگه (اختیاری)</h2>
+            <button id="optional-details-close-btn" class="icon-btn" type="button" aria-label="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="info-dialog-body">
+            <div class="optional-details-grid">
+                <div class="field">
+                    <label data-lang-key="selectGender">جنسیت:</label>
+                    <div class="gender-selector">
+                        <label>
+                            <input type="radio" name="gender" value="male" checked>
+                            <span data-lang-key="genderMale">مرد</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="gender" value="female">
+                            <span data-lang-key="genderFemale">زن</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="field pregnancy-field" id="pregnancy-selector" hidden>
+                    <div class="pregnancy-selector">
+                        <label>
+                            <input type="checkbox" id="is-pregnant">
+                            <span data-lang-key="isPregnant">باردار</span>
+                        </label>
+                        <label id="trimester-wrapper" hidden>
+                            <span data-lang-key="trimesterLabel">سه‌ماهه:</span>
+                            <select id="trimester-select">
+                                <option value="1" data-lang-key="trimester1">اول</option>
+                                <option value="2" data-lang-key="trimester2">دوم</option>
+                                <option value="3" data-lang-key="trimester3">سوم</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="patient-age" data-lang-key="patientAgeLabel">سن بیمار</label>
+                    <input type="number" id="patient-age" min="0" max="120" placeholder="35">
+                    <small class="field-hint" data-lang-key="patientAgeHint">برای دقت بیشتر برخی تست‌ها مثل IGF-1 و رنج‌های کودکان</small>
+                </div>
+                <div class="field">
+                    <label for="patient-name" data-lang-key="patientNameLabel">نام بیمار</label>
+                    <input type="text" id="patient-name" data-lang-key-placeholder="patientNamePlaceholder">
+                </div>
+                <div class="field">
+                    <label for="doctor-name" data-lang-key="doctorNameLabel">پزشک معالج</label>
+                    <input type="text" id="doctor-name" data-lang-key-placeholder="doctorNamePlaceholder">
+                </div>
+                <div class="field">
+                    <label for="lab-name" data-lang-key="labNameLabel">نام آزمایشگاه</label>
+                    <input type="text" id="lab-name" data-lang-key-placeholder="labNamePlaceholder">
+                </div>
+                <div class="field">
+                    <label for="sample-date" data-lang-key="sampleDateLabel">تاریخ نمونه‌گیری</label>
+                    <input type="date" id="sample-date">
+                </div>
+            </div>
+        </div>
+    </dialog>
+
     <div class="container">
         <main class="main-content">
             <section class="input-section">
                 <h2 data-lang-key="inputHeader">اطلاعات برگه آزمایش</h2>
 
-                <details class="optional-details">
-                    <summary data-lang-key="optionalDetailsSummary">مشخصات برگه (اختیاری)</summary>
-                    <div class="optional-details-grid">
-                        <div class="field">
-                            <label data-lang-key="selectGender">جنسیت:</label>
-                            <div class="gender-selector">
-                                <label>
-                                    <input type="radio" name="gender" value="male" checked>
-                                    <span data-lang-key="genderMale">مرد</span>
-                                </label>
-                                <label>
-                                    <input type="radio" name="gender" value="female">
-                                    <span data-lang-key="genderFemale">زن</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label for="patient-age" data-lang-key="patientAgeLabel">سن بیمار</label>
-                            <input type="number" id="patient-age" min="0" max="120" data-lang-key-placeholder="patientAgePlaceholder">
-                        </div>
-                        <div class="field pregnancy-field" id="pregnancy-selector" hidden>
-                            <div class="pregnancy-selector">
-                                <label>
-                                    <input type="checkbox" id="is-pregnant">
-                                    <span data-lang-key="isPregnant">باردار</span>
-                                </label>
-                                <label id="trimester-wrapper" hidden>
-                                    <span data-lang-key="trimesterLabel">سه‌ماهه:</span>
-                                    <select id="trimester-select">
-                                        <option value="1" data-lang-key="trimester1">اول</option>
-                                        <option value="2" data-lang-key="trimester2">دوم</option>
-                                        <option value="3" data-lang-key="trimester3">سوم</option>
-                                    </select>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label for="patient-name" data-lang-key="patientNameLabel">نام بیمار</label>
-                            <input type="text" id="patient-name" data-lang-key-placeholder="patientNamePlaceholder">
-                        </div>
-                        <div class="field">
-                            <label for="doctor-name" data-lang-key="doctorNameLabel">پزشک معالج</label>
-                            <input type="text" id="doctor-name" data-lang-key-placeholder="doctorNamePlaceholder">
-                        </div>
-                        <div class="field">
-                            <label for="lab-name" data-lang-key="labNameLabel">نام آزمایشگاه</label>
-                            <input type="text" id="lab-name" data-lang-key-placeholder="labNamePlaceholder">
-                        </div>
-                        <div class="field">
-                            <label for="sample-date" data-lang-key="sampleDateLabel">تاریخ نمونه‌گیری</label>
-                            <input type="date" id="sample-date">
-                        </div>
-                    </div>
-                </details>
+                <button type="button" id="optional-details-btn" class="optional-details-trigger">
+                    <span data-lang-key="optionalDetailsSummary">مشخصات برگه (اختیاری)</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
 
                 <p class="input-hint" data-lang-key="inputHint">هر آیتم را در یک خط جدید وارد کنید. مثال: Glucose: 95</p>
 
