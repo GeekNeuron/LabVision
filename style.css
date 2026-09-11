@@ -224,6 +224,24 @@ body.dark-theme #theme-toggle .icon-sun { display: block; }
     flex-direction: column;
     overflow-y: auto;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) transparent;
+}
+.input-section::-webkit-scrollbar, .results-section::-webkit-scrollbar {
+    width: 8px;
+}
+.input-section::-webkit-scrollbar-track, .results-section::-webkit-scrollbar-track {
+    background: transparent;
+}
+.input-section::-webkit-scrollbar-thumb, .results-section::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+.input-section:hover::-webkit-scrollbar-thumb, .results-section:hover::-webkit-scrollbar-thumb {
+    background-color: var(--text-muted);
+    background-clip: padding-box;
 }
 
 #lab-input { flex: 1 1 auto; }
@@ -244,38 +262,27 @@ h2 {
 }
 .pulse-divider svg { width: 100%; height: 100%; display: block; }
 
-.patient-context-row {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-}
-
 .gender-selector {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 6px;
-    background-color: var(--bg-color);
-    border-radius: var(--radius-md);
+    gap: 0.5rem;
     width: fit-content;
 }
-.gender-selector span { font-weight: 700; padding-inline-start: 6px; font-size: 0.9rem; }
 .gender-selector label {
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    min-width: 68px;
+    min-width: 60px;
     cursor: pointer;
     padding: 7px 14px;
     border-radius: var(--radius-sm);
-    transition: background-color 0.2s, color 0.2s;
-    font-size: 0.9rem;
+    background-color: var(--card-bg-color);
+    border: 1.5px solid var(--border-color);
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    font-size: 0.85rem;
 }
 .gender-selector input[type="radio"] {
-
     position: absolute;
     width: 0;
     height: 0;
@@ -286,53 +293,63 @@ h2 {
 }
 .gender-selector label:has(input:checked) {
     background-color: var(--primary-color);
+    border-color: var(--primary-color);
     color: var(--primary-text-color);
 }
 
-.age-field-inline {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 6px 10px;
-    background-color: var(--bg-color);
-    border-radius: var(--radius-md);
-    width: fit-content;
-    font-size: 0.9rem;
-}
-.age-field-inline label { font-weight: 700; white-space: nowrap; }
-.age-field-inline input {
-    width: 70px;
-    font-family: inherit;
-    font-size: 0.9rem;
-    padding: 5px 8px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border-color);
-    background-color: var(--card-bg-color);
-    color: inherit;
-    box-sizing: border-box;
-}
-
+.pregnancy-field { grid-column: 1 / -1; }
 .pregnancy-selector {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.25rem;
     flex-wrap: wrap;
-    padding: 6px 10px;
-    background-color: var(--bg-color);
-    border-radius: var(--radius-md);
-    width: fit-content;
-    font-size: 0.9rem;
-
 }
-.pregnancy-selector label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.pregnancy-selector > label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+.pregnancy-selector input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    border: 1.5px solid var(--border-color);
+    background-color: var(--card-bg-color);
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+.pregnancy-selector input[type="checkbox"]:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.pregnancy-selector input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid var(--primary-text-color);
+    border-width: 0 2px 2px 0;
+    transform: rotate(40deg);
+}
 .pregnancy-selector select {
     font-family: inherit;
     font-size: 0.85rem;
-    padding: 3px 6px;
+    padding: 6px 8px;
     border-radius: var(--radius-sm);
-    border: 1px solid var(--border-color);
+    border: 1.5px solid var(--border-color);
     background-color: var(--card-bg-color);
     color: inherit;
+    cursor: pointer;
 }
 
 .input-hint {
@@ -342,6 +359,7 @@ h2 {
 }
 
 .optional-details {
+    flex-shrink: 0;
     margin-bottom: 0.9rem;
     border: 1.5px solid var(--border-color);
     border-radius: var(--radius-md);
@@ -386,12 +404,12 @@ h2 {
     gap: 0.3rem;
     min-width: 0;
 }
-.optional-details .field label {
+.optional-details .field > label {
     font-size: 0.75rem;
     color: var(--text-muted);
     font-weight: 700;
 }
-.optional-details .field input {
+.optional-details .field > input {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -404,7 +422,7 @@ h2 {
     font-size: 0.85rem;
     outline: none;
 }
-.optional-details .field input:focus { border-color: var(--primary-color); }
+.optional-details .field > input:focus { border-color: var(--primary-color); }
 @media (max-width: 480px) {
     .optional-details-grid { grid-template-columns: 1fr; }
 }
@@ -435,6 +453,16 @@ textarea {
     outline: none;
     direction: ltr;
     text-align: left;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) transparent;
+}
+textarea::-webkit-scrollbar { width: 8px; }
+textarea::-webkit-scrollbar-track { background: transparent; }
+textarea::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
 }
 textarea:focus {
     border-color: var(--primary-color);
