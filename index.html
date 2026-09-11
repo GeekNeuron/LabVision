@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,31 +69,38 @@
             <section class="input-section">
                 <h2 data-lang-key="inputHeader">اطلاعات برگه آزمایش</h2>
 
-                <div class="gender-selector">
-                    <span data-lang-key="selectGender">جنسیت:</span>
-                    <label>
-                        <input type="radio" name="gender" value="male" checked>
-                        <span data-lang-key="genderMale">مرد</span>
-                    </label>
-                    <label>
-                        <input type="radio" name="gender" value="female">
-                        <span data-lang-key="genderFemale">زن</span>
-                    </label>
-                </div>
+                <div class="patient-context-row">
+                    <div class="gender-selector">
+                        <span data-lang-key="selectGender">جنسیت:</span>
+                        <label>
+                            <input type="radio" name="gender" value="male" checked>
+                            <span data-lang-key="genderMale">مرد</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="gender" value="female">
+                            <span data-lang-key="genderFemale">زن</span>
+                        </label>
+                    </div>
 
-                <div class="pregnancy-selector" id="pregnancy-selector" hidden>
-                    <label>
-                        <input type="checkbox" id="is-pregnant">
-                        <span data-lang-key="isPregnant">باردار</span>
-                    </label>
-                    <label id="trimester-wrapper" hidden>
-                        <span data-lang-key="trimesterLabel">سه‌ماهه:</span>
-                        <select id="trimester-select">
-                            <option value="1" data-lang-key="trimester1">اول</option>
-                            <option value="2" data-lang-key="trimester2">دوم</option>
-                            <option value="3" data-lang-key="trimester3">سوم</option>
-                        </select>
-                    </label>
+                    <div class="age-field-inline">
+                        <label for="patient-age" data-lang-key="patientAgeLabel">سن بیمار</label>
+                        <input type="number" id="patient-age" min="0" max="120" data-lang-key-placeholder="patientAgePlaceholder">
+                    </div>
+
+                    <div class="pregnancy-selector" id="pregnancy-selector" hidden>
+                        <label>
+                            <input type="checkbox" id="is-pregnant">
+                            <span data-lang-key="isPregnant">باردار</span>
+                        </label>
+                        <label id="trimester-wrapper" hidden>
+                            <span data-lang-key="trimesterLabel">سه‌ماهه:</span>
+                            <select id="trimester-select">
+                                <option value="1" data-lang-key="trimester1">اول</option>
+                                <option value="2" data-lang-key="trimester2">دوم</option>
+                                <option value="3" data-lang-key="trimester3">سوم</option>
+                            </select>
+                        </label>
+                    </div>
                 </div>
 
                 <details class="optional-details">
@@ -102,10 +109,6 @@
                         <div class="field">
                             <label for="patient-name" data-lang-key="patientNameLabel">نام بیمار</label>
                             <input type="text" id="patient-name" data-lang-key-placeholder="patientNamePlaceholder">
-                        </div>
-                        <div class="field">
-                            <label for="patient-age" data-lang-key="patientAgeLabel">سن بیمار</label>
-                            <input type="number" id="patient-age" min="0" max="120" data-lang-key-placeholder="patientAgePlaceholder">
                         </div>
                         <div class="field">
                             <label for="doctor-name" data-lang-key="doctorNameLabel">پزشک معالج</label>

@@ -127,8 +127,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         currentLang = lang;
         document.documentElement.lang = lang;
-        document.documentElement.dir = 'rtl';
-        body.classList.toggle('lang-en', lang === 'en');
+        document.documentElement.dir = 'ltr';
+        body.classList.toggle('lang-fa', lang === 'fa');
 
         langFaBtn.classList.toggle('active', lang === 'fa');
         langEnBtn.classList.toggle('active', lang === 'en');
@@ -255,7 +255,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const displayName = (item, data) => {
             const canonical = data.name[currentLang];
-            if (item.rawName.trim().toLowerCase() === canonical.trim().toLowerCase()) return canonical;
+            const rawLower = item.rawName.trim().toLowerCase();
+            const canonicalLower = canonical.trim().toLowerCase();
+            if (canonicalLower.includes(rawLower)) return canonical;
+            const otherLang = currentLang === 'fa' ? 'en' : 'fa';
+            const otherCanonical = data.name[otherLang];
+            if (otherCanonical && otherCanonical.trim().toLowerCase().includes(rawLower)) return canonical;
             return `${canonical} (${item.rawName})`;
         };
 
