@@ -319,8 +319,8 @@ h2 {
 .pregnancy-selector {
     display: flex;
     align-items: center;
-    gap: 1.25rem;
-    flex-wrap: wrap;
+    gap: 0.6rem;
+    flex-wrap: nowrap;
 }
 .pregnancy-selector > label {
     display: flex;
@@ -475,13 +475,18 @@ h2 {
 .optional-details-trigger svg { width: 16px; height: 16px; flex-shrink: 0; }
 
 .optional-details-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 0.9rem;
     box-sizing: border-box;
 }
+.patient-primary-row {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.6rem;
+}
 .secondary-fields-row {
-    grid-column: 1 / -1;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0.9rem;
@@ -491,9 +496,6 @@ h2 {
     flex-direction: column;
     gap: 0.3rem;
     min-width: 0;
-}
-.pregnancy-field {
-    justify-content: flex-end;
 }
 .info-dialog-body .field > label {
     font-size: 0.75rem;
@@ -538,8 +540,6 @@ body.dark-theme .info-dialog-body .field > input[type="date"] {
 }
 @media (max-width: 480px) {
     .secondary-fields-row { grid-template-columns: 1fr; }
-    .gender-selector label { min-width: 0; padding: 7px 8px; font-size: 0.8rem; }
-    .gender-selector { gap: 0.4rem; }
 }
 
 textarea {
@@ -935,8 +935,12 @@ button:active:not(:disabled) { transform: scale(0.98) translateY(0); }
     .lab-report-table { font-size: 0.78rem; }
     .lab-report-table th, .lab-report-table td { padding: 8px 8px; }
     .lab-report-table td.col-range { display: none; }
-    .pregnancy-selector { row-gap: 0.7rem; }
-    .trimester-wrapper { flex-basis: 100%; }
+    .patient-primary-row { gap: 0.4rem; }
+    .pregnancy-selector { gap: 0.4rem; }
+    .gender-selector { gap: 0.3rem; }
+    .gender-selector label { min-width: 0; padding: 6px 7px; font-size: 0.75rem; }
+    .pregnancy-selector > label { font-size: 0.75rem; gap: 5px; }
+    .custom-select-trigger { padding: 5px 6px; gap: 4px; font-size: 0.75rem; }
     .info-test-list {
         max-height: 130px;
         font-size: 0.7rem;

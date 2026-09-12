@@ -73,8 +73,7 @@
         </div>
         <div class="info-dialog-body">
             <div class="optional-details-grid">
-                <div class="field">
-                    <label data-lang-key="selectGender">جنسیت:</label>
+                <div class="patient-primary-row">
                     <div class="gender-selector">
                         <label>
                             <input type="radio" name="gender" value="male" checked>
@@ -85,15 +84,12 @@
                             <span data-lang-key="genderFemale">زن</span>
                         </label>
                     </div>
-                </div>
-                <div class="field pregnancy-field" id="pregnancy-selector" hidden>
-                    <div class="pregnancy-selector">
+                    <div class="pregnancy-selector" id="pregnancy-selector" hidden>
                         <label>
                             <input type="checkbox" id="is-pregnant">
                             <span data-lang-key="isPregnant">باردار</span>
                         </label>
                         <div class="trimester-wrapper" id="trimester-wrapper" hidden>
-                            <span data-lang-key="trimesterLabel">سه‌ماهه:</span>
                             <div class="custom-select" id="trimester-select">
                                 <button type="button" class="custom-select-trigger" aria-haspopup="listbox" aria-expanded="false">
                                     <span class="custom-select-value" data-lang-key="trimester1">اول</span>
