@@ -219,7 +219,7 @@ body.dark-theme #theme-toggle .icon-sun { display: block; }
     color: var(--text-muted);
     max-width: 1100px;
     width: 100%;
-    margin: 2.5rem auto 0;
+    margin: 3.5rem auto 0;
     box-sizing: border-box;
 }
 
@@ -439,6 +439,10 @@ h2 {
     background-color: var(--primary-hover);
     color: var(--primary-text-color);
 }
+#optional-details-dialog .custom-select-list li.selected,
+#optional-details-dialog .custom-select-list li.selected:hover {
+    color: var(--primary-text-color) !important;
+}
 
 .input-hint {
     color: var(--text-muted);
@@ -488,6 +492,9 @@ h2 {
     gap: 0.3rem;
     min-width: 0;
 }
+.pregnancy-field {
+    justify-content: flex-end;
+}
 .info-dialog-body .field > label {
     font-size: 0.75rem;
     color: var(--text-muted);
@@ -530,8 +537,9 @@ body.dark-theme .info-dialog-body .field > input[type="date"] {
     line-height: 1.3;
 }
 @media (max-width: 480px) {
-    .optional-details-grid { grid-template-columns: 1fr; }
     .secondary-fields-row { grid-template-columns: 1fr; }
+    .gender-selector label { min-width: 0; padding: 7px 8px; font-size: 0.8rem; }
+    .gender-selector { gap: 0.4rem; }
 }
 
 textarea {
@@ -929,4 +937,17 @@ button:active:not(:disabled) { transform: scale(0.98) translateY(0); }
     .lab-report-table td.col-range { display: none; }
     .pregnancy-selector { row-gap: 0.7rem; }
     .trimester-wrapper { flex-basis: 100%; }
+    .info-test-list {
+        max-height: 130px;
+        font-size: 0.7rem;
+        gap: 0.2rem 0.5rem;
+        padding: 0.5rem 0.6rem;
+    }
+    .info-sources-list { font-size: 0.72rem; }
+    .info-sources-list li { margin-bottom: 0.3rem; }
+    .info-disclaimer { font-size: 0.68rem; margin-top: 0.7rem; padding-top: 0.6rem; }
+    .info-dialog-header { padding: 0.8rem 1rem; }
+    .info-dialog-body { padding: 0.9rem 1rem 1rem; }
+    .info-dialog-body h3 { margin: 0.7rem 0 0.4rem; }
+    .info-count { margin: 0 0 0.5rem; }
 }
