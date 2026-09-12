@@ -219,11 +219,7 @@ body.dark-theme #theme-toggle .icon-sun { display: block; }
     color: var(--text-muted);
     max-width: 1100px;
     width: 100%;
-    margin: 0.9rem auto 0;
-    padding: 0.7rem 1.5rem;
-    background-color: var(--card-bg-color);
-    border-radius: var(--radius-lg);
-    box-shadow: 0 4px 20px var(--shadow-color);
+    margin: 1.25rem auto 0;
     box-sizing: border-box;
 }
 
@@ -363,29 +359,74 @@ h2 {
     border-width: 0 2px 2px 0;
     transform: rotate(40deg);
 }
-.pregnancy-selector select {
+.trimester-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+.custom-select {
+    position: relative;
+}
+.custom-select-trigger {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     font-family: inherit;
     font-size: 0.85rem;
-    padding: 6px 30px 6px 10px;
+    font-weight: 400;
+    padding: 6px 10px;
     border-radius: var(--radius-sm);
     border: 1.5px solid var(--border-color);
     background-color: var(--card-bg-color);
-    color: inherit;
+    color: var(--text-color);
     cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235B6B70' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
-    background-repeat: no-repeat;
-    background-position: left 8px center;
-    background-size: 14px;
     transition: border-color 0.2s;
 }
-.pregnancy-selector select:hover, .pregnancy-selector select:focus {
+.custom-select-trigger:hover, .custom-select-trigger[aria-expanded="true"] {
     border-color: var(--primary-color);
 }
-body.dark-theme .pregnancy-selector select {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238FA6A3' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+.custom-select-trigger svg {
+    width: 14px;
+    height: 14px;
+    color: var(--text-muted);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+}
+.custom-select-trigger[aria-expanded="true"] svg {
+    transform: rotate(180deg);
+}
+.custom-select-list {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    z-index: 20;
+    min-width: 100%;
+    margin: 0;
+    padding: 6px;
+    list-style: none;
+    background-color: var(--card-bg-color);
+    border: 1.5px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 24px var(--shadow-color);
+    animation: fadeInUp 0.15s ease both;
+}
+.custom-select-list li {
+    padding: 7px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.15s;
+}
+.custom-select-list li:hover {
+    background-color: var(--bg-color);
+}
+.custom-select-list li.selected {
+    background-color: var(--primary-color);
+    color: var(--primary-text-color);
 }
 
 .input-hint {
@@ -424,6 +465,12 @@ body.dark-theme .pregnancy-selector select {
     gap: 0.9rem;
     box-sizing: border-box;
 }
+.secondary-fields-row {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem;
+}
 .info-dialog-body .field {
     display: flex;
     flex-direction: column;
@@ -449,6 +496,23 @@ body.dark-theme .pregnancy-selector select {
     outline: none;
 }
 .info-dialog-body .field > input:focus { border-color: var(--primary-color); }
+.info-dialog-body .field > input[type="date"] {
+    color-scheme: light;
+    cursor: pointer;
+}
+body.dark-theme .info-dialog-body .field > input[type="date"] {
+    color-scheme: dark;
+}
+.info-dialog-body .field > input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.55;
+    border-radius: 4px;
+    transition: opacity 0.2s, background-color 0.2s;
+}
+.info-dialog-body .field > input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+    background-color: var(--bg-color);
+}
 .field-hint {
     font-size: 0.72rem;
     color: var(--text-muted);
@@ -456,6 +520,7 @@ body.dark-theme .pregnancy-selector select {
 }
 @media (max-width: 480px) {
     .optional-details-grid { grid-template-columns: 1fr; }
+    .secondary-fields-row { grid-template-columns: 1fr; }
 }
 
 textarea {
@@ -802,10 +867,6 @@ button:active:not(:disabled) { transform: scale(0.98) translateY(0); }
 }
 @media (max-width: 480px) {
     .info-test-list { grid-template-columns: 1fr; }
-}
-
-@media (min-width: 721px) {
-    body { zoom: 0.62; }
 }
 
 @media (max-width: 720px) {

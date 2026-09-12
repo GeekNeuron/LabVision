@@ -92,36 +92,44 @@
                             <input type="checkbox" id="is-pregnant">
                             <span data-lang-key="isPregnant">باردار</span>
                         </label>
-                        <label id="trimester-wrapper" hidden>
+                        <div class="trimester-wrapper" id="trimester-wrapper" hidden>
                             <span data-lang-key="trimesterLabel">سه‌ماهه:</span>
-                            <select id="trimester-select">
-                                <option value="1" data-lang-key="trimester1">اول</option>
-                                <option value="2" data-lang-key="trimester2">دوم</option>
-                                <option value="3" data-lang-key="trimester3">سوم</option>
-                            </select>
-                        </label>
+                            <div class="custom-select" id="trimester-select">
+                                <button type="button" class="custom-select-trigger" aria-haspopup="listbox" aria-expanded="false">
+                                    <span class="custom-select-value" data-lang-key="trimester1">اول</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </button>
+                                <ul class="custom-select-list" role="listbox" hidden>
+                                    <li role="option" data-value="1" data-lang-key="trimester1" aria-selected="true" class="selected">اول</li>
+                                    <li role="option" data-value="2" data-lang-key="trimester2" aria-selected="false">دوم</li>
+                                    <li role="option" data-value="3" data-lang-key="trimester3" aria-selected="false">سوم</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="field">
-                    <label for="patient-age" data-lang-key="patientAgeLabel">سن بیمار</label>
-                    <input type="number" id="patient-age" min="0" max="120" placeholder="35">
-                    <small class="field-hint" data-lang-key="patientAgeHint">برای دقت بیشتر برخی تست‌ها مثل IGF-1 و رنج‌های کودکان</small>
-                </div>
-                <div class="field">
-                    <label for="patient-name" data-lang-key="patientNameLabel">نام بیمار</label>
-                    <input type="text" id="patient-name" data-lang-key-placeholder="patientNamePlaceholder">
-                </div>
-                <div class="field">
-                    <label for="doctor-name" data-lang-key="doctorNameLabel">پزشک معالج</label>
-                    <input type="text" id="doctor-name" data-lang-key-placeholder="doctorNamePlaceholder">
-                </div>
-                <div class="field">
-                    <label for="lab-name" data-lang-key="labNameLabel">نام آزمایشگاه</label>
-                    <input type="text" id="lab-name" data-lang-key-placeholder="labNamePlaceholder">
-                </div>
-                <div class="field">
-                    <label for="sample-date" data-lang-key="sampleDateLabel">تاریخ نمونه‌گیری</label>
-                    <input type="date" id="sample-date">
+                <div class="secondary-fields-row">
+                    <div class="field">
+                        <label for="patient-age" data-lang-key="patientAgeLabel">سن بیمار</label>
+                        <input type="number" id="patient-age" min="0" max="120" placeholder="35">
+                        <small class="field-hint" data-lang-key="patientAgeHint">برای دقت بیشتر برخی تست‌ها مثل IGF-1 و رنج‌های کودکان</small>
+                    </div>
+                    <div class="field">
+                        <label for="patient-name" data-lang-key="patientNameLabel">نام بیمار</label>
+                        <input type="text" id="patient-name" data-lang-key-placeholder="patientNamePlaceholder">
+                    </div>
+                    <div class="field">
+                        <label for="doctor-name" data-lang-key="doctorNameLabel">پزشک معالج</label>
+                        <input type="text" id="doctor-name" data-lang-key-placeholder="doctorNamePlaceholder">
+                    </div>
+                    <div class="field">
+                        <label for="lab-name" data-lang-key="labNameLabel">نام آزمایشگاه</label>
+                        <input type="text" id="lab-name" data-lang-key-placeholder="labNamePlaceholder">
+                    </div>
+                    <div class="field">
+                        <label for="sample-date" data-lang-key="sampleDateLabel">تاریخ نمونه‌گیری</label>
+                        <input type="date" id="sample-date">
+                    </div>
                 </div>
             </div>
         </div>

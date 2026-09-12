@@ -18,6 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const isPregnantCheckbox = document.getElementById('is-pregnant');
     const trimesterWrapper = document.getElementById('trimester-wrapper');
     const trimesterSelect = document.getElementById('trimester-select');
+    const trimesterTrigger = trimesterSelect.querySelector('.custom-select-trigger');
+    const trimesterValueEl = trimesterSelect.querySelector('.custom-select-value');
+    const trimesterList = trimesterSelect.querySelector('.custom-select-list');
+    const trimesterOptions = trimesterSelect.querySelectorAll('.custom-select-list li');
+    let trimesterValue = '1';
     const genderRadios = document.querySelectorAll('input[name="gender"]');
     const doctorNameInput = document.getElementById('doctor-name');
     const labNameInput = document.getElementById('lab-name');
@@ -314,7 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (band) range = band.range;
             }
             if (selectedGender === 'female' && isPregnantCheckbox.checked && data.pregnancyRanges) {
-                const trimester = trimesterSelect.value;
+                const trimester = trimesterValue;
                 const pregRange = data.pregnancyRanges['trimester' + trimester];
                 if (pregRange) range = pregRange;
             }
@@ -343,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let genderLabel = selectedGender === 'male' ? t.genderMale : t.genderFemale;
         if (selectedGender === 'female' && isPregnantCheckbox.checked) {
             const trimesterNames = { '1': t.trimester1, '2': t.trimester2, '3': t.trimester3 };
-            genderLabel += ` (${t.isPregnant} — ${t.trimesterLabel} ${trimesterNames[trimesterSelect.value]})`;
+            genderLabel += ` (${t.isPregnant} — ${t.trimesterLabel} ${trimesterNames[trimesterValue]})`;
         }
         const dateStr = new Date().toLocaleDateString(currentLang === 'fa' ? 'fa-IR' : 'en-US');
 
@@ -505,6 +510,32 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     updatePregnancyUI();
 
+    trimesterTrigger.addEventListener('click', () => {
+        const isOpen = !trimesterList.hidden;
+        trimesterList.hidden = isOpen;
+        trimesterTrigger.setAttribute('aria-expanded', String(!isOpen));
+    });
+    trimesterOptions.forEach(li => {
+        li.addEventListener('click', () => {
+            trimesterValue = li.dataset.value;
+            const key = li.getAttribute('data-lang-key');
+            trimesterValueEl.textContent = li.textContent;
+            trimesterValueEl.setAttribute('data-lang-key', key);
+            trimesterOptions.forEach(opt => {
+                opt.classList.toggle('selected', opt === li);
+                opt.setAttribute('aria-selected', String(opt === li));
+            });
+            trimesterList.hidden = true;
+            trimesterTrigger.setAttribute('aria-expanded', 'false');
+        });
+    });
+    document.addEventListener('click', (e) => {
+        if (!trimesterSelect.contains(e.target)) {
+            trimesterList.hidden = true;
+            trimesterTrigger.setAttribute('aria-expanded', 'false');
+        }
+    });
+
     themeToggleBtn.addEventListener('click', toggleTheme);
     processBtn.addEventListener('click', interpretResults);
     printBtn.addEventListener('click', printReport);
@@ -520,6 +551,22 @@ document.addEventListener('DOMContentLoaded', () => {
     optionalDetailsDialog.addEventListener('click', (e) => {
         if (e.target === optionalDetailsDialog) optionalDetailsDialog.close();
     });
+
+    const DESIGN_HEIGHT = 900;
+    const DESIGN_WIDTH = 1180;
+    const MIN_SCALE = 0.55;
+    function updateDesktopScale() {
+        if (window.innerWidth <= 720) {
+            document.body.style.zoom = '';
+            return;
+        }
+        const heightScale = window.innerHeight / DESIGN_HEIGHT;
+        const widthScale = window.innerWidth / DESIGN_WIDTH;
+        const scale = Math.min(1, Math.max(MIN_SCALE, Math.min(heightScale, widthScale)));
+        document.body.style.zoom = scale;
+    }
+    window.addEventListener('resize', updateDesktopScale);
+    updateDesktopScale();
 
     switchLanguage('fa');
 });
