@@ -293,8 +293,10 @@ h2 {
     justify-content: center;
     position: relative;
     min-width: 60px;
+    height: 34px;
+    box-sizing: border-box;
     cursor: pointer;
-    padding: 7px 14px;
+    padding: 0 14px;
     border-radius: var(--radius-sm);
     background-color: var(--card-bg-color);
     border: 1.5px solid var(--border-color);
@@ -384,7 +386,9 @@ h2 {
     font-size: 0.85rem;
     font-weight: 400;
     line-height: 1;
-    padding: 6px 10px;
+    height: 34px;
+    box-sizing: border-box;
+    padding: 0 10px;
     border-radius: var(--radius-sm);
     border: 1.5px solid var(--border-color);
     background-color: var(--card-bg-color);
@@ -484,7 +488,7 @@ h2 {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    gap: 0.6rem;
+    gap: 1.1rem;
 }
 .secondary-fields-row {
     display: grid;
@@ -935,10 +939,8 @@ button:active:not(:disabled) { transform: scale(0.98) translateY(0); }
     .lab-report-table { font-size: 0.78rem; }
     .lab-report-table th, .lab-report-table td { padding: 8px 8px; }
     .lab-report-table td.col-range { display: none; }
-    .patient-primary-row { gap: 0.4rem; }
+    .patient-primary-row { gap: 0.8rem; }
     .pregnancy-selector { gap: 0.4rem; }
-    .gender-selector { gap: 0.3rem; }
-    .gender-selector label { min-width: 0; padding: 6px 7px; font-size: 0.75rem; }
     .pregnancy-selector > label { font-size: 0.75rem; gap: 5px; }
     .custom-select-trigger { padding: 5px 6px; gap: 4px; font-size: 0.75rem; }
     .info-test-list {
