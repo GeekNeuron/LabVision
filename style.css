@@ -825,8 +825,8 @@ button:active:not(:disabled) { transform: scale(0.98) translateY(0); }
     box-shadow: 0 12px 40px rgba(0,0,0,0.25);
     animation: fadeInUp 0.25s ease both;
 }
-#info-dialog { max-height: 96vh; }
-#optional-details-dialog { max-height: 82vh; }
+#info-dialog { max-height: 82dvh; }
+#optional-details-dialog { max-height: 82dvh; }
 #info-dialog::backdrop, #optional-details-dialog::backdrop {
     background-color: rgba(0,0,0,0.45);
     animation: fadeIn 0.2s ease both;
@@ -851,8 +851,8 @@ button:active:not(:disabled) { transform: scale(0.98) translateY(0); }
     padding: 1.2rem 1.4rem 1.4rem;
     overflow-y: auto;
 }
-#info-dialog .info-dialog-body { max-height: calc(96vh - 64px); }
-#optional-details-dialog .info-dialog-body { max-height: calc(82vh - 64px); }
+#info-dialog .info-dialog-body { max-height: calc(82dvh - 64px); }
+#optional-details-dialog .info-dialog-body { max-height: calc(82dvh - 64px); }
 .info-dialog-body h3 { font-size: 0.9rem; margin: 1.1rem 0 0.6rem; }
 .info-count { font-size: 0.85rem; color: var(--text-muted); margin: 0 0 0.8rem; }
 .info-test-list {
@@ -906,6 +906,11 @@ button:active:not(:disabled) { transform: scale(0.98) translateY(0); }
 }
 @media (max-width: 480px) {
     .info-test-list { grid-template-columns: 1fr; }
+}
+
+@media (min-width: 721px) {
+    #info-dialog { max-height: 90dvh; }
+    #info-dialog .info-dialog-body { max-height: calc(90dvh - 64px); }
 }
 
 @media (max-width: 720px) {

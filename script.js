@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
             infoDaneshbodNote: "برای تکمیل فهرست آزمایش‌های رایج در عمل بالینی ایران",
             infoGeneralKnowledge: "دانش پزشکی عمومی و استاندارد، برای تفسیرهای بالینی و توضیحات",
             infoDisclaimer: "این رنج‌ها می‌توانند بین آزمایشگاه‌ها و روش‌های سنجش مختلف کمی متفاوت باشند. همیشه رنج مرجع چاپ‌شده روی برگه آزمایش خودتان را نیز در نظر بگیرید.",
-            infoCountText: (total, quant, qual) => `این نسخه ${total} آزمایش را پشتیبانی می‌کند (${quant} آزمایش کمّی + ${qual} آزمایش کیفی):`,
+            infoCountText: (total, quant, qual) => `این نسخه از LabVision ${total} آزمایش را پشتیبانی می‌کند (${quant} آزمایش کمّی + ${qual} آزمایش کیفی):`,
             summaryText: (total, abnormal) => abnormal === 0
                 ? `از مجموع ${total} آیتم بررسی‌شده، همه در محدوده نرمال قرار دارند.`
                 : `از مجموع ${total} آیتم بررسی‌شده، ${abnormal} مورد نیاز به توجه دارد (به یادداشت‌ها مراجعه کنید).`,
